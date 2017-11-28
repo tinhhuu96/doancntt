@@ -19,11 +19,7 @@ class CreateParametersTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
-        DB::table('parameters')->insert(
-            array(
-                ['name' => 'Chưa xác định']
-            )
-        );
+        
     }
 
     /**

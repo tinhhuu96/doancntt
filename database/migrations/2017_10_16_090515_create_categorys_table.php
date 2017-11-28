@@ -20,12 +20,6 @@ class CreateCategorysTable extends Migration
             $table->integer('parent')->unsigned()->nullable();
             $table->timestamps();
         });
-        DB::table('categories')->insert(
-            array(
-                'name' => 'Chưa xác định',
-                'parent' => 0
-            )
-        );
     }
 
     /**
