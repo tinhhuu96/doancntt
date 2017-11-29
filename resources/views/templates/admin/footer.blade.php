@@ -47,19 +47,19 @@
       <div class="modal-body">
         <div class="form-group col-md-6">
             <label for="">Name</label>
-            <input type="text" name="name" class="form-control" placeholder="Name" id="name"  readonly="">
+            <input type="text"  class="form-control" placeholder="" id="namecontact"  readonly="">
         </div>
         <div class="form-group col-md-6">
             <label for="">Gmail</label>
-            <input type="text" name="name" class="form-control" placeholder="Name" id="email" readonly="">
+            <input type="text"  class="form-control" placeholder="" id="emailcontact" readonly="">
         </div>
         <div class="form-group">
           <label for="">Messages</label><br />
-          <textarea name="" id="content" class="form-control" readonly="">ukm àasfasfsaf</textarea>
+          <textarea name="" id="contentcontact" class="form-control" readonly="">...</textarea>
         </div>
       </div>
       <div class="modal-footer">
-        <a href="javascript:void(0)" onclick="$('.modal').css({display:'none', transition:'0.3 all'});"><button type="button" onclick="" class="btn btn-secondary" data-dismiss="modal">Close</button></a>
+        <a href="{{ route('admin.contact.index') }}"><button type="button" onclick="" class="btn btn-secondary" data-dismiss="modal">Close</button></a>
         <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
@@ -192,9 +192,9 @@ function modelView(a)
     cache: false,
     data: {aid: a },
     success: function(data){
-      $('#name').val(data.name);
-      $('#email').val(data.email);
-      $('#content').val(data.content);
+      $('#namecontact').val(data.name);
+      $('#emailcontact').val(data.email);
+      $('#contentcontact').val(data.content);
       $('.modal').css({display:'block', transition:'0.3 all'});
     },
     error: function (){
@@ -287,7 +287,6 @@ $(document).ready(function () {
 })
 
 
-
 $(function(){
 
   $('#check_all').on('change', function() {
@@ -303,6 +302,89 @@ $(function(){
       }
     }
   });
+
+  //------------------------------------------------------------
+  // $('#check_all').on('change', function() {
+  //   var checkall = document.getElementById("check_all");
+  //   var check    = document.getElementsByClassName("check");
+  //   if (checkall.checked) {
+  //     for (var i = 0; i < check.length; i++) {
+  //       check[i].checked = true;
+  //     }
+  //   }else{
+  //     for (var i = 0; i < check.length; i++) {
+  //       check[i].checked = false;
+  //     }
+  //   }
+  // });
+  //-------------------------------------------------------------
+
+  function getContact(){
+    setTimeout(function(){
+      var a = 1;
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      $.ajax({
+        url: "{{route('admin.ajax.getcontact')}}",
+        type: 'post',
+        data: {data:a},
+        success: function(data){
+          if (data>0) {
+            $('#countcontact').html(data);   
+          }
+       },
+       complete: getContact
+     });
+    },200);
+  };
+  getContact();
+  //------------------------------------------------------------------
+  function getListInOrder(){
+    setTimeout(function(){
+      var date = $('#datetime').val();
+          // alert(date);
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+          $.ajax({
+            url: "{{route('admin.ajax.getInOrder')}}",
+            type: 'post',
+            data: {adate:date},
+            success: function(data){
+             $('#getValueInOrder').html(data);
+           },
+           complete: getListInOrder
+         });
+        },200);
+  };
+  getListInOrder();
+  //=--------------------------------------------------------------
+
+  function getParameters(){
+    setTimeout(function(){
+      var a = 1;
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+      $.ajax({
+        url: "{{route('admin.ajaxParameters')}}",
+        type: 'post',
+        data: {data:a},
+        success: function(data){
+         $('#getparameters').html(data);
+       },
+       complete: getParameters
+     });
+    },200);
+  };
+  getParameters();
 })
 function changerDisplaymes()
 {
@@ -336,84 +418,27 @@ function setStar(id,so){
 });
 }
 
-$(function(){
-  $('#check_all').on('change', function() {
-    var checkall = document.getElementById("check_all");
-    var check    = document.getElementsByClassName("check");
-    if (checkall.checked) {
-      for (var i = 0; i < check.length; i++) {
-        check[i].checked = true;
-      }
-    }else{
-      for (var i = 0; i < check.length; i++) {
-        check[i].checked = false;
-      }
-    }
-  });
 
-  function getContact(){
-    setTimeout(function(){
-      var a = 1;
-      $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-      });
-      $.ajax({
-        url: "{{route('admin.ajax.getcontact')}}",
-        type: 'post',
-        data: {data:a},
-        success: function(data){
-         $('#countcontact').html(data);
-       },
-       complete: getContact
-     });
-    },200);
-  };
-  getContact();
-
-});
-function getListInOrder(){
-  setTimeout(function(){
-    var date = $('#datetime').val();
-        // alert(date);
-        $.ajaxSetup({
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-        });
-        $.ajax({
-          url: "{{route('admin.ajax.getInOrder')}}",
-          type: 'post',
-          data: {adate:date},
-          success: function(data){
-           $('#getValueInOrder').html(data);
-         },
-         complete: getListInOrder
-       });
-      },200);
-};
-getListInOrder();
 
 function addPara(){
-  aname = $('#name').val();
-  apara = $('#parameters').val();
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    aname = $('#name').val();
+    apara = $('#parameters').val();
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    $.ajax({
+      url: "{{route('admin.add.parameters')}}",
+      type: 'post',
+      data: {name: aname, para: apara},
+      success: function(data){
+       $('#alertajax').html(data);
+     },
+     error: function (){
+      alert('Có lỗi xảy ra');
     }
   });
-  $.ajax({
-    url: "{{route('admin.add.parameters')}}",
-    type: 'post',
-    data: {name: aname, para: apara},
-    success: function(data){
-     $('#alertajax').html(data);
-   },
-   error: function (){
-    alert('Có lỗi xảy ra');
-  }
-});
 }
 
 function destroy(id){
@@ -435,28 +460,7 @@ function destroy(id){
   });
 }
 
-$( document ).ready(function() {
-  function getParameters(){
-    setTimeout(function(){
-      var a = 1;
-      $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-      });
-      $.ajax({
-        url: "{{route('admin.ajaxParameters')}}",
-        type: 'post',
-        data: {data:a},
-        success: function(data){
-         $('#getparameters').html(data);
-       },
-       complete: getParameters
-     });
-    },200);
-  };
-  getParameters();
-});
+
 </script>
 @yield('script')
 </body>

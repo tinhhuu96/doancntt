@@ -62,10 +62,6 @@
                 <label for=" ">Giá Nhập Vào</label>
                 <input type="number" name="price_old" class="form-control" id="" placeholder="">
               </div>
-              <div class="form-group">
-                <label for=" ">Giá Bán Ra</label>
-                <input type="number" name="price" class="form-control" id="" placeholder="">
-              </div>
             </div>
             <div class="col-xs-2">
              <div class="form-group">

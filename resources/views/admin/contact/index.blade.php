@@ -6,36 +6,7 @@
 	$countallstar = count(Contact::where('star','=',1)->get());
 ?>
 <!-- Modal -->
-<div class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLongTitle">View Messages</h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group col-md-6">
-            <label for="">Name</label>
-            <input type="text" name="name" class="form-control" placeholder="Name" id="name"  readonly="">
-        </div>
-        <div class="form-group col-md-6">
-            <label for="">Gmail</label>
-            <input type="text" name="name" class="form-control" placeholder="Name" id="email" readonly="">
-        </div>
-        <div class="form-group">
-          <label for="">Messages</label><br />
-          <textarea name="" id="content" class="form-control" readonly="">ukm àasfasfsaf</textarea>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="{{ route('admin.contact.index') }}"><button type="button" onclick="" class="btn btn-secondary" data-dismiss="modal">Close</button></a>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+<!--  -->
 <div class="row">
   <div class="col-md-5">
       @if(Session::has('msg-s'))
@@ -228,9 +199,9 @@
           cache: false,
           data: {aid: a },
           success: function(data){
-            $('#name').val(data.name);
-            $('#email').val(data.email);
-            $('#content').val(data.content);
+            $('#namecontact').val(data.name);
+            $('#emailcontact').val(data.email);
+            $('#contentcontact').val(data.content);
             $('.modal').css({display:'block', transition:'0.3 all'});
           },
           error: function (){

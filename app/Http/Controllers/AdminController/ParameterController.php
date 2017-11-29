@@ -73,8 +73,8 @@ class ParameterController extends Controller
                 $arpa = Parameter::where('name','=',$name)->get();
                 $id_para = $arpa[0]->id;
                 $ar = array(
-                    'parameters_id' => $id_para,
-                    'categories_id' => $cate
+                    'parameter_id' => $id_para,
+                    'category_id' => $cate
                 );
                 Paracatedetail::insert($ar);
                 return '<p class="alert alert-success alert-dismissable">Thêm thành công !</p>';
@@ -138,16 +138,16 @@ class ParameterController extends Controller
         $id  = $request->aid;
         $obj = Parameter::find($id);
 
-        if (count(Paracatedetail::where('parameters_id','=',$id)->get()) > 0) {
+        if (count(Paracatedetail::where('parameter_id','=',$id)->get()) > 0) {
 
-            Paracatedetail::where('parameters_id','=',$id)->delete();
+            Paracatedetail::where('parameter_id','=',$id)->delete();
         }
 
         if (count(Parameter_detail::where('parameter_id','=',$id)->get()) > 0) {
             Parameter_detail::where('parameter_id','=',$id)->delete();
         }
 
-        $des = DB::table('paracatedetail')->where('parameters_id','=',$id)->delete();
+        $des = DB::table('paracatedetail')->where('parameter_id','=',$id)->delete();
         $obj->delete();
         return '<p class="alert alert-danger alert-dismissable">Xóa thành công !</p>';
     }

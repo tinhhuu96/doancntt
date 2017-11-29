@@ -6,7 +6,7 @@
   use App\Paracatedetail;
   use Illuminate\Support\Facades\DB;
   $idcate = Session::get('IDCate');
-  $parameters = DB::table('paracatedetail')->join('parameters', 'paracatedetail.parameters_id','=','parameters.id')->join('categories','paracatedetail.categories_id','=','categories.id')->select('parameters.*')->where('paracatedetail.categories_id','=',$idcate)->get();
+  $parameters = DB::table('paracatedetail')->join('parameters', 'paracatedetail.parameter_id','=','parameters.id')->join('categories','paracatedetail.category_id','=','categories.id')->select('parameters.*')->where('paracatedetail.category_id','=',$idcate)->get();
   $category = Category::all();
   $arProduct = Product::where('id','=',$id)->get();
   
@@ -137,6 +137,7 @@
 @section('script')
   <script type="text/javascript">
     function addPara(){
+      // alert(123);
             aname = $('#name').val();
             apara = $('#parameters').val();
             $.ajaxSetup({

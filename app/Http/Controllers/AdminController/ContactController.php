@@ -33,7 +33,7 @@ class ContactController extends Controller
 
     public function getall(Request $req)
     {
-        $countcontact = count(Contact::all());
+        $countcontact = count(Contact::where('view','=',0)->get());
         return $countcontact;
     }
 
@@ -42,7 +42,8 @@ class ContactController extends Controller
         $contact = Contact::all();
         $str ="";
         foreach ($contact as $key => $value) {
-            $str .= '<li onclick="modelView('.$value->id.')">
+            if ($value->view == 0 ) {
+                $str .= '<li onclick="modelView('.$value->id.')">
                         <a href="#">
                           <div class="pull-left">
                               <img src="" class="img-circle" alt="User Image">
@@ -54,6 +55,8 @@ class ContactController extends Controller
                           <p>'.$value->content.'</p>
                         </a>
                     </li>';
+            }
+            
         }
         
         return $str;
