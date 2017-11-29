@@ -84,7 +84,6 @@ class ProductController extends Controller
         $name= trim($request->name);
         $detail= trim($request->detail);
         $avata = $request->avata;
-        $date  = date('Y-m-d H:i:s');
         $inputs = $request->all();
         $rules = array(
             'name' => 'required|min:5',

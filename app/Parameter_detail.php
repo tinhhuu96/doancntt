@@ -8,5 +8,5 @@ class Parameter_detail extends Model
 {
     protected $table = 'parameter_detail';
     protected $primaryKey = 'id';
-    public $timestamps = false;
+    public $timestamps = true;
 }
