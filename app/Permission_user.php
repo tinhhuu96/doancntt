@@ -8,5 +8,5 @@ class Permission_user extends Model
 {
     protected $table = 'permission_user';
     protected $primaryKey = 'id';
-    public $timestamps = false;
+    public $timestamps = true;
 }

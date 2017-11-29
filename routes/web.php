@@ -48,6 +48,16 @@ Route::group(['namespace' => 'LayoutController'], function () {
 
     });
 
+    Route::group(['prefix'=> 'search'], function(){
+
+        Route::post('search-product',[
+            'uses'  => 'SearchController@search_product',
+            'as'    => 'public.search.product'
+        ]);
+    
+    });
+
+
     Route::group(['prefix' => 'contact'], function () {
         Route::get('',[
             'uses'  => 'ContactController@index',

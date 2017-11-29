@@ -8,5 +8,5 @@ class Paracatedetail extends Model
 {
     protected $table = 'paracatedetail';
     protected $primaryKey = 'id';
-    public $timestamps = false;
+    public $timestamps = true;
 }

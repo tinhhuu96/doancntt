@@ -119,7 +119,7 @@ class CateController extends Controller
         }else{
             $request->session()->flash('msg-e','Update thất bại');
             return redirect()->route('admin.category');
-        } 
+        }
     }
 
     /**
@@ -131,7 +131,7 @@ class CateController extends Controller
 
     public function destroy(Request $request,$id)
     {
-        
+
         $arcate = Category::find($id);
         if ($id == $arcate->id) {
             if (count(Category::where('parent','=',$id)->get()) > 0) {
@@ -161,7 +161,7 @@ class CateController extends Controller
                 }
                 Product::where('category_id','=',$id)->delete();
             }
-            
+
             $arcate->delete();
             $request->session()->flash('msg-s', 'Delete thành công');
             return redirect()->route('admin.category');
@@ -169,6 +169,6 @@ class CateController extends Controller
             $request->session()->flash('msg-e','Delete thất bại');
             return redirect()->route('admin.category');
         }
-        
+
     }
 }

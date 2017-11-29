@@ -84,7 +84,6 @@ class ProductController extends Controller
         $name= trim($request->name);
         $detail= trim($request->detail);
         $avata = $request->avata;
-        $date  = date('Y-m-d H:i:s');
         $inputs = $request->all();
         $rules = array(
             'name' => 'required|min:5',
@@ -102,7 +101,7 @@ class ProductController extends Controller
                         ->withInput();
         }
         $arhash = Product::where('code','=',$code)->get();
-        
+
         if (count($arhash) > 0 ) {
             $request->session()->flash('msg-e', 'Sản phẩm tồn tại !');
             return redirect()->route('admin.listproduct');
@@ -119,15 +118,13 @@ class ProductController extends Controller
                 'detail' => $name,
                 'picture'  => $endPic,
                 'price' => 0,
-                'price_old' =>0,
                 'quantity'  => 0,
                 'active' => $request->display,
                 'category_id' => $id,
-                'user_id' => $request->user_id,
+                'provider_id' => 1,
                 'view' => 1,
-                'created_at' => $date
                 );
-            
+
             if(Product::insert($arProduct)){
 
                 $arProductNew = Product::where('code','=',$code)->select('id')->get();
@@ -143,13 +140,14 @@ class ProductController extends Controller
 
             }
         }
-        
+
     }
 
 
 
     public function addParameters($id)
     {
+        // dd(123);
         $arparameters = Session::get('parameters');
         // dd($id);
         return view('admin.product.addParameters',['id'=>$id, 'parameters'=>$arparameters]);
@@ -175,7 +173,7 @@ class ProductController extends Controller
                 );
         // dd($aradd);
         Parameter_detail::insert($aradd);
-
+        // DD();
         return 'Thêm thành công !';
     }
 
@@ -201,7 +199,7 @@ class ProductController extends Controller
     public function ajaxListPara(Request $request)
     {
         $id = $request->aid;
-        $parameters = DB::table('paracatedetail')->join('parameters', 'paracatedetail.parameters_id','=','parameters.id')->join('category','paracatedetail.category_id','=','category.id')->select('parameters.*')->where('paracatedetail.category_id','=',$id)->get();
+        $parameters = DB::table('paracatedetail')->join('parameters', 'paracatedetail.parameter_id','=','parameters.id')->join('categories','paracatedetail.category_id','=','categories.id')->select('parameters.*')->where('paracatedetail.category_id','=',$id)->get();
 
         $str ="";
         foreach ($parameters as $key => $value) {
@@ -227,11 +225,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $arProduct = DB::table('Products')->join('category', 'Products.category_id','=','category.id')->select('Products.*','category.name as nameCate','category.id as idCate')->where('Products.id','=',$id)->get();
+        $arProduct = DB::table('products')->join('categories', 'products.category_id','=','categories.id')->select('products.*','categories.name as nameCate','categories.id as idCate')->where('products.id','=',$id)->get();
         $arCate = Category::all();
         $parameters = Parameter::all();
         // dd($arProduct);
-        return view('admin.product.edit',['product'=>$arProduct,'category'=>$arCate,'parameters'=>$parameters]);
+        return view('admin.product.edit',['product'=>$arProduct,'categories'=>$arCate,'parameters'=>$parameters]);
     }
 
     /**
@@ -244,7 +242,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $obj = Product::find($id);
-        
+
         $inputs = $request->all();
         $rules = array(
             'name' => 'required|min:5',
@@ -279,8 +277,8 @@ class ProductController extends Controller
             $tmp  = explode('/',$path);
             $obj->picture = end($tmp);
         }
-        
-        
+
+
         if( $obj->update() ){
             // dd('ok ');
             $request->session()->flash('msg-s', 'Update thành công !');
@@ -315,7 +313,7 @@ class ProductController extends Controller
         {
             Parameter_detail::where('product_id','=',$id)->delete();
         }
-        
+
         if (count(Comment::where('product_id','=',$id)->get()) > 0) {
             Comment::where('product_id','=',$id)->delete();
         }
@@ -332,7 +330,7 @@ class ProductController extends Controller
             $request->session()->flash('msg-e','Mời chọn để xóa !');
             return redirect()->route('admin.listproduct');
         }
-        for ($i=0; $i < count($listProduct); $i++) { 
+        for ($i=0; $i < count($listProduct); $i++) {
             $arProduct = Product::find($listProduct[$i]);
             $picture = $arProduct['picture'];
             $arProduct->delete();
@@ -343,8 +341,8 @@ class ProductController extends Controller
         }
         $request->session()->flash('msg-s','Xóa thành công');
         return redirect()->route('admin.listproduct');
-        
-        
+
+
 
     }
 }

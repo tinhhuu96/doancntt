@@ -43,21 +43,16 @@ class OrdermanageController extends Controller
     public function inputUpdateorder(Request $request)
     {
         $code = trim($request->code);
-        $price_old= trim($request->price_old);
         $price= trim($request->price);
         $quantity= trim($request->quantity);
         $detail= trim($request->detail);
 
         $arhash = Product::where('code','=',$code)->get();
         $priceN = $arhash[0]->price;
-        $price_oldN = $arhash[0]->price_old;
         $quantityN = $arhash[0]->quantity;
         $detailN = $arhash[0]->detail;
         if ($price != "") {
             $priceN = $price;
-        }
-        if ($price_old != "") {
-            $price_oldN = $price_old;
         }
        
         if ($quantity != "") {
@@ -67,21 +62,17 @@ class OrdermanageController extends Controller
             $detailN = $detail;
         }
         
-        Product::where('code','=',$code)->update(['price_old'=>$price_oldN, 'price'=>$priceN,'quantity'=>$quantityN, 'detail'=> $detailN]);
+        Product::where('code','=',$code)->update(['price'=>$priceN,'quantity'=>$quantityN, 'detail'=> $detailN]);
 
         $arNewProduct = Product::where('code','=',$code)->get();
 
-        $total = $arNewProduct[0]->price_old*$quantityN;
+        $total = $arNewProduct[0]->price*$quantityN;
         // dd($total);
-        $created_at = date("Y-m-d");
-        // dd($date);
         $array = array(
             'id_product' => $arNewProduct[0]->id,
             'quantity' => $arNewProduct[0]->quantity,
-            'price_old' => $arNewProduct[0]->price_old,
             'price' => $arNewProduct[0]->price,
             'total' => $total,
-            'created_at' => $created_at
         );
         // dd($array);
         TransInput_order::insert($array);
@@ -111,13 +102,11 @@ class OrdermanageController extends Controller
         $quantity= trim($request->quantity);
         $detail= trim($request->detail);
         $avata = $request->avata;
-        $date  = date('Y-m-d H:i:s');
         $inputs = $request->all();
         $rules = array(
             'name' => 'required|min:5',
             'code' => 'required|min:5',
             'detail' => 'required|min:5',
-            'price_old' => 'required',
             'price' => 'required',
             'quantity' => 'required',
             );
@@ -149,13 +138,11 @@ class OrdermanageController extends Controller
                 'detail' => $detail,
                 'picture'  => $endPic,
                 'price' => $price,
-                'price_old' =>$price_old,
                 'quantity' => $quantity,
                 'active'   => 1,
                 'category_id' => $id,
-                'user_id' => $request->user_id,
+                'provider_id' => 1,
                 'view' => 1,
-                'created_at' => $date,
                 );
             // dd($arProduct);
             if(Product::insert($arProduct)){
@@ -165,15 +152,12 @@ class OrdermanageController extends Controller
                 $price = $arNewProduct[0]->price_old;
                 $total = $price_old*$quantity;
                 // dd($total);
-                $created_at = date("Y-m-d");
-                // dd($date);
                 $array = array(
                     'id_product' => $arNewProduct[0]->id,
                     'quantity' => $arNewProduct[0]->quantity,
                     'price_old' => $arNewProduct[0]->price_old,
                     'price' => $arNewProduct[0]->price,
                     'total' => $total,
-                    'created_at' => $created_at
                 );
                 // dd($array);
                 TransInput_order::insert($array);

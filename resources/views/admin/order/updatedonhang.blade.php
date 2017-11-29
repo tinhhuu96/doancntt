@@ -35,12 +35,8 @@
             </div>
             <div class="col-xs-2">
               <div class="form-group">
-                <label for=" ">Giá Nhập Vào</label>
-                <input type="number" name="price_old" value="" class="form-control" id="" placeholder="{{ $arProduct->price_old }}">
-              </div>
-              <div class="form-group">
-                <label for=" ">Giá Bán Ra</label>
-                <input type="number" name="price" value="" class="form-control" id="" placeholder="{{ $arProduct->price }}">
+                <label for=" ">Giá Bán</label>
+                <input type="number" name="price" value="" class="form-control" id="" placeholder="{{ $arProduct->price_old }}">
               </div>
             </div>
             <div class="col-xs-2">

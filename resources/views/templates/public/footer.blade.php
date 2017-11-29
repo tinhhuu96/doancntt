@@ -78,6 +78,23 @@
 		<script src="{{ asset('js/price-range.js') }}"></script>
     <script src="{{ asset('js/jquery.prettyPhoto.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+	  <script type="text/javascript">
+			function addCart(id)
+		    {
+		        var root = '{{url('/carts')}}';
+		        $.get(root + '/' + id + '/' + 'add', function(data, status){
+
+		            console.log(data);
+		        //   $('#count').replaceWith('<span id="count">' + data.count +'</span> ');
+		          $('#count').replaceWith('<span id="count">(' + data.count +')</span> ');
+		        });
+		    }
+
+	      $( ".add_product" ).click(function() {
+		  		alert( "Đã thêm sản phẩm vào giỏ hàng!" );
+				});
+
+		</script>
     @yield('script')
 </body>
 </html>
