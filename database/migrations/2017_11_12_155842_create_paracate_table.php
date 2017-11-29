@@ -15,18 +15,12 @@ class CreateParacateTable extends Migration
     public function up()
     {
         Schema::create('paracatedetail', function (Blueprint $table) {
-            $table->integer('parameters_id')->unsigned()->nullable();
-            $table->foreign('parameters_id')->references('id')->on('parameters');
-            $table->integer('categories_id')->unsigned()->nullable();
-            $table->foreign('categories_id')->references('id')->on('categories');
+            $table->integer('parameter_id')->unsigned()->nullable();
+            $table->foreign('parameter_id')->references('id')->on('parameters');
+            $table->integer('category_id')->unsigned()->nullable();
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
-        DB::table('paracatedetail')->insert(
-            array(
-                'parameters_id' => 1,
-                'categories_id' => 1
-            )
-        );
     }
 
     /**

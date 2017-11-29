@@ -119,13 +119,11 @@ class ProductController extends Controller
                 'detail' => $name,
                 'picture'  => $endPic,
                 'price' => 0,
-                'price_old' =>0,
                 'quantity'  => 0,
                 'active' => $request->display,
                 'category_id' => $id,
-                'user_id' => $request->user_id,
+                'provider_id' => 1,
                 'view' => 1,
-                'created_at' => $date
                 );
             
             if(Product::insert($arProduct)){
@@ -150,6 +148,7 @@ class ProductController extends Controller
 
     public function addParameters($id)
     {
+        // dd(123);
         $arparameters = Session::get('parameters');
         // dd($id);
         return view('admin.product.addParameters',['id'=>$id, 'parameters'=>$arparameters]);
@@ -175,7 +174,7 @@ class ProductController extends Controller
                 );
         // dd($aradd);
         Parameter_detail::insert($aradd);
-
+        // DD();
         return 'Thêm thành công !';
     }
 
@@ -201,7 +200,7 @@ class ProductController extends Controller
     public function ajaxListPara(Request $request)
     {
         $id = $request->aid;
-        $parameters = DB::table('paracatedetail')->join('parameters', 'paracatedetail.parameters_id','=','parameters.id')->join('category','paracatedetail.category_id','=','category.id')->select('parameters.*')->where('paracatedetail.category_id','=',$id)->get();
+        $parameters = DB::table('paracatedetail')->join('parameters', 'paracatedetail.parameter_id','=','parameters.id')->join('categories','paracatedetail.category_id','=','categories.id')->select('parameters.*')->where('paracatedetail.category_id','=',$id)->get();
 
         $str ="";
         foreach ($parameters as $key => $value) {
@@ -227,11 +226,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $arProduct = DB::table('Products')->join('category', 'Products.category_id','=','category.id')->select('Products.*','category.name as nameCate','category.id as idCate')->where('Products.id','=',$id)->get();
+        $arProduct = DB::table('Products')->join('categories', 'Products.category_id','=','categories.id')->select('Products.*','categories.name as nameCate','categories.id as idCate')->where('Products.id','=',$id)->get();
         $arCate = Category::all();
         $parameters = Parameter::all();
         // dd($arProduct);
-        return view('admin.product.edit',['product'=>$arProduct,'category'=>$arCate,'parameters'=>$parameters]);
+        return view('admin.product.edit',['product'=>$arProduct,'categories'=>$arCate,'parameters'=>$parameters]);
     }
 
     /**

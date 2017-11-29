@@ -21,6 +21,14 @@ class CreateProvidersTable extends Migration
             $table->string('email')->unique();
             $table->timestamps();
         });
+        DB::table('providers')->insert(
+            array(
+                'name' => 'Oppo',
+                'phone'=> '123456789',
+                'address' => "danang city",
+                'email'  => "oppo@gmail.com",
+            )
+        );
     }
 
     /**
