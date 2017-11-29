@@ -95,6 +95,35 @@
 				});
 
 		</script>
+			<script type="text/javascript">
+
+		 function down(rowId)
+		 {
+		 	var root = '{{ url('/carts') }}';
+		 	$.get( root + '/' + rowId + '/down-count', function(data, status){
+		 		var sub = data.subtotal.toLocaleString();
+		 		console.log(data);
+		 		$('#'+ rowId).replaceWith('<input type="text" id="'+rowId+'" name="quantity" value="' + data.qty +'" size="2" style="text-align: center;">');
+		 		$('#sub' + rowId).replaceWith('<span id="sub'+rowId+'">'+sub+' VNĐ </span>');
+		 	});
+
+		 }
+
+		function up(rowId)
+		{
+			var root = '{{ url('/carts') }}';
+		 	$.get( root + '/' + rowId + '/up-count', function(data, status){
+		 		var sub = data.subtotal.toLocaleString();
+		 		console.log(data);
+		 		$('#'+ rowId).replaceWith('<input type="text" id="'+rowId+'" name="quantity" value="' + data.qty +'" size="2" style="text-align: center;">');
+		 		$('#sub' + rowId).replaceWith('<span id="sub'+rowId+'">'+sub+' VNĐ </span>');
+		 	});
+		}
+
+		$( ".delete" ).click(function() {
+		  alert( "xóa thành công." );
+		});
+    </script>
     @yield('script')
 </body>
 </html>

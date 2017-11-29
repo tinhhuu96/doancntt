@@ -121,7 +121,7 @@ class ProductController extends Controller
                 'quantity'  => 0,
                 'active' => $request->display,
                 'category_id' => $id,
-                'provider_id' => 1,
+                // 'provider_id' => 1,
                 'view' => 1,
                 );
 
