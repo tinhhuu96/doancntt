@@ -8,5 +8,5 @@ class Parameter extends Model
 {
     protected $table = 'parameters';
     protected $primaryKey = 'id';
-    public $timestamps = false;
+    public $timestamps = true;
 }

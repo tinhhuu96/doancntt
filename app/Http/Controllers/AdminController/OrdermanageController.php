@@ -68,14 +68,11 @@ class OrdermanageController extends Controller
 
         $total = $arNewProduct[0]->price*$quantityN;
         // dd($total);
-        $created_at = date("Y-m-d");
-        // dd($date);
         $array = array(
             'id_product' => $arNewProduct[0]->id,
             'quantity' => $arNewProduct[0]->quantity,
             'price' => $arNewProduct[0]->price,
             'total' => $total,
-            'created_at' => $created_at
         );
         // dd($array);
         TransInput_order::insert($array);
@@ -105,13 +102,11 @@ class OrdermanageController extends Controller
         $quantity= trim($request->quantity);
         $detail= trim($request->detail);
         $avata = $request->avata;
-        $date  = date('Y-m-d H:i:s');
         $inputs = $request->all();
         $rules = array(
             'name' => 'required|min:5',
             'code' => 'required|min:5',
             'detail' => 'required|min:5',
-            'price_old' => 'required',
             'price' => 'required',
             'quantity' => 'required',
             );
@@ -157,15 +152,12 @@ class OrdermanageController extends Controller
                 $price = $arNewProduct[0]->price_old;
                 $total = $price_old*$quantity;
                 // dd($total);
-                $created_at = date("Y-m-d");
-                // dd($date);
                 $array = array(
                     'id_product' => $arNewProduct[0]->id,
                     'quantity' => $arNewProduct[0]->quantity,
                     'price_old' => $arNewProduct[0]->price_old,
                     'price' => $arNewProduct[0]->price,
                     'total' => $total,
-                    'created_at' => $created_at
                 );
                 // dd($array);
                 TransInput_order::insert($array);

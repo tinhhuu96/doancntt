@@ -35,21 +35,34 @@
 	<div class="price-range"><!--price-range-->
 		<h2>Price Range</h2>
 		<div class="well text-center">
-			 <input type="text" class="span2" onchange="" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
-			 <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
+			<form action="{{ route('public.search.product') }}" method="post">
+				{{ csrf_field() }}
+				<div class="form-group">
+					<label for="">Giá Từ</label>
+					<?php 
+						$ar = range( 1000 ,10000, 500)
+					?>
+					<select name="price_first" class="form-control">
+						@foreach($ar as $value)
+							<option value="{{ $value }}"><?php echo number_format ( $value , 3 , '.' ,"." ).' vnđ' ?></option>
+						@endforeach
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="">Giá Từ</label>
+					<select name="price_last" class="form-control">
+						@foreach($ar as $value)
+							<option value="{{$value}}"><?php echo number_format ( $value , 3 , '.' ,"." ).' vnđ' ?></option>
+						@endforeach
+					</select>
+				</div>
+				<div>
+					<button type="submit" class="btn btn-warning">Tìm Kiếm</button>
+				</div>
+			</form>
 		</div>
 	</div><!--/price-range-->
 
 	<div class="shipping text-center"><!--shipping-->
 		<img src="{{ asset('images/home/shipping.jpg') }}" alt="" />
 	</div><!--/shipping-->
-
-	@section('script')
-		
-		<script type="text/javascript">
-			function price_range()
-			{
-				alert(123);
-			}
-		</script>
-	@stop
