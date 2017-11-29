@@ -78,6 +78,52 @@
 		<script src="{{ asset('js/price-range.js') }}"></script>
     <script src="{{ asset('js/jquery.prettyPhoto.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+	  <script type="text/javascript">
+			function addCart(id)
+		    {
+		        var root = '{{url('/carts')}}';
+		        $.get(root + '/' + id + '/' + 'add', function(data, status){
+
+		            console.log(data);
+		        //   $('#count').replaceWith('<span id="count">' + data.count +'</span> ');
+		          $('#count').replaceWith('<span id="count">(' + data.count +')</span> ');
+		        });
+		    }
+
+	      $( ".add_product" ).click(function() {
+		  		alert( "Đã thêm sản phẩm vào giỏ hàng!" );
+				});
+
+		</script>
+			<script type="text/javascript">
+
+		 function down(rowId)
+		 {
+		 	var root = '{{ url('/carts') }}';
+		 	$.get( root + '/' + rowId + '/down-count', function(data, status){
+		 		var sub = data.subtotal.toLocaleString();
+		 		console.log(data);
+		 		$('#'+ rowId).replaceWith('<input type="text" id="'+rowId+'" name="quantity" value="' + data.qty +'" size="2" style="text-align: center;">');
+		 		$('#sub' + rowId).replaceWith('<span id="sub'+rowId+'">'+sub+' VNĐ </span>');
+		 	});
+
+		 }
+
+		function up(rowId)
+		{
+			var root = '{{ url('/carts') }}';
+		 	$.get( root + '/' + rowId + '/up-count', function(data, status){
+		 		var sub = data.subtotal.toLocaleString();
+		 		console.log(data);
+		 		$('#'+ rowId).replaceWith('<input type="text" id="'+rowId+'" name="quantity" value="' + data.qty +'" size="2" style="text-align: center;">');
+		 		$('#sub' + rowId).replaceWith('<span id="sub'+rowId+'">'+sub+' VNĐ </span>');
+		 	});
+		}
+
+		$( ".delete" ).click(function() {
+		  alert( "xóa thành công." );
+		});
+    </script>
     @yield('script')
 </body>
 </html>

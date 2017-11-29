@@ -101,7 +101,7 @@ class ProductController extends Controller
                         ->withInput();
         }
         $arhash = Product::where('code','=',$code)->get();
-        
+
         if (count($arhash) > 0 ) {
             $request->session()->flash('msg-e', 'Sản phẩm tồn tại !');
             return redirect()->route('admin.listproduct');
@@ -121,10 +121,10 @@ class ProductController extends Controller
                 'quantity'  => 0,
                 'active' => $request->display,
                 'category_id' => $id,
-                'provider_id' => 1,
+                // 'provider_id' => 1,
                 'view' => 1,
                 );
-            
+
             if(Product::insert($arProduct)){
 
                 $arProductNew = Product::where('code','=',$code)->select('id')->get();
@@ -140,7 +140,7 @@ class ProductController extends Controller
 
             }
         }
-        
+
     }
 
 
@@ -225,7 +225,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $arProduct = DB::table('Products')->join('categories', 'Products.category_id','=','categories.id')->select('Products.*','categories.name as nameCate','categories.id as idCate')->where('Products.id','=',$id)->get();
+        $arProduct = DB::table('products')->join('categories', 'products.category_id','=','categories.id')->select('products.*','categories.name as nameCate','categories.id as idCate')->where('products.id','=',$id)->get();
         $arCate = Category::all();
         $parameters = Parameter::all();
         // dd($arProduct);
@@ -242,7 +242,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $obj = Product::find($id);
-        
+
         $inputs = $request->all();
         $rules = array(
             'name' => 'required|min:5',
@@ -277,8 +277,8 @@ class ProductController extends Controller
             $tmp  = explode('/',$path);
             $obj->picture = end($tmp);
         }
-        
-        
+
+
         if( $obj->update() ){
             // dd('ok ');
             $request->session()->flash('msg-s', 'Update thành công !');
@@ -313,7 +313,7 @@ class ProductController extends Controller
         {
             Parameter_detail::where('product_id','=',$id)->delete();
         }
-        
+
         if (count(Comment::where('product_id','=',$id)->get()) > 0) {
             Comment::where('product_id','=',$id)->delete();
         }
@@ -330,7 +330,7 @@ class ProductController extends Controller
             $request->session()->flash('msg-e','Mời chọn để xóa !');
             return redirect()->route('admin.listproduct');
         }
-        for ($i=0; $i < count($listProduct); $i++) { 
+        for ($i=0; $i < count($listProduct); $i++) {
             $arProduct = Product::find($listProduct[$i]);
             $picture = $arProduct['picture'];
             $arProduct->delete();
@@ -341,8 +341,8 @@ class ProductController extends Controller
         }
         $request->session()->flash('msg-s','Xóa thành công');
         return redirect()->route('admin.listproduct');
-        
-        
+
+
 
     }
 }

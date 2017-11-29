@@ -30,6 +30,13 @@
 		use App\Category;
 		$category = Category::where('id','>',1)->get();
 	?>
+  <div class="btn btn-default"  style="position: fixed; top: 40px; right: 5px; background-color: #FE980F">
+  @if ( Cart::count() > 0 )
+    <a id="cart" href="{{ url('carts')}}"><i class="fa fa-shopping-cart"></i><span id="count"> ({{ Cart::count() }})</span></a>
+  @else
+    <a id="cart" href="{{ url('carts')}}" ><i class="fa fa-shopping-cart"></i><span id="count"></span></a>
+  @endif
+</div>
 	<header id="header"><!--header-->
 		<div class="header_top"><!--header_top-->
 			<div class="container">
@@ -69,35 +76,39 @@
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
 								@if (Auth::check())
-								<li>
-									<!-- <a href="{{ url('carts/manage')}}"><i class="fa fa-check-square-o" aria-hidden="true"></i> Quản lý đơn hàng</a> -->
-								</li>
-								<li>
-									<a href="#" ></a>
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user"></i>
-                  	{{ Auth::user()->name }} <span class="caret"></span>
-                	</a>
-                	<ul class="dropdown-menu" style="min-width: 110px;">
-                		<li><a href="{{ url('/user')}}">Xem Profile</li></a>
-                		<li><a href="{{ url('change-password')}}">Đổi mật khẩu</a></li>
-                		<li>
+                  @if(Auth::user()->is_admin == 1)
+                  <li>
+                    <a href="{{url('/admin')}}"><i class="fa fa-unlock-alt" aria-hidden="true"></i> Admin</a>
+                  </li>
+                  @endif
+                <li>
+                  <a href="{{ url('carts/manage')}}"><i class="fa fa-check-square-o" aria-hidden="true"></i> Quản lý đơn hàng</a>
+                </li>
+                <li>
+                  <a href="#" ></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-user"></i>
+                                      {{ Auth::user()->name }} <span class="caret"></span>
+                                  </a>
+                                  <ul class="dropdown-menu" style="min-width: 110px;">
+                                    <li><a href="{{ url('/user')}}">Xem Profile</li></a>
+                                    <li><a href="{{ url('/change-password')}}">Đổi mật khẩu</a></li>
+                                    <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             Logout
                                         </a>
-
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
-                                    </li>
-                    </ul>
-								</li>
+                                      </li>
+                                    </ul>
+                </li>
 
-								@else
-								<li><a href="{{ url('login') }}"><i class="fa fa-user" aria-hidden="true"></i> Đăng Nhập</a></li>
-								<li><a href="{{ url('register') }}"><i class="fa fa-lock"></i> Đăng Ký</a></li>
-								@endif
+                @else
+                <li><a href="{{ url('login') }}"><i class="fa fa-user" aria-hidden="true"></i> Đăng Nhập</a></li>
+                <li><a href="{{ url('register') }}"><i class="fa fa-lock"></i> Đăng Ký</a></li>
+                @endif
 							</ul>
 						</div>
 					</div>
