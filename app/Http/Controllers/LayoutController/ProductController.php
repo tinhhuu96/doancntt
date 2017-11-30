@@ -26,7 +26,7 @@ class ProductController extends Controller
 
     public function Product_Cate($slug, $id)
     {
-        $arproducts = Product::where('category_id','=',$id)->paginate(10);
+        $arproducts = Product::where([['category_id','=',$id],['active','=',1]])->paginate(10);
         $arname     = Category::where('id','=',$id)->select('name')->get();
         $name = $arname[0]->name;
         // dd($name);

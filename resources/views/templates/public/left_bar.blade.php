@@ -1,6 +1,6 @@
 <?php 
 	use App\Category;
-	$categories = Category::where('id','>',1)->get();
+	$categories = Category::all();
 ?>
 
 <h2>Category</h2>
@@ -21,7 +21,7 @@
 					<div id="sportswear-{{ $value->id }}" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul>
-								<li><i class="fa fa-long-arrow-right"></i> <a href="{{ route('public.Product_Cate',['slug'=>str_slug($values->name),'id'=>$values->id]) }}">{{ $values->name }} </a></li>
+								<li><i class="fa fa-long-arrow-right"></i> <a href="{{ route('public.Product_Cate',['slug'=>str_slug($values->name), 'id'=>$values->id]) }}">{{ $values->name }} </a></li>
 							</ul>
 						</div>
 					</div>
