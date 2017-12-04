@@ -30,7 +30,7 @@ Route::group(['namespace' => 'LayoutController'], function () {
             'as'    => 'public.products'
         ]);
 
-        Route::get('product-{slug}-{id}',[
+        Route::get('categories/{slug}-{id}',[
             'uses'  => 'ProductController@Product_Cate',
             'as'    => 'public.Product_Cate'
         ]);

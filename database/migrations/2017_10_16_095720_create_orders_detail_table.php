@@ -20,7 +20,7 @@ class CreateOrdersDetailTable extends Migration
             $table->integer('product_id')->unsigned()->nullable();
             $table->foreign('product_id')->references('id')->on('products');
             $table->integer('quantity')->unsigned()->nullable();
-            $table->decimal('price',5,2);
+            $table->string('price');
             $table->timestamps();
         });
     }

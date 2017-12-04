@@ -29,10 +29,10 @@
             <h2>{{ $product->name }}</h2>
             <p>Web ID: {{ $product->code}}</p>
             <span>
-                <span> $ <?php echo number_format($product->price,0,',','.'); ?> </span>
+                <span> $ <?php echo number_format($product->price,0,'.','.'); ?> </span>
                 <label>Quantity:</label>
-                <input type="text" value="0" />
-                <button type="button" class="btn btn-fefault cart">
+                <input type="text" value="1" />
+                <button type="button" onclick="addCart({{$product->id}})" class="btn btn-fefault cart">
                     <i class="fa fa-shopping-cart"></i>
                     Add to cart
                 </button>

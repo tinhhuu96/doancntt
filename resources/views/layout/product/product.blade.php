@@ -7,12 +7,11 @@
     <h2 class="title text-center">Features Items</h2>
     @foreach( $products as $key => $value )
     <?php
-        $price = number_format($value->price,0,',','.');
+        $price = number_format($value->price,0,'.','.');
         $slug = str_slug($value->name);
 
     ?>
         @if($value->picture != "")
-        @if( $value->active == 1 )
         <div class="col-sm-4">
             <div class="product-image-wrapper">
                 <div class="single-products">
@@ -20,13 +19,13 @@
                         <img src="{{ asset('storage/products/'.$value->picture) }}" alt="" />
                         <h2>${{ $price }}</h2>
                         <p>{{ $value->name }}</p>
-                        <a href="javascript:void(0)"  class="btn btn-default add-to-cart add_product" onclick="addCart({{$product->id}})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        <a href="javascript:void(0)"  class="btn btn-default add-to-cart add_product" onclick="addCart({{$value->id}})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                     </div>
                     <div class="product-overlay">
                         <div class="overlay-content">
                             <h2>${{ $price }}</h2>
                             <p>{{ $value->name }}</p>
-                            <a href="javascript:void(0)"  class="btn btn-default add-to-cart add_product" onclick="addCart({{$product->id}})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                            <a href="javascript:void(0)"  class="btn btn-default add-to-cart add_product" onclick="addCart({{$value->id}})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                         </div>
                     </div>
                 </div>
@@ -37,7 +36,6 @@
                 </div>
             </div>
         </div>
-        @endif
         @endif
     @endforeach
 

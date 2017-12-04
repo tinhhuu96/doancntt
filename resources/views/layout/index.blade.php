@@ -7,7 +7,7 @@
 	<h2 class="title text-center">Features Items</h2>
 	@foreach( $products as $key => $value )
 	<?php
-		$price = number_format($value->price,0,',','.');
+		$price = number_format($value->price,0,'.','.');
 		$slug = str_slug($value->name);
 	?>
 		@if($value->picture != "")
@@ -38,4 +38,9 @@
 		@endif
     @endforeach
 </div><!--features_items-->
+<div class="">
+	<div class="text-center">
+		{{ $products->links() }}
+	</div>
+</div>
 @stop

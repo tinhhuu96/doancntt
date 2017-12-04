@@ -28,7 +28,7 @@
 <body>
 	<?php
 		use App\Category;
-		$category = Category::where('id','>',1)->get();
+		$category = Category::where('parent','=',0)->get();
 	?>
   <div class="btn btn-default"  style="position: fixed; top: 40px; right: 5px; background-color: #FE980F">
   @if ( Cart::count() > 0 )

@@ -35,7 +35,7 @@ class ProductController extends Controller
     {
         $id = $request->aid;
         $gt= $request->aso;
-        // dd($id);
+        // return $id;
         if($id>0){
             if ($gt==0) {
 
@@ -45,7 +45,7 @@ class ProductController extends Controller
             }
             if ($gt==1) {
 
-                Produc::where('id','=',$id)->update(['active' => 0]);
+                Product::where('id','=',$id)->update(['active' => 0]);
 
                 echo '<i class="fa fa-power-off text-red" onclick="changerActive('.$id.',0)" aria-hidden="true"></i>';
             }
@@ -261,6 +261,7 @@ class ProductController extends Controller
         }
         $obj->code = trim($request->code);
         $obj->name= trim($request->name);
+        $obj->price= trim($request->price);
         $obj->detail= trim($request->detail);
 
         $avata = $request->avata;
@@ -346,3 +347,4 @@ class ProductController extends Controller
 
     }
 }
+

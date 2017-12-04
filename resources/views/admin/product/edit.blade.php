@@ -12,12 +12,6 @@
         {{ csrf_field() }}
         <div class="box-body">
           <div class="row">
-            <!-- <div class="col-xs-6">
-              <div class="form-group">
-                <label>Hiện đang Chọn danh mục</label>
-                <input class="form-control" id="disabledTextInput" type="text" value="{{ $product[0]->nameCate}}" readonly>
-              </div>
-            </div> -->
             <div class="col-xs-6">
               <div class="form-group">
                 <label>Hiện đang chọn danh mục</label>
@@ -46,6 +40,12 @@
               <div class="form-group">
                 <label for="">Tên Sản Phẩm</label>
                 <input type="text" name="name" value="{{ $product[0]->name }}" class="form-control" id="" placeholder="Enter name product">
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="form-group">
+                <label for="">Giá bán</label>
+                <input type="number" name="price" value="{{ $product[0]->price }}" class="form-control" id="" placeholder="price">
               </div>
             </div>
           </div>
@@ -122,7 +122,7 @@
             <div class="col-xs-12">
               <div class="form-group">
                 <label for="">Chi Tiết Sản Phẩm</label>
-                <textarea name="detail" class="form-control" rows="3">{{ $product[0]->detail }}</textarea>
+                <textarea name="detail" class="ckeditor form-control" rows="3">{{ $product[0]->detail }}</textarea>
               </div>
             </div>
           </div>
