@@ -3,6 +3,21 @@
 route::pattern('id','([0-9]*)'); //là một hàm chứa biểu thức chính quy dùng cho tất cả.
 route::pattern('slug','.*');
 
+//add cart
+        Route::get('carts/{id}/add', 'CartController@add');
+///carts
+        Route::get('/carts', 'CartController@index');
+        Route::get('carts/delete/{rowId}', 'CartController@delete');
+        Route::get('carts/checkout', 'CartController@checkout');
+        Route::post('/carts', 'CartController@store_order');
+        Route::get('carts/manage' , 'CartController@manage');
+        Route::get('carts/manage/{id}/cancel' , 'CartController@cancel');
+        Route::get('carts/manage/{id}/detail' , 'CartController@detail');
+        Route::get('carts/{rowId}/down-count', 'CartController@down_count');
+        Route::get('carts/{rowId}/up-count', 'CartController@up_count');
+        Route::get('carts/manage/export', 'CartController@export_order');
+        Route::get('carts/manage/{id}/detail/export', 'CartController@export_order_detail');
+
 Route::group(['namespace' => 'LayoutController'], function () {
     Route::get('/', [
         'uses' => 'IndexController@index',
@@ -15,7 +30,7 @@ Route::group(['namespace' => 'LayoutController'], function () {
             'as'    => 'public.products'
         ]);
 
-        Route::get('{slug}-{id}',[
+        Route::get('categories/{slug}-{id}',[
             'uses'  => 'ProductController@Product_Cate',
             'as'    => 'public.Product_Cate'
         ]);
@@ -54,7 +69,7 @@ Route::group(['namespace' => 'LayoutController'], function () {
             'uses'  => 'SearchController@search_product',
             'as'    => 'public.search.product'
         ]);
-    
+
     });
 
 
@@ -77,8 +92,8 @@ Route::group(['namespace' => 'LayoutController'], function () {
             'as'    => 'public.login'
         ]);
     });
-    
-    
+
+
 });
 
 
@@ -181,7 +196,7 @@ Route::group(['namespace' => 'AdminController','prefix' => 'adminpc', 'middlewar
             'uses'  => 'CateController@edit',
             'as'    => 'admin.cateEdit'
         ]);
-        
+
         Route::post('update-{slug}-{id}',[
             'uses'  => 'CateController@update',
             'as'    => 'admin.updateCate'
@@ -333,7 +348,7 @@ Route::group(['namespace' => 'AdminController','prefix' => 'adminpc', 'middlewar
             'uses'  => 'PermissionController@setPermission',
             'as'    => 'admin.permission.set'
         ]);
-        
+
         Route::get('/permission-destroy-{id}',[
             'uses'  => 'PermissionController@destroy',
             'as'    => 'admin.permission.destroy'

@@ -65,18 +65,13 @@ class ParameterController extends Controller
         $cate = $request->para;
 
         if ($name == null) {
-            return "Nhập rỗng !";
+            return '<p class="alert alert-danger alert-dismissable">nhập rỗng !</p>';
         }else{
-            $arpara = array('name' =>$name);
-            if (Parameter::insert($arpara)) {
-
+            $arpara = parameter::create(['name'=>$name]);
+            if ($arpara) {
                 $arpa = Parameter::where('name','=',$name)->get();
                 $id_para = $arpa[0]->id;
-                $ar = array(
-                    'parameter_id' => $id_para,
-                    'category_id' => $cate
-                );
-                Paracatedetail::insert($ar);
+                Paracatedetail::create(['parameter_id'=>$id_para,'category_id'=>$cate]);
                 return '<p class="alert alert-success alert-dismissable">Thêm thành công !</p>';
             }else{
                 return 'Thêm thất bại !';
@@ -118,8 +113,8 @@ class ParameterController extends Controller
     {   $obj  = Parameter::find($id);
         $name = trim($request->name) ;
         if ($name == null) {
-            $request->session()->flash('msg-e','Thêm thất bại, tên danh mục đã tồn tại');
-            return redirect()->route('admin.edit.parameter',['slug'=>str_slug($obj->name), 'id'=>$id]);
+            $request->session()->flash('msg-e','nhập rỗng');
+            return redirect()->route('admin.parameter');
         }
         $obj->name = $name;
         $obj->update();

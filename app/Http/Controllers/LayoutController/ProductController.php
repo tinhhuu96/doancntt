@@ -46,15 +46,7 @@ class ProductController extends Controller
         $id_user = $request->aid_user;
         $content = trim($request->acontent);
         if ($content != "") {
-            $date = date('Y-m-d');
-            $arcomment = array(
-                        'product_id' => $id_product,
-                        'user_id'    => 1,
-                        'contents'   => $content,
-                        'created_at' => $date
-                    );
-
-            Comment::insert($arcomment);
+            Comment::create(['product_id'=>$id_product, 'user_id'=>1, 'contents'=> $content]);
 
             return "Bình luận thành công !";
         }

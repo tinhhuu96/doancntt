@@ -37,7 +37,6 @@
 	    </div>
 		@endif
     @endforeach
-
 </div><!--features_items-->
 <div class="">
 	<div class="text-center">

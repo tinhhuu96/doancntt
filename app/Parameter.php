@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Parameter extends Model
 {
     protected $table = 'parameters';
-    protected $primaryKey = 'id';
+    protected $fillable = ['name'];
     public $timestamps = true;
 
     public function parameter_details() {
