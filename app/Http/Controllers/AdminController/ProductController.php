@@ -112,20 +112,10 @@ class ProductController extends Controller
                 $tmp  = explode('/',$path);
                 $endPic = end($tmp);
             }
-            $arProduct = array(
-                'code' => $code ,
-                'name' => $name,
-                'detail' => $name,
-                'picture'  => $endPic,
-                'price' => 0,
-                'quantity'  => 0,
-                'active' => $request->display,
-                'category_id' => $id,
-                // 'provider_id' => 1,
-                'view' => 1,
-                );
 
-            if(Product::insert($arProduct)){
+            $arProduct = Product::create(['code'=>$code, 'name'=>$name, 'detail'=>$detail,'picture'=>$endPic,'price'=>0,'quantity'=>0,'active'=>$request->display, 'category_id'=>$id,'provider_id'=>1,'view'=>1]);
+
+            if($arProduct){
 
                 $arProductNew = Product::where('code','=',$code)->select('id')->get();
 

@@ -342,27 +342,7 @@ $(function(){
   };
   getContact();
   //------------------------------------------------------------------
-  function getListInOrder(){
-    setTimeout(function(){
-      var date = $('#datetime').val();
-          // alert(date);
-          $.ajaxSetup({
-            headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-          });
-          $.ajax({
-            url: "{{route('admin.ajax.getInOrder')}}",
-            type: 'post',
-            data: {adate:date},
-            success: function(data){
-             $('#getValueInOrder').html(data);
-           },
-           complete: getListInOrder
-         });
-        },200);
-  };
-  getListInOrder();
+  
   //=--------------------------------------------------------------
 
   function getParameters(){
@@ -459,9 +439,8 @@ function destroy(id){
     }
   });
 }
-
-
 </script>
 @yield('script')
+@yield('jquery')
 </body>
 </html>

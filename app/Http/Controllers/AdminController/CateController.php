@@ -47,9 +47,12 @@ class CateController extends Controller
      */
     public function store(cateRequest $request)
     {
-        $name    = $request->name;
+        $name    = trim($request->name);
         $parent  = $request->parent;
-
+        if ($name == "") {
+            $request->session()->flash('msg-e','Nhập rỗng !');
+            return redirect()->route('admin.category');
+        }
         $name_olds = Category::select('name')->where('name','=',$name)->get();
         $name_old ="";
         foreach ($name_olds as $key => $value) {
@@ -60,12 +63,10 @@ class CateController extends Controller
             $request->session()->flash('msg-e','Thêm thất bại, tên danh mục đã tồn tại');
             return redirect()->route('admin.category');
         }else{
-            $arCate = array(
-                'name' =>$name,
-                'parent' => $parent
-            );
+
+            $arCate = Category::create(['name'=>$name, 'parent'=>$parent]);
         }
-        if (Category::insert($arCate)) {
+        if ($arCate) {
             $request->session()->flash('msg-s','Thêm thành công');
             return redirect()->route('admin.category');
         }else{

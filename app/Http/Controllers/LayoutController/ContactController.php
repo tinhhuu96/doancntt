@@ -36,15 +36,8 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $date = date('Y-m-d');
-        $arContact = array(
-                    'name'  => trim($request->aname),
-                    'email' => trim($request->aemail),
-                    'content'=> trim($request->acontent),
-                    'created_at'=> $date
-                );
-        // dd($arContact);
-        Contact::insert($arContact);
+        Contact::create(['name'=>trim($request->aname), 'email' => trim($request->aemail),'content'=> trim($request->acontent) ]);
+        
         return 'Send success, Thanks you !';
     }
 

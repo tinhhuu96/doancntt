@@ -60,13 +60,20 @@
             <div class="col-xs-3">
               <div class="form-group">
                 <label for=" ">Giá Nhập Vào</label>
-                <input type="number" name="price_old" class="form-control" id="" placeholder="">
+                <input type="number" name="price" class="form-control" id="" placeholder="">
               </div>
             </div>
             <div class="col-xs-2">
              <div class="form-group">
                <label for=" ">Số lượng</label>
                 <input type="number" name="quantity" class="form-control" id="" placeholder="">
+             </div>
+             <div class="form-group">
+               <label for=" ">Hiển thị sản phẩm</label>
+                <select name="display" id="" class="form-control">
+                  <option value="1">có</option>
+                  <option value="0">không</option>
+                </select>
              </div>
             </div>
             
@@ -140,7 +147,6 @@
                 <th>Stt</th>
                 <th>id_Code</th>
                 <th>Số Lượng</th>
-                <th>Giá nhập vào</th>
                 <th>Giá bán ra </th>
                 <th>Tổng tiền</th>
               </tr>
@@ -157,4 +163,33 @@
     <!-- /.col -->
   </div>
 </div>
+@section('jquery')
+  <script type="text/javascript">
+    $(function(){
+      function getListInOrder(){
+        setTimeout(function(){
+          var date = $('#datetime').val();
+              // alert(date);
+              $.ajaxSetup({
+                headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+              });
+              $.ajax({
+                url: "{{route('admin.ajax.getInOrder')}}",
+                type: 'post',
+                data: {adate:date},
+                success: function(data){
+                 $('#getValueInOrder').html(data);
+               },
+               complete: getListInOrder
+             });
+            },200);
+      };
+      getListInOrder();
+
+    })
+    
+  </script>
+@stop
 @stop

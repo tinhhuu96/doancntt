@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $table = 'products';
-    protected $primaryKey = 'id';
+    protected $fillable = ['code', 'name', 'detail', 'picture','price','quantity','active','category_id','provider_id','view'];
+
     public $timestamps = true;
 
     public function category() {
@@ -16,5 +17,9 @@ class Product extends Model
 
     public function parameter_details(){
       return $this->hasMany('App\Parameter_detail');
+    }
+
+    public function Comment(){
+      return $this->hasMany('App\Comment');
     }
 }
