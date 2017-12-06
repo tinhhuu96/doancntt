@@ -18,6 +18,8 @@ route::pattern('slug','.*');
         Route::get('carts/manage/export', 'CartController@export_order');
         Route::get('carts/manage/{id}/detail/export', 'CartController@export_order_detail');
 
+Route::get('/send_email', array('uses' => 'EmailController@sendEmailReminder'));
+
 Route::group(['namespace' => 'LayoutController'], function () {
     Route::get('/', [
         'uses' => 'IndexController@index',
