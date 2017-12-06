@@ -17,6 +17,15 @@ route::pattern('slug','.*');
         Route::get('carts/{rowId}/up-count', 'CartController@up_count');
         Route::get('carts/manage/export', 'CartController@export_order');
         Route::get('carts/manage/{id}/detail/export', 'CartController@export_order_detail');
+//admin order
+        Route::get('adminpc/orders/summary','AdminOrderController@report');
+        Route::get('adminpc/orders/summary/search','AdminOrderController@report_search');
+        Route::get('adminpc/orders/export', 'AdminOrderController@export_order');
+        Route::get('adminpc/orders/search', 'AdminOrderController@search');
+        Route::resource('adminpc/orders', 'AdminOrderController');
+        Route::resource('adminpc/{id}/orderdetails', 'AdminOrderDetailController');
+
+Route::get('/send_email', array('uses' => 'EmailController@sendEmailReminder'));
 
 Route::group(['namespace' => 'LayoutController'], function () {
     Route::get('/', [
@@ -401,7 +410,6 @@ Route::group(['namespace' => 'AdminController','prefix' => 'adminpc', 'middlewar
         ]);
 
     });
-
 });
 route::group(['prefix'=> 'adminpc', 'namespace'=> 'Auth'], function(){
 

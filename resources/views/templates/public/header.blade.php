@@ -23,14 +23,18 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ $publicurl }}/images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ $publicurl }}/images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="{{ $publicurl }}/images/ico/apple-touch-icon-57-precomposed.png">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head><!--/head-->
 
 <body>
+  {!! Toastr::render() !!}
 	<?php
 		use App\Category;
 		$category = Category::where('parent','=',0)->get();
 	?>
-  <div class="btn btn-default"  style="position: fixed; top: 40px; right: 5px; background-color: #FE980F">
+  <div class="btn btn-default"  style="position: fixed; top: 70px; right: 5px; background-color: #FE980F">
   @if ( Cart::count() > 0 )
     <a id="cart" href="{{ url('carts')}}"><i class="fa fa-shopping-cart"></i><span id="count"> ({{ Cart::count() }})</span></a>
   @else
