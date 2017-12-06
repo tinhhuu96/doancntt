@@ -139,7 +139,7 @@
                                 <option>Canada</option>
                                 <option>Dubai</option>
                             </select>
-                            
+
                         </li>
                         <li class="single_field">
                             <label>Region / State:</label>
@@ -153,7 +153,7 @@
                                 <option>Canada</option>
                                 <option>Dubai</option>
                             </select>
-                        
+
                         </li>
                         <li class="single_field zip-field">
                             <label>Zip Code:</label>
@@ -179,4 +179,4 @@
         </div>
     </div>
 </section><!--/#do_action-->
-@stop 
+@stop

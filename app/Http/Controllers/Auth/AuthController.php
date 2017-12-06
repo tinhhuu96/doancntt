@@ -5,10 +5,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use Toastr;
 
 class AuthController extends Controller
 {
-    
+
 	public function login()
 	{
 		return view('admin.login.index');
