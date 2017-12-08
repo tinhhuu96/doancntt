@@ -120,9 +120,8 @@
                   $slug        = str_slug($name);
                   $parent      = $value->parent;
                   $urledit     = route('admin.cateEdit',['slug'=>$slug, 'id'=>$id]);
-                  $urldelete   = route('admin.deleteCate',['id'=>$id]);
               ?>
-            <tr>
+            <tr id="category-{{ $id }}">
               <td>{{ $i }}</td>
               <td><a href="#" title="xem chi tiết">{{ $name }}</a>
               </td>
@@ -131,7 +130,7 @@
                 <a href="{{ $urledit }}" class="text-yellow" ><i class="fa fa-edit"></i> Edit</a>
               </td>
               <td>
-                <a href="{{ $urldelete }}" onclick="var tb=confirm('Bạn có muốn xóa {{ $value->name }} không ?');if(tb==true){return true;}else{return false;};" class="text-red"><i class="fa fa-trash-o"> Delete</i></a>
+                <a href="javascript:void(0)" onclick="var tb=confirm('Bạn có muốn xóa {{ $value->name }} không ?');if(tb==true){return delCategory({{ $id }});}else{return false;};" class="text-red"><i class="fa fa-trash-o"> Delete</i></a>
               </td>
             </tr>
             <?php } ?>
@@ -147,4 +146,29 @@
     <!-- /.box -->
   </div>
 </div>
+<script type="text/javascript">
+  function delCategory(id)
+  {
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    $.ajax({
+      url: "{{route('admin.ajaxdestroy')}}",
+      type: 'post',
+      data: {aid: id},
+      success: function(data){
+        $('#category-'+id).fadeOut(1000);
+        $('#alertprovider-e').html(data);
+        $('#mes-provider-e').css({display:'block', transition:'0.3 all'});
+        setTimeout(function(){ $('#mes-provider-e').fadeOut() }, 2000);
+        setTimeout(function(){ window.location= "{{route('admin.category')}}" }, 2000);
+      },
+      error: function (){
+        alert('Có lỗi xảy ra');
+      }
+    });
+  }
+</script>
 @stop

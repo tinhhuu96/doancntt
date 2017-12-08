@@ -35,6 +35,11 @@
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
         <li class=" treeview">
+          <a href="{{ route('admin.category') }}">
+            <i class="fa fa-list"></i> <span>Manage Danh Mục</span>
+          </a>
+        </li>
+        <li class=" treeview">
           <a href="javascript:void(0)">
             <i class="fa fa-dashboard"></i> <span>Manage Sản Phẩm</span>
             <span class="pull-right-container">
@@ -46,16 +51,16 @@
             <li><a href="{{ route('admin.cate.add.product') }}"><i class="fa fa-circle-o"></i>Thêm sản phẩm</a></li>
           </ul>
         </li>
-        <li class=" treeview">
-          <a href="{{ route('admin.category') }}">
-            <i class="fa fa-list"></i> <span>Manage Danh Mục</span>
-          </a>
-        </li>
-
         <li class="treeview">
           <a href="{{ route('admin.OrderIn') }}">
             <i class="fa fa-files-o"></i>
             <span>Nhập Đơn Hàng</span>
+          </a>
+        </li>
+        <li class="treeview">
+          <a href="{{ route('provider.index') }}">
+            <i class="fa fa-files-o"></i>
+            <span>Manage Provider</span>
           </a>
         </li>
         <li>

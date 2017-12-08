@@ -37,7 +37,11 @@ class ProductController extends Controller
     {
         $arproduct = Product::find($id);
         $arparameters = $arproduct->parameter_details;
-        return view('layout.product.product_detail',['product'=>$arproduct, 'parameters'=>$arparameters]);
+        $arcategory = $arproduct->Category;
+        // dd($arcategory->id);
+        $arproducts = Product::where('category_id','=',$arcategory->id)->where('id','<>',$id)->get();
+        // dd($arproducts);
+        return view('layout.product.product_detail',['products'=>$arproducts,'product'=>$arproduct, 'parameters'=>$arparameters]);
     }
 
     public function ajaxComment(Request $request)

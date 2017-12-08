@@ -18,27 +18,42 @@
       </div>
       <!-- /.box-header -->
       <!-- form start -->
-      <form action="{{ route('admin.inputOrder') }}" role="form" method="post" enctype="multipart/form-data">
-        {{ csrf_field() }}
-        <input type="hidden" value="{{ Session::get('ID') }}" name="user_id">
-        <div class="box-body">
-          <div class="row">
-            <div class="col-xs-offset-1 col-xs-10">
-              <div class="form-group">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="search......">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Go!</button>
-                  </span>
+      <br>
+      <style>
+        .search{
+          position: absolute;
+          z-index: 9;
+          top: 40px;
+          width: 100%;height: 200px;
+          background: #bbb;
+          border: solid 1px #bbb;
+          transition: all 0.3s;
+          display: none;
+          overflow-y: scroll;
+        }
+      </style>
+      <div class="row">
+          <div class="col-xs-offset-1 col-xs-10">
+            <div class="form-group">
+              <div class="input-group" style="position: relative;">
+                <input type="text" id="txtSearch" class="form-control" placeholder="search......">
+                <div class="search">
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      <form action="{{ route('admin.inputOrder') }}" role="form" method="post" enctype="multipart/form-data">
+        {{ csrf_field() }}
+        <input type="hidden" value="{{ Session::get('ID') }}" name="user_id">
+        <div class="box-body">
+          
           <div class="row">
             <div class="col-xs-6">
               <div class="form-group">
                 <label>Chọn Danh mục sản phẩm</label>
                 <select name="idcate" class="form-control select2 disable" style="width: 100%;">
+                  <option value="0">--- mời chọn ---</option>
                   @foreach( $categories as $key => $value)
                     <option value="{{ $value->id }}">{{ $value->name }}</option>
                   @endforeach
@@ -165,7 +180,35 @@
 </div>
 @section('jquery')
   <script type="text/javascript">
+
     $(function(){
+
+      $('#txtSearch').on('keyup', function(){
+          var name = $(this).val();
+            $.ajaxSetup({
+              headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+            });
+            $.ajax({
+              url: "{{route('admin.ajaxsearch')}}",
+              type: 'post',
+              data: {aname: name},
+              success: function(data){
+                if (data == 0 ) {
+                  $('.search').css({display:'none', transition:'0.3s all'});
+                }else{
+                  $('.search').html(data);
+                  $('.search').css({display:'block', transition:'0.3s all'});
+                }
+                
+              },
+              error: function (){
+               
+              }
+            });
+      });
+
       function getListInOrder(){
         setTimeout(function(){
           var date = $('#datetime').val();

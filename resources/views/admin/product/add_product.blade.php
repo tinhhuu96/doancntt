@@ -25,18 +25,26 @@
             <div class="col-xs-3">
               <div class="form-group">
                 <label for="">Mã Sản Phẩm</label>
-                <input type="text" name="code" class="form-control" placeholder="Enter code product">
+                <input type="text" name="code" class="form-control" placeholder="Enter code product" required="">
+                @if ($errors->has('code'))
+                    <span class="help-block">
+                        <strong class="text-danger">{{ $errors->first('code') }}</strong>
+                    </span>
+                @endif
               </div>
               <div class="form-group">
                 <label for="">Tên Sản Phẩm</label>
-                <input type="text" class="form-control" name="name" placeholder="Enter name product">
+                <input type="text" class="form-control" name="name" placeholder="Enter name product" required="">
               </div>
             </div>
             <div class="col-xs-4">
               <div class="form-group">
                 <label>Nhà cung cấp</label>
-                <select class="form-control" name="provider" style="width: 100%;">
+                <select class="select2 form-control" name="provider" style="width: 100%;">
                   <option selected="selected" value="0">---mời chọn---</option>
+                  @foreach( $providers as $ProValue)
+                  <option value="{{ $ProValue->id }}">{{ $ProValue->name }}</option>
+                  @endforeach
                 </select>
               </div>
               <div class="form-group">
@@ -69,7 +77,7 @@
             <div class="col-xs-12">
               <div class="form-group">
                 <label for="">Chi Tiết Sản Phẩm</label>
-                <textarea class="ckeditor form-control" rows="3" name="detail"></textarea>
+                <textarea class="ckeditor form-control" rows="3" name="detail" required=""></textarea>
               </div>
             </div>
           </div>

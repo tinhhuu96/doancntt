@@ -87,6 +87,9 @@
     data: {aid: id},
     success: function(data){
       $('#comment-'+data).fadeOut(1000);
+      $('#alertprovider-e').html("Xóa Thành công");
+      $('#mes-provider-e').css({display:'block', transition:'0.3 all'});
+      setTimeout(function(){ $('#mes-provider-e').fadeOut() }, 2000);
     },
     error: function (){
       alert('Có lỗi xảy ra');

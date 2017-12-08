@@ -6,17 +6,17 @@ route::pattern('slug','.*');
 //add cart
         Route::get('carts/{id}/add', 'CartController@add');
 ///carts
-        Route::get('/carts', 'CartController@index');
-        Route::get('carts/delete/{rowId}', 'CartController@delete');
-        Route::get('carts/checkout', 'CartController@checkout');
-        Route::post('/carts', 'CartController@store_order');
-        Route::get('carts/manage' , 'CartController@manage');
-        Route::get('carts/manage/{id}/cancel' , 'CartController@cancel');
-        Route::get('carts/manage/{id}/detail' , 'CartController@detail');
-        Route::get('carts/{rowId}/down-count', 'CartController@down_count');
-        Route::get('carts/{rowId}/up-count', 'CartController@up_count');
-        Route::get('carts/manage/export', 'CartController@export_order');
-        Route::get('carts/manage/{id}/detail/export', 'CartController@export_order_detail');
+Route::get('/carts', 'CartController@index');
+Route::get('carts/delete/{rowId}', 'CartController@delete');
+Route::get('carts/checkout', 'CartController@checkout');
+Route::post('/carts', 'CartController@store_order');
+Route::get('carts/manage' , 'CartController@manage');
+Route::get('carts/manage/{id}/cancel' , 'CartController@cancel');
+Route::get('carts/manage/{id}/detail' , 'CartController@detail');
+Route::get('carts/{rowId}/down-count', 'CartController@down_count');
+Route::get('carts/{rowId}/up-count', 'CartController@up_count');
+Route::get('carts/manage/export', 'CartController@export_order');
+Route::get('carts/manage/{id}/detail/export', 'CartController@export_order_detail');
 
 Route::group(['namespace' => 'LayoutController'], function () {
     Route::get('/', [
@@ -69,7 +69,6 @@ Route::group(['namespace' => 'LayoutController'], function () {
             'uses'  => 'SearchController@search_product',
             'as'    => 'public.search.product'
         ]);
-
     });
 
 
@@ -201,9 +200,9 @@ Route::group(['namespace' => 'AdminController','prefix' => 'adminpc', 'middlewar
             'uses'  => 'CateController@update',
             'as'    => 'admin.updateCate'
         ]);
-        Route::get('delete-{id}',[
-            'uses'  => 'CateController@destroy',
-            'as'    => 'admin.deleteCate'
+        Route::post('delete-category',[
+            'uses'  => 'CateController@ajaxdestroy',
+            'as'    => 'admin.ajaxdestroy'
         ]);
 
     });
@@ -242,6 +241,10 @@ Route::group(['namespace' => 'AdminController','prefix' => 'adminpc', 'middlewar
         Route::post('ajax-getInOrder',[
             'uses'  => 'OrdermanageController@ajaxGetInOrder',
             'as'    => 'admin.ajax.getInOrder'
+        ]);
+        Route::post('ajax-order-search',[
+            'uses'  => 'OrdermanageController@ajaxsearch',
+            'as'    => 'admin.ajaxsearch'
         ]);
 
     });
@@ -349,9 +352,32 @@ Route::group(['namespace' => 'AdminController','prefix' => 'adminpc', 'middlewar
             'as'    => 'admin.permission.set'
         ]);
 
-        Route::get('/permission-destroy-{id}',[
+        Route::post('/permission-destroy',[
             'uses'  => 'PermissionController@destroy',
             'as'    => 'admin.permission.destroy'
+        ]);
+    });
+
+    Route::group(['prefix' => 'provider'], function () {
+        Route::get('',[
+            'uses'  => 'ProviderController@index',
+            'as'    => 'provider.index'
+        ]);
+        Route::post('store',[
+            'uses'  => 'ProviderController@store',
+            'as'    => 'provider.store'
+        ]);
+        Route::get('edit-{slug}-{id}',[
+            'uses'  => 'ProviderController@edit',
+            'as'    => 'provider.edit'
+        ]);
+        Route::post('update',[
+            'uses'  => 'ProviderController@update',
+            'as'    => 'provider.update'
+        ]);
+        Route::post('destroy-provider',[
+            'uses'  => 'ProviderController@destroy',
+            'as'    => 'provider.destroy'
         ]);
     });
 

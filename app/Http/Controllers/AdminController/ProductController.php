@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Validator;
+use App\Provider;
 use App\Product;
 use App\Category;
 use App\Comment;
@@ -60,14 +61,14 @@ class ProductController extends Controller
     public function create()
     {
         $arCate = Category::all();
-        // dd($arCate);
          return view('admin.product.CateAdd_Product',['category'=>$arCate]);
     }
 
     public function Infoproduct(Request $request,$id)
     {
         $arCate = Category::find($id);
-        return view('admin.product.add_product', ['category'=> $arCate]);
+        $providers = Provider::all();
+        return view('admin.product.add_product', ['category'=> $arCate,'providers'=>$providers]);
     }
 
     /**
@@ -78,7 +79,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
+        // dd($request->provider);
         $id = $request->idcate;
         $code= trim($request->code);
         $name= trim($request->name);
@@ -96,9 +97,7 @@ class ProductController extends Controller
             );
         $validator = Validator::make($inputs, $rules, $message);
         if ($validator->fails()) {
-            return redirect()->route('admin.add.product',['id'=> $id])
-                        ->withErrors($validator)
-                        ->withInput();
+            return back()->withErrors($validator)->withInput();
         }
         $arhash = Product::where('code','=',$code)->get();
 
@@ -113,7 +112,7 @@ class ProductController extends Controller
                 $endPic = end($tmp);
             }
 
-            $arProduct = Product::create(['code'=>$code, 'name'=>$name, 'detail'=>$detail,'picture'=>$endPic,'price'=>0,'quantity'=>0,'active'=>$request->display, 'category_id'=>$id,'provider_id'=>1,'view'=>1]);
+            $arProduct = Product::create(['code'=>$code, 'name'=>$name, 'detail'=>$detail,'picture'=>$endPic,'price'=>0,'quantity'=>0,'active'=>$request->display, 'category_id'=>$id,'provider_id'=>$request->provider,'view'=>1]);
 
             if($arProduct){
 

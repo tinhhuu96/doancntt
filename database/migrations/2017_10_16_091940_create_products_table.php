@@ -25,7 +25,6 @@ class CreateProductsTable extends Migration
             $table->integer('category_id')->unsigned()->nullable();
             $table->foreign('category_id')->references('id')->on('categories');
             $table->integer('provider_id')->unsigned()->nullable();
-            $table->foreign('provider_id')->references('id')->on('providers');
             $table->integer('view')->unsigned()->nullable();
             $table->timestamps();
         });
