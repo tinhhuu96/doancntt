@@ -41,16 +41,23 @@ class ContactController extends Controller
     {
         $contact = Contact::all();
         $str ="";
+        function ham_dao_nguoc_chuoi($str)
+        {
+            //tách mảng bằng dấu cách
+            $arStr = explode(' ',$str);
+            $arNgay = explode('-', $arStr[0]);
+            return  $arStr[1].' '.$arNgay[2].'-'.$arNgay[1].'-'.$arNgay[0];
+        }
         foreach ($contact as $key => $value) {
             if ($value->view == 0 ) {
                 $str .= '<li onclick="modelView('.$value->id.')">
-                        <a href="#">
+                        <a href="javascript:void(0)">
                           <div class="pull-left">
-                              <img src="" class="img-circle" alt="User Image">
+                              <img src="'.asset('images/logo/avata.png').'" class="img-circle" alt="User Image">
                           </div>
                           <h4>
                             '.$value->name.'
-                            <small><i class="fa fa-clock-o"></i>'.$value->created_at.'</small>
+                            <small><i class="fa fa-clock-o"></i> '.ham_dao_nguoc_chuoi($value->created_at).'</small>
                           </h4>
                           <p>'.$value->content.'</p>
                         </a>

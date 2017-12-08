@@ -11,12 +11,25 @@ class SearchController extends Controller
 {
     public function search_product(Request $req)
     {
-    	$pricefirst = $req->price_first;
-    	$pricelast = $req->price_last;
-    	// dd($pricelast);
-    	$product = DB::table('products')->where([
-								    ['price', '>=', $pricefirst],['price', '=<', $pricelast]
-                                ])->get();
-    	dd($product);
+        if ($req->txt != "") {
+            $count = count(DB::table('products')->where('name','like','%'.$req->txt.'%')->get());
+            $product = DB::table('products')->where('name','like','%'.$req->txt.'%')->paginate(10);
+            // dd($product);
+            return view('layout.search.index',['count'=>$count,'products'=>$product,'name'=>$req->txt]);
+        }else{
+            $pricefirst = $req->price_first;
+            $pricelast = $req->price_last;
+            if ($pricefirst == "") {
+                $txt = ' rỗng';
+                $count = count(DB::table('products')->whereBetween('price', [$pricefirst, $pricelast])->get());
+                $product = DB::table('products')->whereBetween('price', [$pricefirst, $pricelast])->paginate(10);
+                return view('layout.search.index',['count'=>$count,'products'=>$product,'name'=>$txt]);
+            }
+            $txt = ' từ '.$pricefirst.' đến '.$pricelast;
+            $count = count(DB::table('products')->whereBetween('price', [$pricefirst, $pricelast])->get());
+            $product = DB::table('products')->whereBetween('price', [$pricefirst, $pricelast])->paginate(10);
+            return view('layout.search.index',['count'=>$count,'products'=>$product,'name'=>$txt]);
+        }
+    	
     }
 }

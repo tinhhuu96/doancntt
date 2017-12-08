@@ -9,4 +9,8 @@ class TransInput_order extends Model
     protected $table = 'traninput_order';
     protected $fillable = ['id_product', 'quantity','price','total'];
     public $timestamps = true;
+
+    public function product() {
+      return $this->belongsTo('App\Product');
+    }
 }

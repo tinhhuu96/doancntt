@@ -3,6 +3,22 @@
     {{ $product->name }}
 @stop
 @section('content')
+<?php $date = date('Y-m-d'); 
+        function ham_dao_nguoc_chuoi($str)
+        {
+            //tách mảng bằng dấu cách
+            $arStr = explode(' ',$str);
+            $arNgay = explode('-', $arStr[0]);
+            return  $arNgay[0].'-'.$arNgay[1].'-'.$arNgay[2];
+        }
+        function ham_dao_nguoc_date($str)
+        {
+            //tách mảng bằng dấu cách
+            $arStr = explode(' ',$str);
+            $arNgay = explode('-', $arStr[0]);
+            return  $arNgay[2].'-'.$arNgay[1].'-'.$arNgay[0];
+        }
+    ?>
 <div class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -19,13 +35,18 @@
 <div class="product-details"><!--product-details-->
     <div class="col-sm-5">
         <div class="view-product">
-            <img src="{{ asset('storage/products/'.$product->picture) }}" alt="" />
-            <h3>ZOOM</h3>
+            <img class="thumbnail" src="{{ asset('storage/products/'.$product->picture) }}" alt="" />
         </div>
     </div>
     <div class="col-sm-7">
         <div class="product-information"><!--/product-information-->
+            <?php 
+                $created_at = ham_dao_nguoc_chuoi($product->created_at);
+                $dates = ( strtotime($date)-strtotime($created_at) );
+            ?>
+             @if( $dates < 432000)
             <img src="{{ asset('images/product-details/new.jpg') }}" class="newarrival" alt="" />
+            @endif
             <h2>{{ $product->name }}</h2>
             <p>Web ID: {{ $product->code}}</p>
             <span>
@@ -44,78 +65,21 @@
         </div><!--/product-information-->
     </div>
 </div><!--/product-details-->
-<div class="row">
-    <div class="col-xs-6">
 
-    </div>
-    <div class="" id="" >
-        <div class="col-sm-12">
-            <ul>
-                <li><a href=""><i class="fa fa-calendar-o"></i>{{ $product->created_at }}</a></li>
-            </ul>
-            <p><strong>Vài nét về sản phẩm:</strong></p>
-            <p>{!! $product->detail !!}</p>
-        </div>
-    </div>
-</div>
 <div class="category-tab shop-details-tab"><!--category-tab-->
     <div class="col-sm-12">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#reviews" data-toggle="tab">Reviews</a></li>
             <li class=""><a href="#Comments" data-toggle="tab">Comments</a></li>
-            <li><a href="#companyprofile" data-toggle="tab">Related products</a></li>
+            <li><a href="#companyprofile" data-toggle="tab">Information product</a></li>
         </ul>
     </div>
     <div class="tab-content">
         <div class="tab-pane fade" id="companyprofile" >
-            <div class="col-sm-3">
-                <div class="product-image-wrapper">
-                    <div class="single-products">
-                        <div class="productinfo text-center">
-                            <img src="{{ asset('images/home/gallery1.jpg') }}" alt="" />
-                            <h2>$56</h2>
-                            <p>Easy Polo Black Edition</p>
-                            <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="">
+                {!! $product->detail !!}
             </div>
-            <div class="col-sm-3">
-                <div class="product-image-wrapper">
-                    <div class="single-products">
-                        <div class="productinfo text-center">
-                            <img src="{{ asset('images/home/gallery3.jpg') }}" alt="" />
-                            <h2>$56</h2>
-                            <p>Easy Polo Black Edition</p>
-                            <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="product-image-wrapper">
-                    <div class="single-products">
-                        <div class="productinfo text-center">
-                            <img src="{{ asset('images/home/gallery2.jpg') }}" alt="" />
-                            <h2>$56</h2>
-                            <p>Easy Polo Black Edition</p>
-                            <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <div class="product-image-wrapper">
-                    <div class="single-products">
-                        <div class="productinfo text-center">
-                            <img src="{{ asset('images/home/gallery4.jpg') }}" alt="" />
-                            <h2>$56</h2>
-                            <p>Easy Polo Black Edition</p>
-                            <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
         <div class="tab-pane fade" id="Comments" >
            <div class="">
@@ -154,12 +118,10 @@
         <div class="tab-pane fade active in" id="reviews" >
             <div class="col-sm-12">
                 <ul>
-                    <li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>
-                    <li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
-                    <li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
+                    <li><a href=""><i class="fa fa-user"></i>admin</a></li>
+                    <li><a href=""><i class="fa fa-calendar-o"></i><?php echo ham_dao_nguoc_date($product->created_at)  ?></a></li>
                 </ul>
-                <p>{!! $product->detail !!}</p>
-                <p><b>Write Your Review</b></p>
+                <p><b>Write Your Comments</b></p>
                 <h4>Thông số</h4>
                 <table class="table table-bordered">
                     <tr>
@@ -226,80 +188,50 @@
     <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="item active">
+                @foreach( $products as $value )
+                <?php
+                    $price = number_format($value->price,0,'.','.');
+                    $slug = str_slug($value->name);
+
+                ?>
+                @if($value->picture != "")
                 <div class="col-sm-4">
                     <div class="product-image-wrapper">
                         <div class="single-products">
                             <div class="productinfo text-center">
-                                <img src="{{ asset('images/home/recommend1.jpg') }}" alt="" />
-                                <h2>$56</h2>
-                                <p>Easy Polo Black Edition</p>
-                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                <img src="{{ asset('storage/products/'.$value->picture) }}" alt="{{ $value->name}}" />
+                                <h2>$ {{ $price }}</h2>
+                                <p>{!! $value->detail !!}</p>
+                                <a href="javascript:void(0)" onclick="addCart({{$value->id}})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="{{ asset('images/home/recommend2.jpg') }}" alt="" />
-                                <h2>$56</h2>
-                                <p>Easy Polo Black Edition</p>
-                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="{{ asset('images/home/recommend3.jpg') }}" alt="" />
-                                <h2>$56</h2>
-                                <p>Easy Polo Black Edition</p>
-                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endif
+                @endforeach
             </div>
             <div class="item">
+                @foreach( $products as $value )
+                <?php
+                    $price = number_format($value->price,0,'.','.');
+                    $slug = str_slug($value->name);
+
+                ?>
+                @if($value->picture != "")
                 <div class="col-sm-4">
                     <div class="product-image-wrapper">
                         <div class="single-products">
                             <div class="productinfo text-center">
-                                <img src="{{ asset('images/home/recommend1.jpg') }}" alt="" />
-                                <h2>$56</h2>
-                                <p>Easy Polo Black Edition</p>
-                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                <img src="{{ asset('storage/products/'.$value->picture) }}" alt="{{ $value->name}}" />
+                                <h2>$ {{ $price }}</h2>
+                                <p>{!! $value->detail !!}</p>
+                                <a href="javascript:void(0)" onclick="addCart({{$value->id}})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="{{ asset('images/home/recommend2.jpg') }}" alt="" />
-                                <h2>$56</h2>
-                                <p>Easy Polo Black Edition</p>
-                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="{{ asset('images/home/recommend3.jpg') }}" alt="" />
-                                <h2>$56</h2>
-                                <p>Easy Polo Black Edition</p>
-                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endif
+                @endforeach
             </div>
         </div>
             <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">

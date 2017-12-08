@@ -175,6 +175,36 @@ class OrdermanageController extends Controller
     public function detaiOrder(){
         return view('admin.order.hoadondetail');
     }
+
+    public function ajaxsearch(Request $request)
+    {
+        $name = $request->aname;
+        $products = Product::where('name','like','%'.$name.'%')->get();
+        $str ="";
+        if ($name != "") {
+            if (count(Product::where('name','like','%'.$name.'%')->get()) > 0) {
+                foreach ($products as $key => $value) {
+                    $str .= '<div class="col-xs-12" style="background: white; border-bottom: solid 1px #bbb;">
+                                <a href="'.route('admin.Order.inputUpdate',['slug'=>str_slug($value->name), 'id'=> $value->id ]).'" >
+                                    <div class="col-xs-1">
+                                        <img class="thumbnail" src="'.asset('storage/products/'.$value->picture).'" alt="'.$value->name.'" style="width:50px; height:50px;">
+                                    </div>
+                                    <div class="col-xs-11">
+                                        <i>'.$value->name.'</i>
+                                        <p> số lượng: '.$value->quantity.'</p>
+                                    </div>
+                                    </a>
+                            </div>';
+                }
+                return $str;
+            }else{
+                return $str .= "không tìm thấy !";
+            }
+            
+        }else{
+            return 0;
+        }
+    }
     /**
      * Show the form for editing the specified resource.
      *

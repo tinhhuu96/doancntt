@@ -10,7 +10,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordian" href="#sportswear-{{ $value->id }}"><i class="fa fa-long-arrow-right"></i>
+						<a data-toggle="collapse" data-parent="#accordian" href="#sportswear-{{ $value->id }}">
 							<span class="badge pull-right"><i class="fa fa-plus"></i></span>
 							{{ $value->name }}
 						</a>
@@ -21,7 +21,7 @@
 					<div id="sportswear-{{ $value->id }}" class="panel-collapse collapse">
 						<div class="panel-body">
 							<ul>
-								<li><i class="fa fa-long-arrow-right"></i> <a href="{{ route('public.Product_Cate',['slug'=>str_slug($values->name), 'id'=>$values->id]) }}">{{ $values->name }} </a></li>
+								<li> <a href="{{ route('public.Product_Cate',['slug'=>str_slug($values->name), 'id'=>$values->id]) }}">{{ $values->name }} </a></li>
 							</ul>
 						</div>
 					</div>

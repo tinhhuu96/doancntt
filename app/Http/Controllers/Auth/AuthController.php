@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 use App\User;
 
 class AuthController extends Controller
@@ -11,7 +12,12 @@ class AuthController extends Controller
     
 	public function login()
 	{
-		return view('admin.login.index');
+		if (Session::get('USERNAME')) {
+			return redirect()->route('admin.index');
+		}else{
+			return view('admin.login.index');	
+		}
+		
 	}
 
 	public function postLogin(Request $request)

@@ -11,18 +11,6 @@
         <input type="hidden" value="{{ Session::get('ID') }}" name="user_id">
         <div class="box-body">
           <div class="row">
-            <div class="col-xs-offset-1 col-xs-10">
-              <div class="form-group">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="search......">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Go!</button>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
             <div class="col-xs-4">
               <div class="form-group">
                 <label for=" ">Mã Sản Phẩm</label>
@@ -36,7 +24,7 @@
             <div class="col-xs-2">
               <div class="form-group">
                 <label for=" ">Giá Bán</label>
-                <input type="number" name="price" value="" class="form-control" id="" placeholder="{{ $arProduct->price_old }}">
+                <input type="number" name="price" value="" class="form-control" id="" placeholder="{{ $arProduct->price }}">
               </div>
             </div>
             <div class="col-xs-2">
@@ -53,13 +41,7 @@
                     </div>
                     <div id="thumbbox">
                         <img height="100" class="thumbnail" src="{{ asset('storage/products/'.$arProduct->picture) }}" width="100" alt="Thumb image" id="thumbimage">
-                        <!-- <a class="removeimg" href="javascript:"></a> -->
                      </div>
-                     <!-- <div id="boxchoice">
-                        <a href="javascript:" class="Choicefile">Browser</a>
-                        <p style="clear:both"></p>
-                     </div>
-                      <label class="filename"></label> -->
                 </div>
             </div>
           </div>
