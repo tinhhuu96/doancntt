@@ -25,17 +25,15 @@ class AuthController extends Controller
 	{
 		$username = $request->username;
     	$password = $request->password;
-    	if (Auth::attempt(['name'=>$username, 'password'=> $password])) {
+    	if (Auth::attempt(['email'=>$username, 'password'=> $password])) {
 	    	$username = $request->username;
 	    	$password = $request->password;
-	    	$arID = User::where('name','=',$username)->select('*')->get();
+	    	$arID = User::where('email','=',$username)->select('*')->get();
 	            $id = $arID[0]['id'];
 	            $picture = $arID[0]['picture'];
 	            $gmail = $arID[0]['email'];
-	            $fullname = $arID[0]['fullname'];
 	            $request->session()->put('USERNAME',$arID[0]['name']);
 	            $request->session()->put('PASSWORD', $password);
-	            $request->session()->put('FULLNAME', $fullname);
 	            $request->session()->put('PICTURE',$picture);
 	            $request->session()->put('GMAIL',$gmail);
 	            $request->session()->put('ID',$id);

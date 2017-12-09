@@ -16,10 +16,6 @@
                     <label for="">UserName</label>
                     <input type="text" name="username" value="" class="form-control">
                 </div>
-                <div class="form-group">
-                    <label for="">Fullname</label>
-                    <input type="text" name="fullname" value="" class="form-control">
-                </div>
             </div>
             <div class="col-xs-4">
                 <div class="form-group">

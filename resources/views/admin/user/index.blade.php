@@ -33,7 +33,6 @@ img{
             <tr class="">
               <th>.#</th>
               <th>Name</th>
-              <th>Fullname</th>
               <th>Avatar</th>
               <th>Gmail</th>
               <th>Quyền truy cập</th>
@@ -51,8 +50,6 @@ img{
               <tr>
                 <td>1</td>
                 <td><a href="javascipt:void(0)" title="">{{ $value->name }}</a>
-                </td>
-                <td><a href="#" title="xem chi tiết">{{ $value->fullname }}</a>
                 </td>
                 <td class="text-center">
                   @if($hinhanh != "")

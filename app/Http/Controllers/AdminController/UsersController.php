@@ -61,7 +61,6 @@ class UsersController extends Controller
             'gmail' => 'required|email',
             'password' => 'required|min:5|max:20',
             'password_confirmation' => 'required|same:password',
-            'fullname' => 'required|min:5|max:50',
             'address'  => 'required',
             );
         $message = array(
@@ -88,7 +87,7 @@ class UsersController extends Controller
             }
             if ($request->username != "") {
 
-                User::create(['name'=>$username,'email'=>trim($request->gmail), 'password'=>bcrypt($request->password), 'fullname'=>trim($request->fullname), 'address'=>trim($request->address), 'picture'  => $endPic ]);
+                User::create(['name'=>$username,'email'=>trim($request->gmail), 'password'=>bcrypt($request->password),'address'=>trim($request->address), 'picture'  => $endPic ]);
 
                 $arnewuser = User::where('email','=',trim($request->gmail) )->get();
                 // dd($arnewuser[0]['id']);
@@ -149,7 +148,6 @@ class UsersController extends Controller
         $rules = array(
             'gmail' => 'required|email',
             'password_old' => 'required',
-            'fullname' => 'required|min:5|max:50',
             'address'  => 'required',
             );
         $message = array(
@@ -168,9 +166,6 @@ class UsersController extends Controller
         
         if ($request->password != "") {
             $objUser->password = bcrypt($request->password);
-        }
-        if ($request->fullname != "") {
-            $objUser->fullname = trim($request->fullname);
         }
 
         if ($request->gmail) {

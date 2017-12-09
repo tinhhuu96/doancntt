@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','fullname','address','picture'
+        'name', 'email', 'password','phone','address','picture'
     ];
     protected $primaryKey ='id';
     public $timestamps= true;

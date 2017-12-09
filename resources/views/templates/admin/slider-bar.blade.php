@@ -13,8 +13,8 @@
         </div>
         <div class="pull-left info">
           <p>
-            @if(Session::get('FULLNAME') != "")
-              {{ Session::get('FULLNAME')}}
+            @if(Session::get('USERNAME') != "")
+              {{ Session::get('USERNAME')}}
             @endif
           </p>
           <a href="javascript:void(0)"><i class="fa fa-circle text-success"></i> Online</a>
