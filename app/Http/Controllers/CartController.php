@@ -1,5 +1,4 @@
 <?php
-;
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -81,7 +80,7 @@ class CartController extends Controller
     public function cancel($id)
     {
         $order = Order::find($id);
-        $order->update(['shipping_status' => 'cancel', 'status' => 'not avalible']);
+        $order->update(['shipping_status' => 2, 'status' => 0]);
         return redirect('carts/manage');
     }
 
