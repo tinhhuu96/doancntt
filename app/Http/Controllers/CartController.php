@@ -25,11 +25,6 @@ class CartController extends Controller
 	}
 
     public function add($id){
-    	/*$product = Product::find($id);
-    	Cart::add($product->id, $product->name, 1, $product->price, ['images' => $product->images]);
-    	// $content = Cart::content();
-    	// dd($content);
-    	return redirect('/');*/
         $product = Product::find($id);
         Cart::add($product->id, $product->name, 1, $product->price, ['images' => $product->picture]);
         $count = Cart::count();
@@ -57,6 +52,9 @@ class CartController extends Controller
             foreach ($content as $item) {
             OrderDetail::create(['product_id' => $item->id, 'quantity' => $item->qty, 'price' => $item->price, 'order_id' => $order->id]);
             $product = Product::find($item->id);
+            if ($product->quantity < $item->qty){
+                Toastr::success(" Cann't checkout, quanlity big! ");
+                return redirect('/carts');}
             $product->quantity -= $item->qty;
             $product->save();
             }
