@@ -3,14 +3,7 @@
     {{ $name }}
 @stop
 @section('content')
-<?php $date = date('Y-m-d'); 
-        function ham_dao_nguoc_chuoi($str)
-        {
-            //tách mảng bằng dấu cách
-            $arStr = explode(' ',$str);
-            $arNgay = explode('-', $arStr[0]);
-            return  $arNgay[0].'-'.$arNgay[1].'-'.$arNgay[2];
-        }
+<?php $date = date('Y-m-d');
     ?>
 <div class="features_items"><!--features_items-->
     <h2 class="title text-center">Features Items</h2>
@@ -18,7 +11,7 @@
     <?php
         $price = number_format($value->price,0,'.','.');
         $slug = str_slug($value->name);
-        $created_at = ham_dao_nguoc_chuoi($value->created_at);
+        $created_at = date_format($value->created_at,"Y-m-d");
         $dates = ( strtotime($date)-strtotime($created_at) );
 
     ?>
