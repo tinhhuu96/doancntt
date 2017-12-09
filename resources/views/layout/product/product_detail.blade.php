@@ -3,14 +3,7 @@
     {{ $product->name }}
 @stop
 @section('content')
-<?php $date = date('Y-m-d'); 
-        function ham_dao_nguoc_chuoi($str)
-        {
-            //tách mảng bằng dấu cách
-            $arStr = explode(' ',$str);
-            $arNgay = explode('-', $arStr[0]);
-            return  $arNgay[0].'-'.$arNgay[1].'-'.$arNgay[2];
-        }
+<?php $date = date('Y-m-d');
         function ham_dao_nguoc_date($str)
         {
             //tách mảng bằng dấu cách
@@ -41,7 +34,7 @@
     <div class="col-sm-7">
         <div class="product-information"><!--/product-information-->
             <?php 
-                $created_at = ham_dao_nguoc_chuoi($product->created_at);
+                $created_at = date_format($product->created_at,"Y-m-d");;
                 $dates = ( strtotime($date)-strtotime($created_at) );
             ?>
              @if( $dates < 432000)
