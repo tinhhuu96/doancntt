@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use App\User;
+use Toastr;
 
 class AuthController extends Controller
 {
-    
+
 	public function login()
 	{
 		if (Session::get('USERNAME')) {

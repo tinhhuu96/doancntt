@@ -14,7 +14,7 @@ use DateTime;
 use App\Product;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\UploadedFile;
-
+use Toastr;
 class CartController extends Controller
 {
 	public function index(){
@@ -40,28 +40,34 @@ class CartController extends Controller
     public function delete($rowId)
     {
     	Cart::remove($rowId);
-    	return redirect('/carts')->withSuccess('Cat has been deleted.');
+    	return redirect('/carts');
     }
 
 
     public function checkout()
     {
-       return view('layouts.cart.checkout');
+        return view('layouts.cart.checkout');
     }
 
     public function store_order(Request $request)
     {
         $order = Order::create(['email' => $request->Input('email'), 'shipping_status' => 0, 'address' => $request->Input('address_order'), 'phone' => $request->Input('phone'), 'name' => $request->Input('name_receiver'), 'user_id' => Auth::user()->id ]);
 
-
-
-        $content = Cart::content();
-        foreach ($content as $item) {
+        if ($order) {
+            $content = Cart::content();
+            foreach ($content as $item) {
             OrderDetail::create(['product_id' => $item->id, 'quantity' => $item->qty, 'price' => $item->price, 'order_id' => $order->id]);
+            $product = Product::find($item->id);
+            $product->quantity -= $item->qty;
+            $product->save();
+            }
+            Cart::destroy();
+            Toastr::success("Checkout Completed, please check mail !");
+            return redirect('/');
         }
-        Cart::destroy();
-        return redirect('/');
-
+        else
+        Toastr::warning("error");
+        return redirect('/carts/checkout');
     }
 
     public function manage()

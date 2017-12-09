@@ -7,7 +7,7 @@
 	<section id="cart_items" style="margin-bottom: 50px">
 		<div class="container">
 			<div class="breadcrumbs">
-				<ol class="breadcrumb">
+				<ol class="breadcrumb" style="margin-bottom: -45px;">
 				  <li><a href="#">Home</a></li>
 				  <li class="active">Shopping Cart</li>
 				</ol>
@@ -16,7 +16,7 @@
 			 <br>
 			 <br>
 			 <br>
-			<div class="table-responsive cart_info">
+			<div class="table-responsive cart_info" style="margin-bottom: 15px;">
 
 				<table class="table table-condensed">
 					<thead>
