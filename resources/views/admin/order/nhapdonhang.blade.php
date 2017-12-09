@@ -35,7 +35,7 @@
       <div class="row">
           <div class="col-xs-offset-1 col-xs-10">
             <div class="form-group">
-              <div class="input-group" style="position: relative;">
+              <div class="form-group" style="position: relative;">
                 <input type="text" id="txtSearch" class="form-control" placeholder="search......">
                 <div class="search">
                 </div>
