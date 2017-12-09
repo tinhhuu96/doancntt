@@ -32,7 +32,7 @@
   {!! Toastr::render() !!}
 	<?php
 		use App\Category;
-		$category = Category::where('parent','=',0)->get();
+		$category = Category::all();
 	?>
   <div class="btn btn-default"  style="position: fixed; top: 70px; right: 5px; background-color: #FE980F">
   @if ( Cart::count() > 0 )
@@ -138,7 +138,15 @@
 
 								@foreach( $category as $key => $value)
 									@if( $value->parent == 0 )
-									<li><a href="{{ route('public.Product_Cate',['slug'=>str_slug($value->name),'id'=>$value->id]) }}">{{ $value->name }}</a></li>
+									<li class="dropdown"><a href="{{ route('public.Product_Cate',['slug'=>str_slug($value->name),'id'=>$value->id]) }}">{{ $value->name }} <i class="fa fa-angle-down"></i></a>
+										<ul role="menu" class="sub-menu">
+											@foreach( $category as $keys => $parent)
+												@if( $parent->parent == $value->id)
+			                                    <li><a href="{{ route('public.Product_Cate',['slug'=>str_slug($parent->name),'id'=>$parent->id]) }}">{{ $parent->name}}</a></li>
+			                                    @endif
+											@endforeach
+	                                    </ul>
+	                                </li>
 									@endif
 								@endforeach
 								<li><a href="{{ route('public.products') }}">Products News </a></li>
@@ -148,7 +156,10 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="search_box pull-right">
-							<input type="text" placeholder="Search"/>
+							<form action="{{ route('public.search.product') }}" method="post">
+								{{ csrf_field() }}
+								<input type="text" id="txt" name="txt" placeholder="Search" class="form-control" required="" />
+							</form>
 						</div>
 					</div>
 				</div>

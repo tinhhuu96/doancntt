@@ -68,14 +68,7 @@ class OrdermanageController extends Controller
 
         $total = $arNewProduct[0]->price*$quantityN;
         // dd($total);
-        $array = array(
-            'id_product' => $arNewProduct[0]->id,
-            'quantity' => $arNewProduct[0]->quantity,
-            'price' => $arNewProduct[0]->price,
-            'total' => $total,
-        );
-        // dd($array);
-        TransInput_order::insert($array);
+        TransInput_order::create(['id_product'=> $arNewProduct[0]->id, 'quantity'=>$arNewProduct[0]->quantity, 'price'=>$arNewProduct[0]->price, 'total'=> $total ]);
 
         $request->session()->flash('msg-s', 'Nhập thành công !');
         return redirect()->route('admin.listproduct');
@@ -97,7 +90,6 @@ class OrdermanageController extends Controller
         $id = $request->idcate;
         $code= trim($request->code);
         $name= trim($request->name);
-        $price_old= trim($request->price_old);
         $price= trim($request->price);
         $quantity= trim($request->quantity);
         $detail= trim($request->detail);
@@ -132,35 +124,17 @@ class OrdermanageController extends Controller
                 $tmp  = explode('/',$path);
                 $endPic = end($tmp);
             }
-            $arProduct = array(
-                'code' => $code ,
-                'name' => $name,
-                'detail' => $detail,
-                'picture'  => $endPic,
-                'price' => $price,
-                'quantity' => $quantity,
-                'active'   => 1,
-                'category_id' => $id,
-                'provider_id' => 1,
-                'view' => 1,
-                );
-            // dd($arProduct);
-            if(Product::insert($arProduct)){
+            $arProduct = Product::create(['code'=>$code, 'name'=>$name, 'detail'=>$detail,'picture'=>$endPic,'price'=>0,'quantity'=>0,'active'=>$request->display, 'category_id'=>$id,'provider_id'=>1,'view'=>1]);
+            
+            if($arProduct){
                 $arNewProduct = Product::where('code','=',$code)->get();
                 // dd($arNewProduct[0]->id);
                 $quantity = $arNewProduct[0]->quantity;
-                $price = $arNewProduct[0]->price_old;
-                $total = $price_old*$quantity;
-                // dd($total);
-                $array = array(
-                    'id_product' => $arNewProduct[0]->id,
-                    'quantity' => $arNewProduct[0]->quantity,
-                    'price_old' => $arNewProduct[0]->price_old,
-                    'price' => $arNewProduct[0]->price,
-                    'total' => $total,
-                );
-                // dd($array);
-                TransInput_order::insert($array);
+                $price = $arNewProduct[0]->price;
+                $total = $price*$quantity;
+                
+                TransInput_order::create(['id_product'=> $arNewProduct[0]->id, 'quantity'=>$arNewProduct[0]->quantity, 'price'=>$arNewProduct[0]->price, 'total'=> $total ]);
+
                 $request->session()->flash('msg-s', 'Nhập thành công !');
                 return redirect()->route('admin.OrderIn');
             }else{
@@ -173,8 +147,8 @@ class OrdermanageController extends Controller
     public function ajaxGetInOrder(Request $request)
     {
         $date = $request->adate;
-        $array = TransInput_order::where('created_at','=',$date)->get();
-        // dd($array);
+
+        $array = TransInput_order::where('created_at','like',''.$date.'%')->get();
         $str = "";
         foreach ($array as $key => $value) {
             $str .= $value->id_product;
@@ -183,7 +157,6 @@ class OrdermanageController extends Controller
                 <td>'.$value->id_product.'</td>
                 <td>'.$value->quantity.'</td>
                 <td>'.$value->price.' vnđ</td>
-                <td>'.$value->price_old.' vnđ </td>
                 <td class="text-right">'.$value->total.' vnđ</td>
               </tr>';
         }
@@ -201,6 +174,36 @@ class OrdermanageController extends Controller
     }
     public function detaiOrder(){
         return view('admin.order.hoadondetail');
+    }
+
+    public function ajaxsearch(Request $request)
+    {
+        $name = $request->aname;
+        $products = Product::where('name','like','%'.$name.'%')->get();
+        $str ="";
+        if ($name != "") {
+            if (count(Product::where('name','like','%'.$name.'%')->get()) > 0) {
+                foreach ($products as $key => $value) {
+                    $str .= '<div class="col-xs-12" style="background: white; border-bottom: solid 1px #bbb;">
+                                <a href="'.route('admin.Order.inputUpdate',['slug'=>str_slug($value->name), 'id'=> $value->id ]).'" >
+                                    <div class="col-xs-1">
+                                        <img class="thumbnail" src="'.asset('storage/products/'.$value->picture).'" alt="'.$value->name.'" style="width:50px; height:50px;">
+                                    </div>
+                                    <div class="col-xs-11">
+                                        <i>'.$value->name.'</i>
+                                        <p> số lượng: '.$value->quantity.'</p>
+                                    </div>
+                                    </a>
+                            </div>';
+                }
+                return $str;
+            }else{
+                return $str .= "không tìm thấy !";
+            }
+            
+        }else{
+            return 0;
+        }
     }
     /**
      * Show the form for editing the specified resource.

@@ -24,26 +24,15 @@ class PermissionController extends Controller
 
     public function store(Request $request)
     {
-    	$inputs = $request->all();
-        $rules = array(
-            'name' => 'required'
-            );
-        $message = array(
-            'required' => 'Xin mời nhập !'
-            );
-        $validator = Validator::make($inputs, $rules, $message);
-        if ($validator->fails()) {
-            return redirect('/adminpc/User/user-permission')
-                        ->withErrors($validator)
-                        ->withInput();
+        if ($request->aname == "") {
+            return response()->json(['alert'=>'Lỗi nhập rỗng !', 'a'=>'e']) ;
         }
-        $name = trim($request->name);
-        $arpermission  = array(
-        	'name' => $name, 
-        );
-        Permission::insert($arpermission);
-        $request->session()->flash('msg-s','Thêm Thành Công ');
-                return redirect()->route('admin.userPermission');
+        $ar = count(Permission::where('name','=',$request->aname)->get());
+        if ($ar > 0) {
+            return response()->json(['alert'=>'Nhập vào tồn tại !', 'a'=>'e']) ;
+        }
+        Permission::create(['name'=>$request->aname]);
+        return response()->json(['alert'=>'Thêm thành công !', 'a'=>'s']) ;
     }
 
     public function setPermission(Request $request)
@@ -72,16 +61,12 @@ class PermissionController extends Controller
 
 
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request)
     {
+        $id = $request->aid;
     	// dd('chạy');
-    	$arper = Permission::find($id);
-    	if ($arper == null ) {
-    		$request->session()->flash('msg-e',"Xóa thất bại !");
-    		return redirect()->route('admin.userPermission');
-    	}
-    	$arper->delete();
-    	$request->session()->flash('msg-e',"Xóa thành công !");
-    	return redirect()->route('admin.userPermission');
+    	Permission::where('id',$id)->delete();
+
+    	return "Xóa thành công";
     }
 }

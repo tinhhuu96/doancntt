@@ -13,8 +13,8 @@
         </div>
         <div class="pull-left info">
           <p>
-            @if(Session::get('FULLNAME') != "")
-              {{ Session::get('FULLNAME')}}
+            @if(Session::get('USERNAME') != "")
+              {{ Session::get('USERNAME')}}
             @endif
           </p>
           <a href="javascript:void(0)"><i class="fa fa-circle text-success"></i> Online</a>
@@ -35,53 +35,64 @@
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
         <li class=" treeview">
+          <a href="{{ route('admin.category') }}">
+            <i class="fa fa-list"></i> <span>Categories management</span>
+          </a>
+        </li>
+        <li class=" treeview">
           <a href="javascript:void(0)">
-            <i class="fa fa-dashboard"></i> <span>Manage Sản Phẩm</span>
+            <i class="fa fa-dashboard"></i> <span>Products management</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li  class=""><a href="{{ route('admin.listproduct') }}"><i class="fa fa-circle-o"></i>Danh sách sản phẩm</a></li>
-            <li><a href="{{ route('admin.cate.add.product') }}"><i class="fa fa-circle-o"></i>Thêm sản phẩm</a></li>
+            <li  class=""><a href="{{ route('admin.listproduct') }}"><i class="fa fa-circle-o"></i>List of products</a></li>
+            <li><a href="{{ route('admin.cate.add.product') }}"><i class="fa fa-circle-o"></i>import new products</a></li>
           </ul>
         </li>
-        <li class=" treeview">
-          <a href="{{ route('admin.category') }}">
-            <i class="fa fa-list"></i> <span>Manage Danh Mục</span>
+        <li class="treeview">
+          <a href="{{ route('promotion.index') }}">
+            <i class="fa fa-files-o"></i>
+            <span>Promotions management</span>
           </a>
         </li>
-
         <li class="treeview">
           <a href="{{ route('admin.OrderIn') }}">
             <i class="fa fa-files-o"></i>
-            <span>Nhập Đơn Hàng</span>
+            <span>Import orders Products</span>
+          </a>
+        </li>
+        <li class="treeview">
+          <a href="{{ route('provider.index') }}">
+            <i class="fa fa-files-o"></i>
+            <span>Providers management</span>
           </a>
         </li>
         <li>
           <a href="">
-            <i class="fa fa-th"></i> <span>Manage hóa đơn</span>
+            <i class="fa fa-th"></i> <span>Bill managements</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('admin.qlhoadon') }}"><i class="fa fa-circle-o"></i>Danh sách hóa đơn</a></li>
+            <li><a href="{{ route('admin.qlhoadon') }}"><i class="fa fa-circle-o"></i>List of bill</a></li>
           </ul>
         </li>
         <li class=" treeview">
           <a href="{{ route('admin.parameter') }}">
-            <i class="fa fa-list"></i> <span>Manage Parameters</span>
+            <i class="fa fa-list"></i> <span>Parameters management</span>
           </a>
         </li>
         <li class=" treeview">
           <a href="{{ route('admin.comment') }}">
-            <i class="fa fa-list"></i> <span>Manage Comments</span>
+            <i class="fa fa-list"></i> <span>Comments management</span>
           </a>
         </li>
         <li>
           <a href="{{ route('admin.contact.index') }}">
-            <i class="fa fa-envelope"></i> <span>Contacts</span>
+            <i class="fa fa-envelope"></i> <span>Contacts management</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-yellow" id="countcontact"></small>
             </span>

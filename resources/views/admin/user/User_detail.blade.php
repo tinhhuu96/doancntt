@@ -21,10 +21,6 @@
 			</div>
 			<div class="col-xs-6">
 				<div class="form-group">
-					<label for="">Fullname</label>
-					<input type="text" class="form-control" value="{{ $aruser->fullname }}" readonly="">
-				</div>
-				<div class="form-group">
 					<label for="">Gmail</label>
 					<input type="gmail" class="form-control" value="{{ $aruser->email }}" readonly="" >
 				</div>

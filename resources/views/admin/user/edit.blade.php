@@ -47,21 +47,12 @@
                 
             <div class="col-xs-12">
                 <div class="form-group">
-                <label for="">Gmail</label>
-                <input type="email" name="gmail" value="{{ $aruser->email }}" class="form-control">
-                @if ($errors->has('gmail'))
-                    <p class="has-error alert-danger">{{$errors->first('gmail')}}</p>
-                @endif
-            </div>
-            </div>
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <label for="">Fullname</label>
-                    <input type="text" name="fullname" value="{{ $aruser->fullname }}" class="form-control">
-                    @if ($errors->has('fullname'))
-                        <p class="has-error alert-danger">{{$errors->first('fullname')}}</p>
+                    <label for="">Gmail</label>
+                    <input type="email" name="gmail" value="{{ $aruser->email }}" class="form-control">
+                    @if ($errors->has('gmail'))
+                        <p class="has-error alert-danger">{{$errors->first('gmail')}}</p>
                     @endif
-                </div>    
+                </div>
             </div>
             <div class="col-xs-12">
                 <div class="form-group">

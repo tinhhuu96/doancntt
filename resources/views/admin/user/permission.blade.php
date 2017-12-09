@@ -19,23 +19,17 @@ img{
                 <!-- /.box-tools -->
             </div>
             <!-- /.box-header -->
-            <form action="{{ route('admin.permission.store')}}" method="post" accept-charset="utf-8">
+            <form action="" method="post" accept-charset="utf-8">
                 {{ csrf_field() }}
                 <div class="box-body">
-                    @if(Session::has('msg-s'))
-                        <div class="alert alert-success alert-dismissable">{{ Session::get('msg-s') }}</div>
-                      @endif
-                      @if(Session::has('msg-e'))
-                        <div class="alert alert-danger alert-dismissable">{{ Session::get('msg-e') }}</div>
-                      @endif
                     <div class="form-group">
                         <label for="">Permission name</label>
-                        <input type="text" name="name" value="" placeholder="nhập..." class="form-control" style="width:300px;">
+                        <input type="text" name="name" id="name" placeholder="nhập..." class="form-control" style="width:300px;">
                     </div>
                 </div>
                 <div class="box-footer">
                     <div class="form-group">
-                        <input type="submit" value="Add" class="form-control btn btn-success" style="width:100px;">
+                        <a onclick="addPermission()" class="form-control btn btn-success" style="width:100px;">Add new</a>
                     </div>
                 </div>
             </form>
@@ -63,10 +57,9 @@ img{
                 @foreach($arpermis as $key => $value)
                 <?php   
                     $id = $value->id;
-                    $delete = route('admin.permission.destroy',['id'=>$id]);
                     $update = route('admin.permission.update',['id'=>$value->id]);
                 ?>
-                <tr>
+                <tr id="permission-{{$id}}">
                     <td>{{ $key}}</td>
                     <td>
                         <input type="hidden" id="Inputold-{{ $value->id}}" value="{{ $value->name }}">
@@ -81,7 +74,7 @@ img{
 
                     </td>
                     <td>
-                        <a href="{{ $delete }}" class="text-red"><i class="fa fa-remove">Delete</i></a>
+                        <a href="javascript:void(0)" onclick="deletePermission({{$id}})" class="text-red"><i class="fa fa-remove">Delete</i></a>
                     </td>
                 </tr>
                 @endforeach
@@ -147,6 +140,53 @@ img{
   </div>
 </div>
 <script type="text/javascript">
+    function addPermission()
+    {
+        var name = $('#name').val();
+        $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+        $.ajax({
+            url: "{{route('admin.permission.store')}}",
+            type: 'POST',
+            data: {aname: name },
+            success: function(data){
+                $('#alertprovider-'+data.a).html(data.alert);
+                $('#mes-provider-'+data.a).css({display:'block', transition:'all 0.3s'});
+                setTimeout(function(){ $('#mes-provider-'+data.a).fadeOut() }, 1000);
+            },
+            error: function (){
+                alert('Có lỗi xảy ra');
+            }
+        });
+    }
+
+    function deletePermission(id)
+    {
+        $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+        $.ajax({
+            url: "{{route('admin.permission.destroy')}}",
+            type: 'POST',
+            data: {aid: id },
+            success: function(data){
+                $('#permission-'+id).fadeOut(1000);
+                $('#alertprovider-s').html(data);
+                $('#mes-provider-s').css({display:'block', transition:'0.3 all'});
+                setTimeout(function(){ $('#mes-provider-s').fadeOut() }, 1000);
+            },
+            error: function (){
+                alert('Có lỗi xảy ra');
+            }
+        });
+    }
+
+
     function EditEvent(id){
         $("#Input-"+id).attr("disabled", false);
         $("#Edit-"+id).css({'display': 'none'});

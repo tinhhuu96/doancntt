@@ -47,9 +47,12 @@ class CateController extends Controller
      */
     public function store(cateRequest $request)
     {
-        $name    = $request->name;
+        $name    = trim($request->name);
         $parent  = $request->parent;
-
+        if ($name == "") {
+            $request->session()->flash('msg-e','Nhập rỗng !');
+            return redirect()->route('admin.category');
+        }
         $name_olds = Category::select('name')->where('name','=',$name)->get();
         $name_old ="";
         foreach ($name_olds as $key => $value) {
@@ -60,12 +63,10 @@ class CateController extends Controller
             $request->session()->flash('msg-e','Thêm thất bại, tên danh mục đã tồn tại');
             return redirect()->route('admin.category');
         }else{
-            $arCate = array(
-                'name' =>$name,
-                'parent' => $parent
-            );
+
+            $arCate = Category::create(['name'=>$name, 'parent'=>$parent]);
         }
-        if (Category::insert($arCate)) {
+        if ($arCate) {
             $request->session()->flash('msg-s','Thêm thành công');
             return redirect()->route('admin.category');
         }else{
@@ -128,47 +129,80 @@ class CateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    public function destroy(Request $request,$id)
+    //-------------------------------------------------
+    public function ajaxdestroy(Request $request)
     {
+        $id = $request->aid;
+        if (count(Category::where('parent','=',$id)->get() ) > 0 ) {
+            $arParent = Category::where('parent','=',$id)->get();
+            foreach ($arParent as $value) {
 
-        $arcate = Category::find($id);
-        if ($id == $arcate->id) {
-            if (count(Category::where('parent','=',$id)->get()) > 0) {
-                $idparent = Category::where('parent','=',$id)->get();
-                dd($idparent[0]->id);
-                    if (count( Paracatedetail::where('categories_id','=',$idparent[0]->id)->get()) > 0) {
-                     Paracatedetail::where('categories_id','=',$idparent[0]->id)->delete();
-                }
+                if(count( Product::where('category_id','=',$value->id)->get() ) > 0 ) {
+                    $product = Product::where('category_id','=',$value->id)->get();
+                    foreach ($product as $value_product) {
+                        if (count(Parameter_detail::where('product_id','=',$value_product->id)->get() ) > 0 ) {
+                            $parameters = Parameter_detail::where('product_id','=',$value_product->id)->get();
 
-                if (count(Product::where('category_id','=',$idparent[0]->id)->get()) > 0) {
-                    $idspparent = Product::select('id')->where('category_id','=',$idparent[0]->id)->get();
-                    if (count(Paracatedetail::where('product_id','=',$idspparent[0]->id)->get()) > 0 ) {
-                       Paracatedetail::where('product_id','=',$idspparent[0]->id)->delete();
+                            foreach ($parameters as $value_para) {
+                                Parameter_detail::where('id','=',$value_para->id)->delete();
+                            }
+                        }
+                        
                     }
-                    Product::where('category_id','=',$idparent)->delete();
+                    $product->delete();
                 }
-                Category::where('parent','=',$id)->delete();
-            }
-            if (count( Paracatedetail::where('categories_id','=',$id)->get()) > 0) {
-                 Paracatedetail::where('categories_id','=',$id)->delete();
+                if (count(Paracatedetail::where('category_id','=', $value->id)->get() ) > 0 ) {
+                    $paracates = Paracatedetail::where('category_id','=', $value->id)->get();
+                    foreach ($paracates as $value_paracate) {
+                        Paracatedetail::where('category_id','=',$value_paracate->category_id)->delete();
+                    }
+                }
+
+                Category::where('id','=',$value->id)->delete();
             }
 
-            if (count(Product::where('category_id','=',$id)->get()) > 0) {
-                $idsp = Product::select('id')->where('category_id','=',$id)->get();
-                if (count(Paracatedetail::where('product_id','=',$idsp[0]->id)->get()) > 0 ) {
-                   Paracatedetail::where('product_id','=',$idsp[0]->id)->delete();
+            Category::where('parent','=',$id)->delete();
+            if(count( Product::where('category_id','=',$id)->get() ) > 0 ) {
+                    $products = Product::where('category_id','=',$id)->get();
+                    foreach($products as $value_product) {
+                        if (count(Parameter_detail::where('product_id','=',$value_product->id)->get() ) > 0 ) {
+                            $parameters = Parameter_detail::where('product_id','=',$value_product->id)->get();
+                            foreach ($parameters as $value_para) {
+                                Parameter_detail::where('product_id','=',$value_product->id)->delete();
+                            }
+                        }
+                        Product::where('id',$value_product->id)->delete();
+                    }
                 }
-                Product::where('category_id','=',$id)->delete();
-            }
-
-            $arcate->delete();
-            $request->session()->flash('msg-s', 'Delete thành công');
-            return redirect()->route('admin.category');
+                if (count(Paracatedetail::where('category_id','=', $id)->get() ) > 0 ) {
+                    $paracates = Paracatedetail::where('category_id','=', $id)->delete();
+                }
+            Category::where('id','=',$id)->delete();
+            return  "Xóa Thành Công ";
         }else{
-            $request->session()->flash('msg-e','Delete thất bại');
-            return redirect()->route('admin.category');
-        }
+            if (count( Product::where('category_id','=',$id)->get()) > 0 ) {
+                $product = Product::where('category_id','=',$id)->get();
+                foreach ($product as $value_product) {
+                    if (count(Parameter_detail::where('product_id','=',$value_product->id)->get() ) > 0 ) {
+                        $parameters = Parameter_detail::where('product_id','=',$value_product->id)->get();
 
+                        foreach ($parameters as $value_para) {
+                            Parameter_detail::where('product_id','=',$value_product->id)->delete();
+                        }
+                    }
+                    Product::where('id','=',$value_product->id)->delete();
+                }
+
+            }
+            if (count(Paracatedetail::where('category_id','=', $id)->get() ) > 0 ) {
+                $paracates = Paracatedetail::where('category_id','=', $id)->get();
+                foreach ($paracates as $value_paracate) {
+                    Paracatedetail::where('category_id','=',$value_paracate->category_id)->delete();
+                }
+            }
+            Category::where('id','=',$id)->delete();
+            return "Xóa Thành công ";
+        }
+        
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 use App\User;
 use Toastr;
 
@@ -12,24 +13,27 @@ class AuthController extends Controller
 
 	public function login()
 	{
-		return view('admin.login.index');
+		if (Session::get('USERNAME')) {
+			return redirect()->route('admin.index');
+		}else{
+			return view('admin.login.index');	
+		}
+		
 	}
 
 	public function postLogin(Request $request)
 	{
 		$username = $request->username;
     	$password = $request->password;
-    	if (Auth::attempt(['name'=>$username, 'password'=> $password])) {
+    	if (Auth::attempt(['email'=>$username, 'password'=> $password])) {
 	    	$username = $request->username;
 	    	$password = $request->password;
-	    	$arID = User::where('name','=',$username)->select('*')->get();
+	    	$arID = User::where('email','=',$username)->select('*')->get();
 	            $id = $arID[0]['id'];
 	            $picture = $arID[0]['picture'];
 	            $gmail = $arID[0]['email'];
-	            $fullname = $arID[0]['fullname'];
 	            $request->session()->put('USERNAME',$arID[0]['name']);
 	            $request->session()->put('PASSWORD', $password);
-	            $request->session()->put('FULLNAME', $fullname);
 	            $request->session()->put('PICTURE',$picture);
 	            $request->session()->put('GMAIL',$gmail);
 	            $request->session()->put('ID',$id);

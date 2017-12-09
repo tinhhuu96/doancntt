@@ -14,7 +14,6 @@ use App\Product;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\UploadedFile;
 use Toastr;
-
 class CartController extends Controller
 {
 	public function index(){

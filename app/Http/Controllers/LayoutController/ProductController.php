@@ -37,7 +37,11 @@ class ProductController extends Controller
     {
         $arproduct = Product::find($id);
         $arparameters = $arproduct->parameter_details;
-        return view('layout.product.product_detail',['product'=>$arproduct, 'parameters'=>$arparameters]);
+        $arcategory = $arproduct->Category;
+        // dd($arcategory->id);
+        $arproducts = Product::where('category_id','=',$arcategory->id)->where('id','<>',$id)->get();
+        // dd($arproducts);
+        return view('layout.product.product_detail',['products'=>$arproducts,'product'=>$arproduct, 'parameters'=>$arparameters]);
     }
 
     public function ajaxComment(Request $request)
@@ -46,15 +50,7 @@ class ProductController extends Controller
         $id_user = $request->aid_user;
         $content = trim($request->acontent);
         if ($content != "") {
-            $date = date('Y-m-d');
-            $arcomment = array(
-                        'product_id' => $id_product,
-                        'user_id'    => 1,
-                        'contents'   => $content,
-                        'created_at' => $date
-                    );
-
-            Comment::insert($arcomment);
+            Comment::create(['product_id'=>$id_product, 'user_id'=>1, 'contents'=> $content]);
 
             return "Bình luận thành công !";
         }

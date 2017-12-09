@@ -54,14 +54,13 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        $username = $request->username;
+        $username = trim($request->username);
         $inputs = $request->all();
         $rules = array(
             'username' => 'required|min:3|max:20',
             'gmail' => 'required|email',
             'password' => 'required|min:5|max:20',
             'password_confirmation' => 'required|same:password',
-            'fullname' => 'required|min:5|max:50',
             'address'  => 'required',
             );
         $message = array(
@@ -86,27 +85,16 @@ class UsersController extends Controller
                 $tmp  = explode('/',$path);
                 $endPic = end($tmp);
             }
-            $arUser = array(
-                'name' => trim($request->username) ,
-                'email'    => trim($request->gmail) ,
-                'password' => bcrypt($request->password),
-                'fullname' => trim($request->fullname),
-                'address'  => trim($request->address),
-                'picture'  => $endPic
-            );
             if ($request->username != "") {
-                User::insert($arUser);
 
-                $arnewuser = User::where('email','=',$request->gmail)->get();
+                User::create(['name'=>$username,'email'=>trim($request->gmail), 'password'=>bcrypt($request->password),'address'=>trim($request->address), 'picture'  => $endPic ]);
+
+                $arnewuser = User::where('email','=',trim($request->gmail) )->get();
                 // dd($arnewuser[0]['id']);
-
-                $arpermis = array(
-                    'user_id' => $arnewuser[0]['id'],
-                    'permission_id' => 1
-                );
-                Permission_user::insert($arpermis);
+                Permission_user::create(['user_id'=>$arnewuser[0]['id'], 'permission_id' => 1 ]);
                 $request->session()->flash('msg-s','Thêm thành công');
                 return redirect()->route('admin.users');
+                
             }else{
                 $request->session()->flash('msg-e','Không thể thêm admin');
                 return redirect()->route('admin.users');
@@ -160,7 +148,6 @@ class UsersController extends Controller
         $rules = array(
             'gmail' => 'required|email',
             'password_old' => 'required',
-            'fullname' => 'required|min:5|max:50',
             'address'  => 'required',
             );
         $message = array(
@@ -179,9 +166,6 @@ class UsersController extends Controller
         
         if ($request->password != "") {
             $objUser->password = bcrypt($request->password);
-        }
-        if ($request->fullname != "") {
-            $objUser->fullname = trim($request->fullname);
         }
 
         if ($request->gmail) {

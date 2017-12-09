@@ -1,4 +1,30 @@
 <div class="row">
+  <div id="mes-provider-s" class="modal bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content alert alert-success" role="alert">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+        </div>
+        <div id="alertprovider-s" class="modal-body">
+        ...
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="mes-provider-e" class="modal bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content alert alert-danger" role="alert">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+        </div>
+        <div id="alertprovider-e" class="modal-body">
+        ...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
   <style type="text/css">
     .Choicefile
     {
@@ -64,7 +90,6 @@
       </div>
     </div>
   </div>
-</div>
 </div>
 
 <footer class="main-footer">
@@ -342,27 +367,7 @@ $(function(){
   };
   getContact();
   //------------------------------------------------------------------
-  function getListInOrder(){
-    setTimeout(function(){
-      var date = $('#datetime').val();
-          // alert(date);
-          $.ajaxSetup({
-            headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-          });
-          $.ajax({
-            url: "{{route('admin.ajax.getInOrder')}}",
-            type: 'post',
-            data: {adate:date},
-            success: function(data){
-             $('#getValueInOrder').html(data);
-           },
-           complete: getListInOrder
-         });
-        },200);
-  };
-  getListInOrder();
+  
   //=--------------------------------------------------------------
 
   function getParameters(){
@@ -433,7 +438,9 @@ function addPara(){
       type: 'post',
       data: {name: aname, para: apara},
       success: function(data){
-       $('#alertajax').html(data);
+        $('#alertprovider-s').html(data);
+        $('#mes-provider-s').css({display:'block', transition:'0.3 all'});
+        setTimeout(function(){ $('#mes-provider-s').fadeOut() }, 2000);
      },
      error: function (){
       alert('Có lỗi xảy ra');
@@ -452,16 +459,17 @@ function destroy(id){
     type: 'post',
     data: {aid: id},
     success: function(data){
-      $('#alertajax').html(data);
+      $('#alertprovider-e').html(data);
+      $('#mes-provider-e').css({display:'block', transition:'0.3 all'});
+      setTimeout(function(){ $('#mes-provider-e').fadeOut() }, 2000);
     },
     error: function (){
       alert('Có lỗi xảy ra');
     }
   });
 }
-
-
 </script>
 @yield('script')
+@yield('jquery')
 </body>
 </html>

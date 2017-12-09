@@ -121,8 +121,8 @@
                 <img src="{{ asset('images/logo/avata.png') }}"  class="user-image" alt="User Image">
               @endif
               <span class="hidden-xs">
-                @if(Session::get('FULLNAME') != "")
-                  {{ Session::get('FULLNAME')}}
+                @if(Session::get('USERNAME') != "")
+                  {{ Session::get('USERNAME')}}
                 @endif
               </span>
             </a>
@@ -137,8 +137,8 @@
     width: 90px;">
                 @endif
                 <p>
-                @if(Session::get('FULLNAME') != "")
-                  {{ Session::get('FULLNAME')}}
+                @if(Session::get('USERNAME') != "")
+                  {{ Session::get('USERNAME')}}
                 @endif
                 </p>
               </li>
