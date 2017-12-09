@@ -182,6 +182,14 @@ Route::group(['namespace' => 'AdminController','prefix' => 'adminpc', 'middlewar
         ]);
 
     });
+
+    Route::group(['prefix' => 'Promotion'], function () {
+        Route::get('',[
+            'uses'  => 'PromotionController@index',
+            'as'    => 'promotion.index'
+        ]);
+    });
+
     Route::group(['prefix' => 'Category'], function () {
         Route::get('',[
             'uses'  => 'CateController@index',
