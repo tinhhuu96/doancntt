@@ -5,6 +5,12 @@ namespace App\Http\Controllers\LayoutController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Contact;
+use Mail;
+use App\User;
+use App\Mail\ContactEmail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ContactController extends Controller
 {
@@ -13,6 +19,8 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function index()
     {
         return view('layout.contact.index');
@@ -36,8 +44,10 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        Contact::create(['name'=>trim($request->aname), 'email' => trim($request->aemail),'content'=> trim($request->acontent) ]);
-        
+        // Contact::create(['name'=>trim($request->aname), 'email' => trim($request->aemail),'content'=> trim($request->acontent) ]);
+        $id = 7; // điền 1 mã id bất kỳ của user trong bảng users
+        $user = User::findOrFail($id);
+        Mail::to($user)->send(new ContactEmail());
         return 'Send success, Thanks you !';
     }
 
