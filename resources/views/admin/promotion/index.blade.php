@@ -4,7 +4,7 @@
   <div class="col-xs-11">
     <div class="box box-primary">
       <div class="box-header with-border">
-        <h3 class="box-title">Chương trình khuyến mãi </h3>
+        <h3 class="box-title">Chương trình khuyến mãi KH</h3>
       </div>
       <!-- /.box-header -->
         <div class="box-body">
