@@ -92,6 +92,7 @@ Route::group(['namespace' => 'LayoutController'], function () {
             'as'    => 'public.create.contact'
         ]);
 
+        Route::get('testsendmail','ContactController@sendmailtest');
     });
 
     Route::group(['prefix' => 'login'], function () {

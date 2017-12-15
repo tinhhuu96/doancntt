@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'mailgun'),
+    'driver' => env('MAIL_DRIVER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'smtp.mailtrap.io'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'admin@gmail.com'),// điền email gửi
-        'name' => env('MAIL_FROM_NAME', 'Huu Tinh'),// Điền tên người gửi
+        'address' => env('MAIL_FROM_ADDRESS', 'shoping.doan96@gmail.com'),// điền email gửi
+        'name' => env('MAIL_FROM_NAME', 'tranluong'),// Điền tên người gửi
     ],
 
     /*

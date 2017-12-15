@@ -5,6 +5,7 @@ namespace App\Http\Controllers\LayoutController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Contact;
+use Mail;
 
 class ContactController extends Controller
 {
@@ -16,6 +17,15 @@ class ContactController extends Controller
     public function index()
     {
         return view('layout.contact.index');
+    }
+
+    public function sendmailtest()
+    {
+        Mail::send(['emails.test'],['name'=>'tranluong'],function($message){
+            $message->to('shoping.doan96@gmail.com','to shoping')->subject('test send mail');
+            $message->from('shoping.doan96@gmail.com','tranluong');
+        });
+        return 1;
     }
 
     /**
