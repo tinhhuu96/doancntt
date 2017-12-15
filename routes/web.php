@@ -91,7 +91,7 @@ Route::group(['namespace' => 'LayoutController'], function () {
             'uses'  => 'ContactController@store',
             'as'    => 'public.create.contact'
         ]);
-
+        
     });
 
     Route::group(['prefix' => 'login'], function () {
