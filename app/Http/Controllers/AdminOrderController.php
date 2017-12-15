@@ -61,7 +61,7 @@ class AdminOrderController extends Controller
      */
     public function edit($id)
     {
-       $order = Order::find($id);
+        $order = Order::find($id);
         return view('auth.order.edit')->with('order', $order);
     }
 
@@ -76,13 +76,9 @@ class AdminOrderController extends Controller
     {
         $order = Order::find($id);
         $shipping = $request->Input('shipping_status');
-        if ($shipping == 1)
+        if ($shipping == 0)
         {
             $order->update(['address' => $request->Input('address'), 'shipping_status' => 0, 'phone' => $request->Input('phone'), 'name' => $request->Input('name'), 'status' => 1 ]);
-        }
-        elseif ( $shipping == 2)
-        {
-            $order->update(['address' => $request->Input('address'), 'shipping_status' => 1, 'phone' => $request->Input('phone'), 'name' => $request->Input('name'), 'status' => 0  ]);
         }
         else
         {
@@ -153,11 +149,11 @@ class AdminOrderController extends Controller
                 $orders = Order::all();
             }
             elseif ($request->Input('status') == 1) {
-                $orders = Order::where('status', '=', 'avalible')->get();
+                $orders = Order::where('status', '=', 1)->get();
             }
             else
             {
-                $orders = Order::where('status', '=', 'not avalible')->get();
+                $orders = Order::where('status', '=', 0)->get();
             }
             Excel::create('Orders Excel', function($excel) use($orders) {
                 $excel->sheet('Excel sheet', function($sheet) use($orders) {
@@ -167,14 +163,14 @@ class AdminOrderController extends Controller
             return redirect('admin/orders');
         }
         elseif ($request->Input('status') == 2) {
-            $orders = Order::where('date', '>=', $date_start)->where('date', '<=', $date_end)->get();
+            $orders = Order::where('created_at', '>=', $date_start)->where('created_at', '<=', $date_end)->get();
         }
         elseif ($request->Input('status') == 1) {
-            $orders = Order::where('date', '>=', $date_start)->where('date', '<=', $date_end)->where('status', '=', 'avalible')->get();
+            $orders = Order::where('created_at', '>=', $date_start)->where('created_at', '<=', $date_end)->where('status', '=', 1)->get();
         }
         else
         {
-            $orders = Order::where('date', '>=', $date_start)->where('date', '<=', $date_end)->where('status', '=', 'not avalible')->get();
+            $orders = Order::where('created_at', '>=', $date_start)->where('created_at', '<=', $date_end)->where('status', '=', 0)->get();
         }
         Excel::create('Orders Excel', function($excel) use($orders) {
             $excel->sheet('Excel sheet', function($sheet) use($orders) {

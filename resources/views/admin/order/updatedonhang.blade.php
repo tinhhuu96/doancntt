@@ -80,7 +80,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            
+
             <input type="hidden" value="{{ $date }}" id="datetime">
             <table id="example2" class="table table-bordered table-hover">
               <thead>
@@ -94,7 +94,7 @@
               </tr>
               </thead>
               <tbody id="getValueInOrder">
-                
+
               </tbody>
             </table>
           </div>

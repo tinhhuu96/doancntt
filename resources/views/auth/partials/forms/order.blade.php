@@ -15,7 +15,7 @@
              </div> -->
              <div class="form-group">
                 {!! Form::label('shipping_status', 'Tình Trạng Giao Hàng')!!}
-                {!! Form::select('shipping_status', array('1' => 'waiting', '2' => 'done', '3' =>'cancel'), null, ['class' => 'form-control'], ['class' => 'form-control']) !!}
+                {!! Form::select('shipping_status', array('0' => 'waiting', '1' => 'done', '2' =>'cancel'), null, ['class' => 'form-control'], ['class' => 'form-control']) !!}
             </div>
             <div class="form-group">
               {!! Form::label('phone', 'Số Điện Thoại')!!}
