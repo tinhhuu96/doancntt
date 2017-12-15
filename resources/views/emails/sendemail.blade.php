@@ -1,3 +1,2 @@
-Hello,
-This is email sent by Mailgun API and Laravel 5.4
-Kungfu PHP
+<p>{{ $order->name }}</p>
+<p>{{ $order->email }}</p>

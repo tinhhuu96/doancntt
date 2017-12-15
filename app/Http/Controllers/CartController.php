@@ -13,6 +13,8 @@ use DateTime;
 use App\Product;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderShipped;
 use Toastr;
 class CartController extends Controller
 {
@@ -40,6 +42,14 @@ class CartController extends Controller
 
     public function checkout()
     {
+        $content = Cart::content();
+        foreach ($content as $item) {
+            $product = Product::findOrFail($item->id);
+            if ($product->quantity < $item->qty){
+                Toastr::warning("Not enough quantity. " . $product->name);
+                return redirect('/carts');
+            }
+        }
         return view('layouts.cart.checkout');
     }
 
@@ -59,6 +69,7 @@ class CartController extends Controller
             $product->save();
             }
             Cart::destroy();
+            Mail::to($order)->send(new OrderShipped($order));
             Toastr::success("Checkout Completed, please check mail !");
             return redirect('/');
         }
@@ -78,7 +89,18 @@ class CartController extends Controller
     public function cancel($id)
     {
         $order = Order::find($id);
+        if ($order->status == 0) {
+            Toastr::warning("Can not cancel order !");
+            return redirect('carts/manage');
+        }
+        $items = $order->OrderDetails()->get();
         $order->update(['shipping_status' => 2, 'status' => 0]);
+        foreach ($items as $item) {
+            $product = Product::findOrFail($item->product_id);
+            $quantity = $product->quantity + $item->quantity;
+            $product->update(['quantity' => $quantity]);
+        }
+        Toastr::success("Canceled Order " . $order->id);
         return redirect('carts/manage');
     }
 
@@ -114,7 +136,7 @@ class CartController extends Controller
             $excel->sheet('Excel sheet', function($sheet) use($orders) {
                 $sheet->fromArray($orders);
             });
-        })->export('pdf');
+        })->export('xls');
         return redirect('carts/manage');
     }
 
