@@ -11,7 +11,7 @@
 	<?php
 		$price = number_format($value->price,0,'.','.');
 		$slug = str_slug($value->name);
-		$created_at = date_format($value->created_at,"Y-m-d");
+		$created_at = date_format($value->created_at,'Y-m-d');
 		$dates = ( strtotime($date)-strtotime($created_at) );
 
 	?>

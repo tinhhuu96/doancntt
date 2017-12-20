@@ -58,6 +58,7 @@ return [
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'shoping.doan96@gmail.com'),// điền email gửi
         'name' => env('MAIL_FROM_NAME', 'tranluong'),// Điền tên người gửi
+
     ],
 
     /*

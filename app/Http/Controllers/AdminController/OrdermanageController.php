@@ -36,7 +36,6 @@ class OrdermanageController extends Controller
     public function AddOrderInput($slug,$id)
     {
         $arProduct = Product::find($id);
-        // dd($arProduct);
         return view('admin.order.updatedonhang',['arProduct'=>$arProduct]);
     }
 
@@ -54,14 +53,14 @@ class OrdermanageController extends Controller
         if ($price != "") {
             $priceN = $price;
         }
-       
+
         if ($quantity != "") {
             $quantityN = $quantity + $quantityN;
         }
         if ($detail != "") {
             $detailN = $detail;
         }
-        
+
         Product::where('code','=',$code)->update(['price'=>$priceN,'quantity'=>$quantityN, 'detail'=> $detailN]);
 
         $arNewProduct = Product::where('code','=',$code)->get();
@@ -113,7 +112,7 @@ class OrdermanageController extends Controller
                         ->withInput();
         }
         $arhash = Product::where('code','=',$code)->get();
-        
+
         if (count($arhash) > 0 ) {
             $request->session()->flash('msg-e', 'Sản phẩm tồn tại !');
             return redirect()->route('admin.OrderIn');
@@ -125,14 +124,14 @@ class OrdermanageController extends Controller
                 $endPic = end($tmp);
             }
             $arProduct = Product::create(['code'=>$code, 'name'=>$name, 'detail'=>$detail,'picture'=>$endPic,'price'=>0,'quantity'=>0,'active'=>$request->display, 'category_id'=>$id,'provider_id'=>1,'view'=>1]);
-            
+
             if($arProduct){
                 $arNewProduct = Product::where('code','=',$code)->get();
                 // dd($arNewProduct[0]->id);
                 $quantity = $arNewProduct[0]->quantity;
                 $price = $arNewProduct[0]->price;
                 $total = $price*$quantity;
-                
+
                 TransInput_order::create(['id_product'=> $arNewProduct[0]->id, 'quantity'=>$arNewProduct[0]->quantity, 'price'=>$arNewProduct[0]->price, 'total'=> $total ]);
 
                 $request->session()->flash('msg-s', 'Nhập thành công !');
@@ -200,7 +199,7 @@ class OrdermanageController extends Controller
             }else{
                 return $str .= "không tìm thấy !";
             }
-            
+
         }else{
             return 0;
         }

@@ -32,7 +32,7 @@
   {!! Toastr::render() !!}
 	<?php
 		use App\Category;
-		$category = Category::all();
+		$categories = Category::all();
 	?>
   <div class="btn btn-default"  style="position: fixed; top: 70px; right: 5px; background-color: #FE980F">
   @if ( Cart::count() > 0 )
@@ -136,11 +136,11 @@
 							<ul class="nav navbar-nav collapse navbar-collapse">
 								<li><a href="{{ route('public.index') }}" class="active">Home</a></li>
 
-								@foreach( $category as $key => $value)
+								@foreach( $categories as $key => $value)
 									@if( $value->parent == 0 )
 									<li class="dropdown"><a href="{{ route('public.Product_Cate',['slug'=>str_slug($value->name),'id'=>$value->id]) }}">{{ $value->name }} <i class="fa fa-angle-down"></i></a>
 										<ul role="menu" class="sub-menu">
-											@foreach( $category as $keys => $parent)
+											@foreach( $categories as $keys => $parent)
 												@if( $parent->parent == $value->id)
 			                                    <li><a href="{{ route('public.Product_Cate',['slug'=>str_slug($parent->name),'id'=>$parent->id]) }}">{{ $parent->name}}</a></li>
 			                                    @endif

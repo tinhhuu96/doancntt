@@ -25,16 +25,21 @@
             <div class="col-xs-3">
               <div class="form-group">
                 <label for="">Mã Sản Phẩm</label>
-                <input type="text" name="code" class="form-control" placeholder="Enter code product" required="">
+                <input type="text" name="code" class="form-control" placeholder="Enter code product" >
                 @if ($errors->has('code'))
                     <span class="help-block">
                         <strong class="text-danger">{{ $errors->first('code') }}</strong>
                     </span>
                 @endif
               </div>
-              <div class="form-group">
+              <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
                 <label for="">Tên Sản Phẩm</label>
-                <input type="text" class="form-control" name="name" placeholder="Enter name product" required="">
+                <input type="text" id="name" class="form-control" name="name" autofocus placeholder="Enter name product">
+                @if ($errors->has('name'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('name') }}</strong>
+                    </span>
+                @endif
               </div>
             </div>
             <div class="col-xs-4">
@@ -77,7 +82,7 @@
             <div class="col-xs-12">
               <div class="form-group">
                 <label for="">Chi Tiết Sản Phẩm</label>
-                <textarea class="ckeditor form-control" rows="3" name="detail" required=""></textarea>
+                <textarea class="ckeditor form-control" rows="3" name="detail" ></textarea>
               </div>
             </div>
           </div>

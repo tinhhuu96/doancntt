@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('email');
             $table->string('address');
             $table->integer('shipping_status')->default(0);
-            $table->integer('status')->default(0);
+            $table->integer('status')->default(1);
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
