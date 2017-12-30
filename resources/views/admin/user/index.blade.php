@@ -43,7 +43,7 @@ img{
             @foreach($arUser as $key => $value)
                 <?php 
                   $hinhanh = $value->picture;
-                  $slug    = str_slug($value->fullname);
+                  $slug    = str_slug($value->name);
                   $edit = route('admin.user.edit',['slug'=>$slug, 'id'=>$value->id]);
                   $delete = route('admin.user.delete',['id'=>$value->id]);
                 ?>
@@ -107,7 +107,7 @@ img{
              @foreach($arUser as $key => $value)
                 <?php 
                   $hinhanh = $value->picture;
-                  $slug    = str_slug($value->fullname);
+                  $slug    = str_slug($value->name);
                   $edit = route('admin.user.edit',['slug'=>$slug, 'id'=>$value->id]);
                   $delete = route('admin.user.delete',['id'=>$value->id]);
                 ?>

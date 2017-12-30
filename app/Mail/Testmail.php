@@ -28,6 +28,6 @@ class Testmail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.test');
+        return $this->view('emails.test')->with(['content'=>$content]);
     }
 }
