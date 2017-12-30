@@ -1,7 +1,6 @@
 @extends('templates.public.templates_index')
 
 @section('content')
-<div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2" style="margin-left: 0px">
             <div class="panel panel-default">
@@ -43,5 +42,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection
