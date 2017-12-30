@@ -1,2 +1,2 @@
-this is test sendmail
-tranluong
+13dsgdsgd
+{{ $content }}

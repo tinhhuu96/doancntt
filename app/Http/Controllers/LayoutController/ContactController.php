@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Contact;
 use Mail;
+use App\Mail\Testmail;
 
 
 class ContactController extends Controller
@@ -24,11 +25,7 @@ class ContactController extends Controller
 
     public function sendmailtest()
     {
-        Mail::send(['emails.test'],['name'=>'tranluong'],function($message){
-            $message->to('shoping.doan96@gmail.com','to shoping')->subject('test send mail');
-            $message->from('shoping.doan96@gmail.com','tranluong');
-        });
-        return 1;
+        Mail::to('tinhhuu96@gmail.com')->send(new Testmail());
     }
 
     /**
@@ -49,10 +46,12 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        // Contact::create(['name'=>trim($request->aname), 'email' => trim($request->aemail),'content'=> trim($request->acontent) ]);
-        $id = 7; // điền 1 mã id bất kỳ của user trong bảng users
-        $user = User::findOrFail($id);
-        Mail::to($user)->send(new ContactEmail());
+        $name    = $request->aname;
+        $content = $request->acontent;
+        $email   = $request->aemail;
+
+        Mail::to('tinhhuu96@gmail.com')->send(new Testmail($content));
+
         return 'Send success, Thanks you !';
     }
 
