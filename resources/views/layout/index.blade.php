@@ -15,7 +15,7 @@
 	?>
 	@foreach( $products as $key => $value )
 	<?php
-		$discount = 0; 
+		$discount = 0;
 		$arProduct = DB::table('promo_products')->join('promotions','promo_products.promotion_id','=','promotions.id')->join('products','products.id','=','promo_products.product_id')->select(['promotions.value_km','promotions.active'])->where('promo_products.product_id',$value->id)->get();
 		$so = count($arProduct);
 		if ($so > 0) {
@@ -28,7 +28,7 @@
 		$created_at = date_formats($value->created_at,'Y-m-d');
 		$dates = ( strtotime($date)-strtotime($created_at) );
 
-		
+
 	?>
 		@if($value->picture != "")
 	    <div class="col-sm-4">
@@ -37,7 +37,7 @@
 	                <div class="productinfo text-center">
 	                    <img src="{{ asset('storage/products/'.$value->picture) }}" style="height: 250px" />
 	                    @if( $active == 1 )
-							<?php 
+							<?php
 								$discount = $arProduct[0]->value_km;
 								$phantram = 100 - $discount;
 								$chieckhau =$phantram/100;
@@ -55,7 +55,7 @@
 	                <div class="product-overlay">
 	                    <div class="overlay-content">
 	                        @if( $active == 1 )
-								<?php 
+								<?php
 									$discount = $arProduct[0]->value_km;
 									$phantram = 100 - $discount;
 									$chieckhau =$phantram/100;

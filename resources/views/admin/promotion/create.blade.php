@@ -1,6 +1,6 @@
 @extends('templates.admin.template')
 @section('content')
-<?php 
+<?php
   use App\Category;
   use App\Calculation;
   $arcalcu    = Calculation::all();
@@ -17,8 +17,8 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="form-group">
-                <label for="">Chọn khuyến mãi</label>
-                <select id="idCategories" class="select2 form-control" multiple="multiple" data-placeholder="Select a State" style="width: 200px;" onchange="changeSp()">
+                <label for="">Chọn Loại Sản Phẩm:  </label>
+                <select id="idCategories" class="select2 form-control" multiple="multiple" data-placeholder="Select a State" style="width: 100%;" onchange="changeSp()">
                   @foreach( $arcategory as $value)
                   <option value="{{ $value->id }}">{{ $value->name }}</option>
                   @endforeach
@@ -124,7 +124,7 @@
             <div class="col-xs-12">
               <div class="row">
                 <div class="col-xs-2">
-                
+
                 </div>
                 <div class="col-xs-10">
                   <a onclick="addProduct()" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>Chọn sản phẩm</a>
@@ -194,7 +194,7 @@
               alert('Có lỗi xảy ra');
           }
       });
-    
+
   }
   function saveProduct()
   {

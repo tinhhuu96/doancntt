@@ -15,14 +15,13 @@ class CreatePermissionTable extends Migration
      */
     public function up()
     {
-        Schema::create('permission', function (Blueprint $table) {
+        Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->timestamps();
         });
-        DB::table('permission')->insert(
+        DB::table('permissions')->insert(
             array(
-                ['name' => "chưa xác định"],
                 ['name' => "Administrator"],
                 ['name' => "Nhanvien"],
                 ['name' => "thanhvien"]
@@ -37,6 +36,6 @@ class CreatePermissionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permission');
+        Schema::dropIfExists('permissions');
     }
 }

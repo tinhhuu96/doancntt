@@ -16,9 +16,9 @@ class AuthController extends Controller
 		if (Session::get('USERNAME')) {
 			return redirect()->route('admin.index');
 		}else{
-			return view('admin.login.index');	
+			return view('admin.login.index');
 		}
-		
+
 	}
 
 	public function postLogin(Request $request)

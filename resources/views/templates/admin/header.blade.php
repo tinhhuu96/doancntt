@@ -31,18 +31,13 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{ asset('admin/dist/css/skins/_all-skins.min.css') }}">
   <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <style>
     .wrapper{
       overflow-x: unset !important;
-    overflow-y: unset !important;
+      overflow-y: unset !important;
     }
   </style>
 </head>
@@ -52,7 +47,7 @@
 
   <header class="main-header">
      <!-- Logo -->
-    <a href="{{ route('admin.index') }}" class="logo">
+    <a href="{{ url ('admin.index') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
@@ -79,7 +74,7 @@
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu" id="get_arcontact">
-                  
+
                 </ul>
               </li>
             </ul>
@@ -133,11 +128,11 @@
               <!-- User image -->
               <li class="user-header">
                  @if(Session::get('PICTURE') != "")
-                  <img src="{{ asset('storage/admins/'.Session::get('PICTURE')) }}" class="img-circle" alt="User Image" style="height: 90px;
-    width: 90px;">
+                  <img src="{{ asset('storage/admins/'.Session::get('PICTURE')) }}" class="img-circle"
+                    alt="User Image" style="height: 90px; width: 90px;">
                 @else
-                  <img src="{{ asset('images/logo/avata.png') }}" class="img-circle" alt="User Image" style="height: 90px;
-    width: 90px;">
+                  <img src="{{ asset('images/logo/avata.png') }}" class="img-circle" alt="User Image"
+                    style="height: 90px; width: 90px;">
                 @endif
                 <p>
                 @if(Session::get('USERNAME') != "")
