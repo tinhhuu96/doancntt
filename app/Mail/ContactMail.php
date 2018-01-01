@@ -6,22 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Order;
+use App\Contact;
 
-class OrderShipped extends Mailable
+class ContactMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $order;
+    protected $contact;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Order $order)
+    public function __construct(Contact $contact)
     {
-        $this->order = $order;
+        $this->contact = $contact;
     }
 
     /**
@@ -31,6 +31,6 @@ class OrderShipped extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.sendemail')->with(['order' => $this->order]);
+        return $this->view('emails.sendemail')->with(['contact' => $this->contact]);
     }
 }

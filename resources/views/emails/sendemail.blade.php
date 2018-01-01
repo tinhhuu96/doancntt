@@ -1,2 +1,1 @@
-<p>{{ $order->name }}</p>
-<p>{{ $order->email }}</p>
+<p>{{$contact->name}}</p>
