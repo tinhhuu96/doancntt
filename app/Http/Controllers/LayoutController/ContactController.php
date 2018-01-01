@@ -5,9 +5,8 @@ namespace App\Http\Controllers\LayoutController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Contact;
-use Mail;
-use App\Mail\Testmail;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMail;
 
 class ContactController extends Controller
 {
@@ -46,12 +45,8 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $name    = $request->aname;
-        $content = $request->acontent;
-        $email   = $request->aemail;
-
-        Mail::to('tinhhuu96@gmail.com')->send(new Testmail($content));
-
+        $contact = Contact::create(['name'=>trim($request->aname), 'email' => trim($request->aemail),'content'=> trim($request->acontent) ]);
+        Mail::to($contact)->send(new ContactMail($contact));
         return 'Send success, Thanks you !';
     }
 
