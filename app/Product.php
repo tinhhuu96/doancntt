@@ -22,4 +22,8 @@ class Product extends Model
     public function Comment(){
       return $this->hasMany('App\Comment');
     }
+
+    public function Promotion_product() {
+      return $this->belongsTo('App\promo_products');
+    }
 }

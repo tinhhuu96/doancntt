@@ -10,6 +10,8 @@ use App\Category;
 use App\Parameter_detail;
 use App\Parameter;
 use App\Comment;
+use App\Promotion_product;
+use App\Promotion;
 
 class ProductController extends Controller
 {
@@ -20,7 +22,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where('active','=',1)->orderby('id','DESC')->paginate(10);
+        $products =  Product::where('active',1)->paginate(12);
         return view('layout.product.index',['products'=>$products]);
     }
 
@@ -87,6 +89,23 @@ class ProductController extends Controller
                     </div>';
         }
         return $str;
+    }
+
+
+    public function disablePromotion(Request $request)
+    {
+        $adate = $request->date;
+        $s="";
+        $arpromotion = Promotion::all();
+        foreach ($arpromotion as $key => $value) {
+            
+            $date = explode(' ', $value->date_end);
+            // $s .= $date[0];
+
+            $s = count(Promotion::where('date_end','>', $adate)->get() );
+
+        }
+        return $s;
     }
 
     /**

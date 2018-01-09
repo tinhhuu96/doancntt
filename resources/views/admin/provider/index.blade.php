@@ -128,7 +128,7 @@
                 <a href="{{ $urledit }}" class="text-yellow" ><i class="fa fa-edit"></i> Edit</a>
               </td>
               <td>
-                <a href="javascript:void(0)" onclick="destroyProvide({{$id}})" class="text-red"><i class="fa fa-trash-o"> Delete</i></a>
+                <a href="javascript:void(0)" onclick="var tb=confirm('Bạn có muốn xóa không ?');if(tb==true){return destroyProvide({{$id}});}else{return false;};" class="text-red"><i class="fa fa-trash-o"> Delete</i></a>
               </td>
             </tr>
             <?php } ?>
