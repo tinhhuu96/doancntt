@@ -6,6 +6,7 @@
   $arcalcu    = Calculation::all();
   $arcategory = Category::all();
 ?>
+
 <div class="row">
   <div id="model-promotion" class="modal bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xs">
@@ -19,6 +20,7 @@
               <div class="form-group">
                 <label for="">Chọn khuyến mãi</label>
                 <select id="idCategories" class="select2 form-control" multiple="multiple" data-placeholder="Select a State" style="width: 200px;" onchange="changeSp()">
+                  <option>--Chọn danh mục</option>
                   @foreach( $arcategory as $value)
                   <option value="{{ $value->id }}">{{ $value->name }}</option>
                   @endforeach
@@ -55,17 +57,27 @@
   </div>
 </div>
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 <div class="row">
   <div class="col-xs-11">
     <div class="box box-primary">
       <div class="box-header with-border">
-        <h3 class="box-title">Thêm Khuyến Mãi</h3>
+        <h3 class="box-title">Chỉnh sửa Khuyến Mãi</h3>
       </div>
       <!-- /.box-header -->
       <!-- form start -->
-      <form role="form" action="{{ route('promotion.store') }}" method="post">
+      <form role="form" action="{{ route('promotion.update') }}" method="post">
         {{ csrf_field() }}
+        <input type="hidden" name="id" value="{{ $arpromotions[0]->id }}">
         <div class="box-body">
           <div class="row">
             <div class="col-xs-12">
@@ -73,9 +85,14 @@
                 <label for="">Tên chương trình</label>
               </div>
               <div class="col-xs-5">
-                <input type="text" name="name" placeholder="nhập tên khuyến mãi..." class="form-control">    <br>
+                <input type="text" name="name" value="{{ $arpromotions[0]->name }}" placeholder="nhập tên khuyến mãi..." class="form-control">    <br>
+                <?php $c = "checked"; ?>
                 @foreach($arcalcu as $valuecacul)
-                <input type="radio" name="radio_km" class="flat-red" value="{{ $valuecacul->id}}">{{ $valuecacul->name }} &nbsp&nbsp
+                  @if( $valuecacul->id == $arpromotions[0]->calculation_id)
+                    <input type="radio" name="radio_km" class="flat-red" {{$c}} value="{{ $valuecacul->id}}">{{ $valuecacul->name }} &nbsp&nbsp
+                  @else
+                    <input type="radio" name="radio_km" class="flat-red" value="{{ $valuecacul->id}}">{{ $valuecacul->name }} &nbsp&nbsp
+                  @endif
                 @endforeach
               </div>
             </div>
@@ -87,7 +104,7 @@
                 <label for="">Giá trị</label>
               </div>
               <div class="col-xs-5">
-                <input type="number" name="gt_pro" placeholder="nhập % or $..." class="form-control">
+                <input type="number" name="gt_pro" value="{{ $arpromotions[0]->value_km }}" placeholder="nhập % or $..." class="form-control">
               </div>
             </div>
           </div>
@@ -98,6 +115,10 @@
                 <label for="">Chọn ngày</label>
               </div>
               <div class="col-xs-5">
+                <div>
+                  Ngày bắt đầu: {{ $arpromotions[0]->date_begin }} <br>
+                  Ngày hết hạn: {{ $arpromotions[0]->date_end }}
+                </div>
                 <div class="input-group">
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
@@ -114,8 +135,13 @@
                 <label for="">Hiệu lực</label>
               </div>
               <div class="col-xs-5">
+                @if( $arpromotions[0]->active == 1)
+                <input type="radio" name="radio_active" checked class="flat-red" value="1"> Có &nbsp&nbsp
+                <input type="radio" name="radio_active" class="flat-red" value="2"> Không
+                @else
                 <input type="radio" name="radio_active" class="flat-red" value="1"> Có &nbsp&nbsp
-              <input type="radio" name="radio_active" class="flat-red" value="2"> Không
+                <input type="radio" name="radio_active" class="flat-red" checked value="2"> Không
+                @endif
               </div>
             </div>
           </div>
@@ -133,7 +159,7 @@
               <div class="row">
                 <div class="col-xs-12">
                   <table class="table tabel-bordered">
-                  <caption>Sản phẩm khuyến mãi</caption>
+                  <caption>Sản phẩm đang được khuyến mãi</caption>
                   <thead>
                     <tr>
                       <th>Code</th>
@@ -143,6 +169,14 @@
                     </tr>
                   </thead>
                   <tbody id="setproductpromotion">
+                    @foreach( $product_promotion as $valuePro )
+                      <tr>
+                        <td>{{ $valuePro->code }}</td>
+                        <td>{{ $valuePro->name }}</td>
+                        <td>{{ $valuePro->price }}</td>
+                        <td>{{ $valuePro->quantity }}</td>
+                      </tr>
+                    @endforeach
                   </tbody>
                 </table>
                 </div>
@@ -158,7 +192,7 @@
                 &nbsp
               </div>
               <div class="col-xs-1">
-                <button type="submit" class="btn btn-primary ">Create</button>
+                <button type="submit" class="btn btn-primary ">Update</button>
               </div>
               <div class="col-xs-2">
                 <a href="{{ route('promotion.index') }}" class="btn btn-danger pull-right">Cancel</a>

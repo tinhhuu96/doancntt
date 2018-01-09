@@ -163,7 +163,6 @@
         $('#alertprovider-e').html(data);
         $('#mes-provider-e').css({display:'block', transition:'0.3 all'});
         setTimeout(function(){ $('#mes-provider-e').fadeOut() }, 2000);
-        setTimeout(function(){ window.location= "{{route('admin.category')}}" }, 2000);
       },
       error: function (){
         alert('Có lỗi xảy ra');

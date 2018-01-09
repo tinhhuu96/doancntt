@@ -468,6 +468,7 @@ function destroy(id){
     }
   });
 }
+  
 </script>
 @yield('script')
 @yield('jquery')

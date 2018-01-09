@@ -58,6 +58,11 @@ Route::group(['namespace' => 'LayoutController'], function () {
             'uses'  => 'ProductController@ajaxGetComment',
             'as'    => 'public.ajax.getComment'
         ]);
+
+        Route::post('update-disable-promotion',[
+            'uses'  => 'ProductController@disablePromotion',
+            'as'    => 'promotion.disable'
+        ]);
     });
 
     Route::group(['prefix' => 'order'], function () {
@@ -197,6 +202,38 @@ Route::group(['namespace' => 'AdminController','prefix' => 'adminpc', 'middlewar
         Route::get('',[
             'uses'  => 'PromotionController@index',
             'as'    => 'promotion.index'
+        ]);
+        Route::get('/create-promotion',[
+            'uses'  => 'PromotionController@create',
+            'as'    => 'promotion.create'
+        ]);
+        Route::post('/ajax-getproduct-promotion',[
+            'uses'  => 'PromotionController@getproduct',
+            'as'    => 'promotion.ajaxgetProduct' 
+        ]);
+        Route::post('save-sp-promotion',[
+            'uses'  => 'PromotionController@saveSp',
+            'as'    => 'promotion.savesp'
+        ]);
+        Route::post('store-promotion',[
+            'uses'  => 'PromotionController@store',
+            'as'    => 'promotion.store'
+        ]);
+        Route::get('edit-promotion-{id}',[
+            'uses'  => 'PromotionController@edit',
+            'as'    => 'promotion.edit'
+        ]);
+        Route::post('update-promotion',[
+            'uses'  => 'PromotionController@update',
+            'as'    => 'promotion.update'
+        ]);
+        Route::post('destroy-promotion',[
+            'uses'  => 'PromotionController@destroy',
+            'as'    => 'promotion.destroy'
+        ]);
+        Route::get('view-promotion-{id}',[
+            'uses'  => 'PromotionController@show',
+            'as'    => 'promotion.show'
         ]);
     });
 

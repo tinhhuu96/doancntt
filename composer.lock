@@ -1478,12 +1478,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/oriceon/toastr-5-laravel.git",
-                "reference": "148d2747dc649b86d8a2d9a1135634b454223bb5"
+                "reference": "4ce3779ba7bd76f7a9cdc4dad90ed85b300218cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oriceon/toastr-5-laravel/zipball/148d2747dc649b86d8a2d9a1135634b454223bb5",
-                "reference": "148d2747dc649b86d8a2d9a1135634b454223bb5",
+                "url": "https://api.github.com/repos/oriceon/toastr-5-laravel/zipball/4ce3779ba7bd76f7a9cdc4dad90ed85b300218cf",
+                "reference": "4ce3779ba7bd76f7a9cdc4dad90ed85b300218cf",
                 "shasum": ""
             },
             "require": {
@@ -1492,6 +1492,16 @@
                 "php": ">=5.4.0"
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kamaln7\\Toastr\\ToastrServiceProvider"
+                    ],
+                    "aliases": {
+                        "Toastr": "Kamaln7\\Toastr\\Facades\\Toastr"
+                    }
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Kamaln7\\Toastr\\": "src/"
@@ -1519,7 +1529,7 @@
                 "php",
                 "toastr"
             ],
-            "time": "2017-01-28T17:37:02+00:00"
+            "time": "2018-01-02T07:28:16+00:00"
         },
         {
             "name": "paragonie/random_compat",

@@ -1,9 +1,15 @@
 @extends('templates.public.templates')
 @section('title')
-    {{ $product->name }}
+    view - {{ $product->name }}
 @stop
 @section('content')
-<?php $date = date('Y-m-d');
+<?php $date = date('Y-m-d');$chieckhau=0;
+        function date_formats($str)
+        {
+            $arNgay = explode(' ', $str);
+            $arNgay = explode('-', $arNgay[0]);
+            return  $arNgay[0].'-'.$arNgay[1].'-'.$arNgay[2];
+        }
         function ham_dao_nguoc_date($str)
         {
             //tách mảng bằng dấu cách
@@ -11,6 +17,13 @@
             $arNgay = explode('-', $arStr[0]);
             return  $arNgay[2].'-'.$arNgay[1].'-'.$arNgay[0];
         }
+
+
+        $discount = 0; 
+        $arProduct = DB::table('promo_products')->join('promotions','promo_products.promotion_id','=','promotions.id')->join('products','products.id','=','promo_products.product_id')->select(['promotions.value_km'])->where('promo_products.product_id',$product->id)->get();
+        $so = count($arProduct);
+        $price = $product->price;
+
     ?>
 <div class="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -34,7 +47,7 @@
     <div class="col-sm-7">
         <div class="product-information"><!--/product-information-->
             <?php 
-                $created_at = date_format($product->created_at,"Y-m-d");;
+                $created_at = date_formats($product->created_at,"Y-m-d");;
                 $dates = ( strtotime($date)-strtotime($created_at) );
             ?>
              @if( $dates < 432000)
@@ -43,7 +56,19 @@
             <h2>{{ $product->name }}</h2>
             <p>Web ID: {{ $product->code}}</p>
             <span>
-                <span> $ <?php echo number_format($product->price,0,'.','.'); ?> </span>
+                @if( $so >0 )
+                    <?php 
+                        $discount = $arProduct[0]->value_km;
+                        $phantram = 100 - $discount;
+                        $chieckhau =$phantram/100;
+                        $chieckhau = $price*$chieckhau;
+                        $chieckhau = number_format($chieckhau,0,'.','.');
+                    ?>
+                       <i><strike>$<?php echo number_format($price,0,'.','.') ?></strike></i> <br>
+                       <span>${{$chieckhau}}</span>
+                @else
+                    <span>$<?php echo number_format($price,0,'.','.') ?></span>
+                @endif
                 <label>Quantity:</label>
                 <input type="text" value="1" />
                 <button type="button" onclick="addCart({{$product->id}})" class="btn btn-fefault cart">

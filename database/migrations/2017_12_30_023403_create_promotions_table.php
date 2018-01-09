@@ -16,12 +16,11 @@ class CreatePromotionsTable extends Migration
         Schema::create('promotions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-             $table->string('content');
-            $table->dateTimeTz('date_begin');
-            $table->dateTimeTz('date_end');
+            $table->integer('value_km')->unsigned()->nullable();
+            $table->date('date_begin');
+            $table->date('date_end');
             $table->integer('active')->unsigned()->nullable();
             $table->integer('calculation_id')->unsigned()->nullable();
-            $table->foreign('calculation_id')->references('id')->on('promotions');
             $table->timestamps();
         });
     }
