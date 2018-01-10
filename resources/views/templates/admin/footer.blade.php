@@ -406,11 +406,19 @@ $(function(){
 function changerDisplaymes()
 {
   $('#liststar').css({display:'none', transition:'0.3 all'});
+  $('#listsend').css({display:'none', transition:'0.3 all'});
   $('#listmes').css({display:'block', transition:'0.3 all'});
 }
 function changerDisplayStar()
 {
   $('#liststar').css({display:'block', transition:'0.3 all'});
+  $('#listmes').css({display:'none', transition:'0.3 all'});
+  $('#listsend').css({display:'none', transition:'0.3 all'});
+}
+function changerDisplaySend()
+{
+  $('#listsend').css({display:'block', transition:'0.3 all'});
+  $('#liststar').css({display:'none', transition:'0.3 all'});
   $('#listmes').css({display:'none', transition:'0.3 all'});
 }
 
