@@ -5,8 +5,6 @@
   $countall = count(Contact::all());
 	$countallstar = count(Contact::where('star','=',1)->get());
 ?>
-<!-- Modal -->
-<!--  -->
 <div class="row">
   <div class="col-md-5">
       @if(Session::has('msg-s'))
@@ -105,7 +103,7 @@
         								<a href="javascript:void(0)" onclick="setStar({{$value->id}},0)"><i class="fa fa-star text-black"></i></a>
         			                	@endif
         			                </td>
-        			                <td onclick="modalView({{ $value->id }})" class="mailbox-name text-danger"><a href="" class="text-danger">{{ $value->name }}</a></td>
+        			                <td onclick="modalView({{ $value->id }})" class="mailbox-name text-danger"><a href="javascript:void(0)" class="text-danger">{{ $value->name }}</a></td>
         			                <td class="mailbox-subject text-danger"><b>{{ $value->content }}</b>
         			                </td>
         			                <td class="mailbox-attachment text-danger"></td>
@@ -123,7 +121,6 @@
       </div>
       <!-- /. box -->
     </div>
-    <!-------------------- -->
     <div class="col-md-9" id="liststar" style="display: none;">
       <div class="box box-primary">
         <div class="box-header with-border">

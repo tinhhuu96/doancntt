@@ -83,10 +83,22 @@
           <label for="">Messages</label><br />
           <textarea name="" id="contentcontact" class="form-control" readonly="">...</textarea>
         </div>
+
+        <p>
+          <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Reply
+          </a>
+        </p>
+        <div class="collapse" id="collapseExample">
+          <div class="card card-body">
+            <textarea name="" cols="12" rows="5" class="form-control" placeholder="Nhập nội dung..."></textarea>
+          </div>
+          <button type="button" class="btn btn-primary">Send Contact</button>
+        </div>
+        
       </div>
       <div class="modal-footer">
         <a href="{{ route('admin.contact.index') }}"><button type="button" onclick="" class="btn btn-secondary" data-dismiss="modal">Close</button></a>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -438,9 +450,9 @@ function addPara(){
       type: 'post',
       data: {name: aname, para: apara},
       success: function(data){
-        $('#alertprovider-s').html(data);
+        $('#alertprovider-s').html(data.txt);
         $('#mes-provider-s').css({display:'block', transition:'0.3 all'});
-        setTimeout(function(){ $('#mes-provider-s').fadeOut() }, 2000);
+        setTimeout(function(){ $('#mes-provider-s').fadeOut() }, 1000);
      },
      error: function (){
       alert('Có lỗi xảy ra');
@@ -461,7 +473,7 @@ function destroy(id){
     success: function(data){
       $('#alertprovider-e').html(data);
       $('#mes-provider-e').css({display:'block', transition:'0.3 all'});
-      setTimeout(function(){ $('#mes-provider-e').fadeOut() }, 2000);
+      setTimeout(function(){ $('#mes-provider-e').fadeOut() }, 1000);
     },
     error: function (){
       alert('Có lỗi xảy ra');

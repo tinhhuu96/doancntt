@@ -17,7 +17,12 @@
 	<?php
 		$discount = 0; 
 		$arProduct = DB::table('promo_products')->join('promotions','promo_products.promotion_id','=','promotions.id')->join('products','products.id','=','promo_products.product_id')->select(['promotions.value_km','promotions.active'])->where('promo_products.product_id',$value->id)->get();
-		$active = $arProduct[0]->active;
+		$so = count($arProduct);
+		if ($so > 0) {
+			$active = $arProduct[0]->active;
+		}else{
+			$active = 0;
+		}
 		$price = $value->price;
 		$slug = str_slug($value->name);
 		$created_at = date_formats($value->created_at,'Y-m-d');

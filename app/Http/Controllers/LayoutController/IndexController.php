@@ -21,8 +21,7 @@ class IndexController extends Controller
     {
         $arCate = Category::where('id','>',1)->get();
 
-        $arProducts = Product::where('active',1)->paginate(12);
-
+        $arProducts = Product::where('active','=',1)->where('price','>',0)->paginate(12);
         return view('layout.index',['categories'=>$arCate, 'products'=>$arProducts]);
     }
 

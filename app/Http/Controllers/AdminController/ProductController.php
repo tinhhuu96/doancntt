@@ -147,24 +147,18 @@ class ProductController extends Controller
 
     public function addParaAjax(Request $request)
     {
-        $idpara = $request->aidpara;
-        $idproduct = $request->aidproduct;
-        $namepara = $request->anamePara;
-        $nameContent = trim($request->anameContent);
-
-        if ($nameContent == "") {
-            return 'Thêm thất bại !';
+        for ($i=0; $i < count($request->idpara) ; $i++) { 
+            if($request->content[$i] != "")
+            {
+                Parameter_detail::create(['product_id'=>$request->id_product,'parameter_id'=>$request->idpara[$i],'content'=>$request->content[$i] ]);
+            }
         }
-        $aradd = array(
-                    'product_id'=> $idproduct,
-                    'parameter_id'=> $idpara,
-                    'content'   => $nameContent
-                );
         // dd($aradd);
-        Parameter_detail::insert($aradd);
-        // DD();
-        return 'Thêm thành công !';
+        return redirect()->back();
     }
+
+
+
 
     public function getParaNewAdd(Request $request)
     {
@@ -188,11 +182,21 @@ class ProductController extends Controller
     public function ajaxListPara(Request $request)
     {
         $id = $request->aid;
-        $parameters = DB::table('paracatedetail')->join('parameters', 'paracatedetail.parameter_id','=','parameters.id')->join('categories','paracatedetail.category_id','=','categories.id')->select('parameters.*')->where('paracatedetail.category_id','=',$id)->get();
-
+        $name = $request->aname;
+        $parameters = DB::table('paracatedetail')->join('parameters', 'paracatedetail.parameter_id','=','parameters.id')->join('categories','paracatedetail.category_id','=','categories.id')->select('parameters.*')->where('paracatedetail.category_id','=',$id)->where('parameters.name','=',$name)->get();
         $str ="";
         foreach ($parameters as $key => $value) {
-            $str .= '<option value="'.$value->id.'">'.$value->name.'</option>
+            $str .= '<div class="row">
+                        <div class="col-xs-12">
+                          <div class="col-xs-3">
+                            <label for="" class="form-control">'.$value->name .'</label>
+                          </div>
+                          <div class="col-xs-6">
+                            <input type="hidden" id="namePara" name="idpara[]" value="'. $value->id .'">
+                            <input type="text" name="content[]" id="valuePara" placeholder="nhập giá trị..." class="form-control">
+                          </div>
+                        </div>
+                      </div>
                 ';
         }
         return $str;
