@@ -22,13 +22,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products =  Product::where('active',1)->paginate(12);
+        $products =  Product::where('active',1)->where('price','>',0)->paginate(12);
         return view('layout.product.index',['products'=>$products]);
     }
 
     public function Product_Cate($slug, $id)
     {
-        $arproducts = Product::where([['category_id','=',$id],['active','=',1]])->paginate(10);
+        $arproducts = Product::where([['category_id','=',$id],['active','=',1],['price','>',0]])->paginate(10);
         $arname     = Category::where('id','=',$id)->select('name')->get();
         $name = $arname[0]->name;
         // dd($name);

@@ -19,7 +19,7 @@ class CreateParameterDetailTable extends Migration
             $table->foreign('product_id')->references('id')->on('products');
             $table->integer('parameter_id')->unsigned()->nullable();
             $table->foreign('parameter_id')->references('id')->on('parameters');
-            $table->string('content');
+            $table->string('content')->nullable();;
             $table->timestamps();
         });
     }

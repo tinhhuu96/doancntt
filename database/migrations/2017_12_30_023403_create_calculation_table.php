@@ -13,14 +13,16 @@ class CreateCalculationTable extends Migration
      */
     public function up()
     {
-        Schema::create('Calculation', function (Blueprint $table) {
+        Schema::create('calculation', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('unit');
             $table->timestamps();
         });
-        DB::table('Calculation')->insert(
+        DB::table('calculation')->insert(
             array(
-                'name' => 'Giảm giá theo %'
+                ['name' => "giảm giá theo %", 'unit'=>'%'],
+                ['name' => "giảm giá theo $", 'unit'=>'$']
            )
         );
     }
@@ -32,6 +34,6 @@ class CreateCalculationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Calculation');
+        Schema::dropIfExists('calculation');
     }
 }

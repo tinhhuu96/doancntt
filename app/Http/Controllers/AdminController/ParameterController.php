@@ -65,17 +65,28 @@ class ParameterController extends Controller
         $cate = $request->para;
 
         if ($name == null) {
-            return '<p class="alert alert-danger alert-dismissable">nhập rỗng !</p>';
+            $txt = '<p class="alert alert-danger alert-dismissable">nhập rỗng !</p>';
+            return response()->json(['txt'=>$txt,'so'=>1]);
         }else{
-            $arpara = parameter::create(['name'=>$name]);
-            if ($arpara) {
-                $arpa = Parameter::where('name','=',$name)->get();
-                $id_para = $arpa[0]->id;
-                Paracatedetail::create(['parameter_id'=>$id_para,'category_id'=>$cate]);
-                return '<p class="alert alert-success alert-dismissable">Thêm thành công !</p>';
+            $so = count(Parameter::where('name',$name)->get() );
+            if ($so == 0) {
+                $arpara = parameter::create(['name'=>$name]);
+                if ($arpara) {
+                    $arpa = Parameter::where('name','=',$name)->get();
+                    $id_para = $arpa[0]->id;
+                    Paracatedetail::create(['parameter_id'=>$id_para,'category_id'=>$cate]);
+                    $txt = '<p class="alert alert-success alert-dismissable">Thêm thành công !</p>';
+                    return response()->json(['txt'=>$txt,'so'=>0]);
+                }else{
+                    $txt = 'Thêm thất bại !';
+                    return response()->json(['txt'=>$txt,'so'=>1]);
+                }
             }else{
-                return 'Thêm thất bại !';
+                $txt = '<p class="alert alert-danger alert-dismissable">Đã tồn tại !</p>';
+                return response()->json(['txt'=>$txt,'so'=>1]);
+                
             }
+            
         }
     }
 
