@@ -20,6 +20,7 @@ class CreateContactTable extends Migration
             $table->text('content');
             $table->integer('view')->unsigned()->default(0);
             $table->integer('star')->unsigned()->default(0);
+            $table->integer('reply')->unsigned()->default(0);
             $table->timestamps();
         });
     }
