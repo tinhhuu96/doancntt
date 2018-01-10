@@ -3,6 +3,9 @@
 route::pattern('id','([0-9]*)'); //là một hàm chứa biểu thức chính quy dùng cho tất cả.
 route::pattern('slug','.*');
 
+//change pass
+    Route::get('change-password', 'UpdatePasswordController@view_update');
+    Route::post('change-password', 'UpdatePasswordController@update');
 //add cart
         Route::get('carts/{id}/add', 'CartController@add');
 ///carts
@@ -185,7 +188,7 @@ Route::group(['namespace' => 'AdminController','prefix' => 'adminpc', 'middlewar
             'uses'  => 'ProductController@update',
             'as'    => 'admin.update.product'
         ]);
-        
+
         Route::get('destroy-product-{id}',[
             'uses'  => 'ProductController@destroy',
             'as'    => 'admin.destroy.product'
@@ -209,7 +212,7 @@ Route::group(['namespace' => 'AdminController','prefix' => 'adminpc', 'middlewar
         ]);
         Route::post('/ajax-getproduct-promotion',[
             'uses'  => 'PromotionController@getproduct',
-            'as'    => 'promotion.ajaxgetProduct' 
+            'as'    => 'promotion.ajaxgetProduct'
         ]);
         Route::post('save-sp-promotion',[
             'uses'  => 'PromotionController@saveSp',

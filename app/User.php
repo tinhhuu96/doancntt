@@ -14,12 +14,12 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'address', 'phone'];
+    protected $fillable = ['name', 'email', 'password', 'address', 'phone', 'permission_id'];
     protected $primaryKey ='id';
     public $timestamps= true;
 
-    public function Permission_user(){
-      return $this->hasMany('App\Permission_user');
+    public function permission(){
+        return $this->belongsTo('App\Permission');
     }
 
     /**

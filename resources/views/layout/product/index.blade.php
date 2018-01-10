@@ -15,7 +15,7 @@ function date_formats($str)
     <h2 class="title text-center">Features Items</h2>
     @foreach( $products as $key => $value )
     <?php
-        $discount = 0; 
+        $discount = 0;
         $arProduct = DB::table('promo_products')->join('promotions','promo_products.promotion_id','=','promotions.id')->join('products','products.id','=','promo_products.product_id')->select(['promotions.value_km','promotions.active'])->where('promo_products.product_id',$value->id)->get();
         $active = $arProduct[0]->active;
         $price = $value->price;
@@ -30,7 +30,7 @@ function date_formats($str)
                     <div class="productinfo text-center">
                         <img src="{{ asset('storage/products/'.$value->picture) }}" style="height: 250px" />
                         @if( $active == 1 )
-                            <?php 
+                            <?php
                                 $discount = $arProduct[0]->value_km;
                                 $phantram = 100 - $discount;
                                 $chieckhau =$phantram/100;
@@ -48,7 +48,7 @@ function date_formats($str)
                     <div class="product-overlay">
                         <div class="overlay-content">
                             @if( $active == 1 )
-                                <?php 
+                                <?php
                                     $discount = $arProduct[0]->value_km;
                                     $phantram = 100 - $discount;
                                     $chieckhau =$phantram/100;

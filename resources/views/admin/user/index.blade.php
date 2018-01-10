@@ -1,12 +1,12 @@
 @extends('templates.admin.template')
 @section('content')
-<?php 
+<?php
   use App\Permission;
 ?>
 <style>
 img{
     display: inline-block !important;
-    width:100px; 
+    width:100px;
     height:80px;
 }
 </style>
@@ -44,14 +44,14 @@ img{
             </thead>
             <tbody>
             @foreach($arUser as $key => $value)
-                <?php 
-                  $permission = Permission::where('id',$value->permission_id)->get();
+                <?php
+                  $user = App\User::find($value->id);
                   $hinhanh = $value->picture;
                   $slug    = str_slug($value->name);
                   $edit = route('admin.user.edit',['slug'=>$slug, 'id'=>$value->id]);
                   $delete = route('admin.user.delete',['id'=>$value->id]);
                 ?>
-                @if($value->permission_id == 4)
+                @if($user->permission->id == 3)
               <tr>
                 <td>1</td>
                 <td><a href="javascipt:void(0)" title="">{{ $value->name }}</a>
@@ -64,7 +64,7 @@ img{
                   @endif
                 </td>
                 <td>{{ $value->email }}</td>
-                <td>{{ $permission[0]->name}}</td>
+                <td>{{ $user->permission->name}}</td>
                 <td>
                   <a href="{{ $edit }}" class="text-yellow"><i class="fa fa-edit"> Edit</i></a>
                 </td>
@@ -94,7 +94,7 @@ img{
         <!-- /.box-tools -->
       </div>
       <!-- /.box-header -->
-      
+
       <div class="box-body">
         <form action="">
           <table id="" class="table table-bordered table-hover text-center">
@@ -110,14 +110,14 @@ img{
             </thead>
             <tbody>
              @foreach($arUser as $key => $value)
-                <?php 
+                <?php
                   $permission = Permission::where('id',$value->permission_id)->get();
                   $hinhanh = $value->picture;
                   $slug    = str_slug($value->name);
                   $edit = route('admin.user.edit',['slug'=>$slug, 'id'=>$value->id]);
                   $delete = route('admin.user.delete',['id'=>$value->id]);
                 ?>
-                @if($value->permission_id == 2 || $value->permission_id == 3)
+                @if($value->permission_id == 1 || $value->permission_id == 2)
               <tr>
                 <td>1</td>
                 <td><a href="javascipt:void(0)" title="">{{ $value->name }}</a>

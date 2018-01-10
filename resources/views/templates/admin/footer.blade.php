@@ -117,6 +117,60 @@
   <div class="control-sidebar-bg"></div>
 
 </div>
+<script type="text/javascript">
+  Highcharts.chart('container', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Browser market shares January, 2015 to May, 2015'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'IE',
+            y: 56.33
+        }, {
+            name: 'Chrome',
+            y: 24.03,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Firefox',
+            y: 10.38
+        }, {
+            name: 'Safari',
+            y: 4.77
+        }, {
+            name: 'Opera',
+            y: 0.91
+        }, {
+            name: 'Other',
+            y: 0.2
+        }]
+    }]
+});
+</script>
 <script src="{{ asset('admin/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
 <script src="{{ asset('admin/plugins/jQuery/my-query.js') }}"></script>
 <!-- Bootstrap 3.3.6 -->
@@ -149,7 +203,7 @@
 <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
 <!-- Page script -->
 <script type="text/javascript">
-  
+
 $(function () {
     //Initialize Select2 Elements
     $(".select2").select2();
@@ -238,7 +292,7 @@ function modelView(a)
       alert('Có lỗi xảy ra');
     }
   });
-  
+
 }
 $(function(){
   function countallcontact(){
@@ -306,9 +360,9 @@ function readURL(input,thumbimage) {
 }
 $(document).ready(function () {
   $(".Choicefile").bind('click', function () {
-    
+
     $("#uploadfile").click();
-    
+
   });
   $(".removeimg").click(function () {
     $("#thumbimage").attr('src', '{{ asset('images/logo/avata.png') }}').show();
@@ -370,7 +424,7 @@ $(function(){
         data: {data:a},
         success: function(data){
           if (data>0) {
-            $('#countcontact').html(data);   
+            $('#countcontact').html(data);
           }
        },
        complete: getContact
@@ -379,7 +433,7 @@ $(function(){
   };
   getContact();
   //------------------------------------------------------------------
-  
+
   //=--------------------------------------------------------------
 
   function getParameters(){
@@ -488,7 +542,7 @@ function destroy(id){
     }
   });
 }
-  
+
 </script>
 @yield('script')
 @yield('jquery')

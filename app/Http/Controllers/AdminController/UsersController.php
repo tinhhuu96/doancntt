@@ -27,15 +27,12 @@ class UsersController extends Controller
     public function index()
     {
         if (Session::get('USERNAME') == 'admin') {
-            $aruser = DB::table('users')
-            ->join('permission_user', 'users.id','=','permission_user.user_id')
-            ->select(['users.*','permission_user.*'])->get();
-            
+            $aruser = DB::table('users')->get();
             return view('admin.user.index', ['arUser'=>$aruser]);
         }else{
             return view('error.404');
         }
-        
+
     }
 
 
@@ -48,7 +45,7 @@ class UsersController extends Controller
         }else{
             return view('error.404');
         }
-        
+
     }
 
     /**
@@ -63,7 +60,7 @@ class UsersController extends Controller
         }else{
             return view('error.404');
         }
-        
+
     }
 
 
@@ -115,7 +112,7 @@ class UsersController extends Controller
                 Permission_user::create(['user_id'=>$arnewuser[0]['id'], 'permission_id' => 1 ]);
                 $request->session()->flash('msg-s','Thêm thành công');
                 return redirect()->route('admin.users');
-                
+
             }else{
                 $request->session()->flash('msg-e','Không thể thêm admin');
                 return redirect()->route('admin.users');
@@ -134,7 +131,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        
+
     }
 
     /**
@@ -151,7 +148,7 @@ class UsersController extends Controller
         }else{
             return view('error.404');
         }
-        
+
     }
 
     /**
@@ -189,7 +186,7 @@ class UsersController extends Controller
         if ($validator->fails()) {
             return redirect()->route('admin.user.edit',['id'=>$id, 'slug'=>$slug])->withErrors($validator)->withInput();
         }
-        
+
         if ($request->password != "") {
             $objUser->password = bcrypt($request->password);
         }
@@ -227,7 +224,7 @@ class UsersController extends Controller
                             Storage::delete('public/admins/'.$tenanhcu); // xóa trong file
                         }
                         $objUser->picture = "";
-                        
+
                     }
                 }
                 $objUser->update();
@@ -253,7 +250,7 @@ class UsersController extends Controller
     {
         if (Session::get('USERNAME') == 'admin') {
             $objUser = User::find($id);
-        
+
             $tenanhcu = $objUser['picture']; //data
             $pathOldPic = storage_path('public/admins/'.$tenanhcu);
             //is_file kiểm tra khác rỗng
@@ -266,7 +263,7 @@ class UsersController extends Controller
             if ($objUser != null) {
                 $objUser->delete();
             }
-            
+
             $request->session()->flash('msg-s', 'Delete thành công');
             return redirect()->route('admin.users');
         }else{

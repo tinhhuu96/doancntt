@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('phone');
             $table->string('address')->nullable();
             $table->string('picture')->nullable();
+            $table->integer('permission_id')->unsigned()->nullable();
+            $table->foreign('permission_id')->references('id')->on('permissions');
             $table->rememberToken();
             $table->timestamps();
         });
