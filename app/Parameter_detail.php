@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Parameter_detail extends Model
 {
-    protected $table = 'parameter_detail';
+    protected $table = 'parameter_details';
     protected $fillable = ['product_id','parameter_id','content'];
     protected $primaryKey = 'id';
     public $timestamps = true;

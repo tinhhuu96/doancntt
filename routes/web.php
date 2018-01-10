@@ -164,6 +164,11 @@ Route::group(['namespace' => 'AdminController','prefix' => 'adminpc', 'middlewar
             'as'    => 'admin.ajaxAddPara.product'
         ]);
 
+        Route::post('ajax-add-para-product',[
+            'uses'  => 'ProductController@addPara_Ajax',
+            'as'    => 'admin.ajax.AddPara.product'
+        ]);
+
         Route::post('ajax-getParaNewProduct',[
             'uses'  => 'ProductController@getParaNewAdd',
             'as'    => 'admin.ajaxParaNewAdd'

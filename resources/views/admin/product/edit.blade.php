@@ -168,7 +168,7 @@
             }
         });
         $.ajax({
-            url: "{{route('admin.ajaxAddPara.product')}}",
+            url: "{{route('admin.ajax.AddPara.product')}}",
             type: 'post',
             data: {aidpara: idPara,aidproduct: id_product, anamePara:namePara, anameContent: nameContent},
             success: function(data){

@@ -157,6 +157,16 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
+    public function addPara_Ajax(Request $request)
+    {
+        $idpara = $request->aidpara;
+        $aidproduct = $request->aidproduct;
+        $anamePara = $request->anamePara;
+        $anameContent = $request->anameContent;
+        Parameter_detail::create(['product_id'=>$aidproduct,'parameter_id'=>$idpara,'content'=>$anameContent ]);
+        return 'Thêm thành công !';
+    }
+
 
 
 
