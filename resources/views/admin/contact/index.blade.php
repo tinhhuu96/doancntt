@@ -79,7 +79,7 @@
 		            	@foreach( $contacts as $value)
 		            	@if( $value->view == 1 )
 			            <tr style="cursor: pointer;">
-			                <td><input type="checkbox"></td>
+			                <td><input type="checkbox" id="" class="check" name="checkall[]" value="{{$value->id}}"/></td>
 			                <td class="mailbox-star" id="setStar-{{ $value->id }}">
 			                	@if( $value->star == 1 )
 			                	<a href="javascript:void(0)" onclick="setStar({{$value->id}},1)" ><i class="fa fa-star text-yellow"></i></a>

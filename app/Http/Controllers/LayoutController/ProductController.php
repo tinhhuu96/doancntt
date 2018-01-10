@@ -95,17 +95,11 @@ class ProductController extends Controller
     public function disablePromotion(Request $request)
     {
         $adate = $request->date;
-        $s="";
         $arpromotion = Promotion::all();
-        foreach ($arpromotion as $key => $value) {
-            
-            $date = explode(' ', $value->date_end);
-            // $s .= $date[0];
-
-            $s = count(Promotion::where('date_end','>', $adate)->get() );
-
+        foreach ($arpromotion as $key => $value) {            
+            Promotion::where('date_end','<', $adate)->update(['active'=>0]);
         }
-        return $s;
+        return 200;
     }
 
     /**

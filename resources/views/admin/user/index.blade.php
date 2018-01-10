@@ -1,5 +1,8 @@
 @extends('templates.admin.template')
 @section('content')
+<?php 
+  use App\Permission;
+?>
 <style>
 img{
     display: inline-block !important;
@@ -42,11 +45,13 @@ img{
             <tbody>
             @foreach($arUser as $key => $value)
                 <?php 
+                  $permission = Permission::where('id',$value->permission_id)->get();
                   $hinhanh = $value->picture;
                   $slug    = str_slug($value->name);
                   $edit = route('admin.user.edit',['slug'=>$slug, 'id'=>$value->id]);
                   $delete = route('admin.user.delete',['id'=>$value->id]);
                 ?>
+                @if($value->permission_id == 4)
               <tr>
                 <td>1</td>
                 <td><a href="javascipt:void(0)" title="">{{ $value->name }}</a>
@@ -59,7 +64,7 @@ img{
                   @endif
                 </td>
                 <td>{{ $value->email }}</td>
-                <td>Administrator</td>
+                <td>{{ $permission[0]->name}}</td>
                 <td>
                   <a href="{{ $edit }}" class="text-yellow"><i class="fa fa-edit"> Edit</i></a>
                 </td>
@@ -70,6 +75,7 @@ img{
                   <a href="{{ route('admin.user.seeProfile',['id'=>$value->id]) }}"><i>xem chi tiết...</i></a>
                 </td>
               </tr>
+              @endif
               @endforeach
             </tbody>
           </table>
@@ -96,7 +102,6 @@ img{
             <tr class="">
               <th>.#</th>
               <th>Name</th>
-              <th>Fullname</th>
               <th>Avatar</th>
               <th>Gmail</th>
               <th>Quyền truy cập</th>
@@ -106,16 +111,17 @@ img{
             <tbody>
              @foreach($arUser as $key => $value)
                 <?php 
+                  $permission = Permission::where('id',$value->permission_id)->get();
                   $hinhanh = $value->picture;
                   $slug    = str_slug($value->name);
                   $edit = route('admin.user.edit',['slug'=>$slug, 'id'=>$value->id]);
                   $delete = route('admin.user.delete',['id'=>$value->id]);
                 ?>
+                @if($value->permission_id == 2 || $value->permission_id == 3)
               <tr>
                 <td>1</td>
                 <td><a href="javascipt:void(0)" title="">{{ $value->name }}</a>
                 </td>
-                <td><a href="#" title="xem chi tiết">{{ $value->fullname }}</a>
                 </td>
                 <td class="text-center">
                   @if($hinhanh != "")
@@ -126,17 +132,18 @@ img{
                 </td>
                 <td{{ $value->email }}</td>
                 <td>{{ $value->email }}</td>
-                <td>Administrator</td>
+                <td>{{ $permission[0]->name}}</td>
                 <td>
                   <a href="{{ $edit }}" class="text-yellow"><i class="fa fa-edit"> Edit</i></a>
                 </td>
                 <td>
-                  <a href="{{ $delete }}" class="text-red"><i class="fa fa-trash-o"> Delete</i></a>
+                  <a href="{{ $delete }}" onclick="var tb=confirm('Bạn có muốn xóa không ?');if(tb==true){return true;}else{return false;};" class="text-red"><i class="fa fa-trash-o"> Delete</i></a>
                 </td>
                 <td>
                   <a href="{{ route('admin.user.seeProfile',['id'=>$value->id]) }}"><i>xem chi tiết...</i></a>
                 </td>
               </tr>
+              @endif
               @endforeach
             </tbody>
           </table>

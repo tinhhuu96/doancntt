@@ -21,8 +21,8 @@
         @foreach( $products as $key => $value )
         <?php
             $discount = 0; 
-            $arProduct = DB::table('promo_products')->join('promotions','promo_products.promotion_id','=','promotions.id')->join('products','products.id','=','promo_products.product_id')->select(['promotions.value_km'])->where('promo_products.product_id',$value->id)->get();
-            $so = count($arProduct);
+            $arProduct = DB::table('promo_products')->join('promotions','promo_products.promotion_id','=','promotions.id')->join('products','products.id','=','promo_products.product_id')->select(['promotions.value_km','promotions.active'])->where('promo_products.product_id',$value->id)->get();
+            $active = $arProduct[0]->active;
             $price = $value->price;
             $slug = str_slug($value->name);
             $created_at = ham_dao_nguoc_chuoi($value->created_at);
@@ -35,7 +35,7 @@
                     <div class="single-products">
                         <div class="productinfo text-center">
                             <img src="{{ asset('storage/products/'.$value->picture) }}" alt="" />
-                            @if( $so >0 )
+                            @if( $active == 1 )
                                 <?php 
                                     $discount = $arProduct[0]->value_km;
                                     $phantram = 100 - $discount;
@@ -53,7 +53,7 @@
                         </div>
                         <div class="product-overlay">
                             <div class="overlay-content">
-                                @if( $so >0 )
+                                @if( $active == 1 )
                                     <?php 
                                         $discount = $arProduct[0]->value_km;
                                         $phantram = 100 - $discount;
@@ -73,7 +73,7 @@
                         @if( $dates < 432000)
                         <img src="{{ asset('images/home/new.png')}}" class="new" alt="" />
                         @endif
-                        @if( $so > 0)
+                        @if( $active == 1)
                             <img src="{{ asset('images/home/sale.png') }}" class="new" alt="" />
                         @endif
                     </div>

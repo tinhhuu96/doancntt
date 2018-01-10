@@ -16,8 +16,8 @@ function date_formats($str)
     @foreach( $products as $key => $value )
     <?php
         $discount = 0; 
-        $arProduct = DB::table('promo_products')->join('promotions','promo_products.promotion_id','=','promotions.id')->join('products','products.id','=','promo_products.product_id')->select(['promotions.value_km'])->where('promo_products.product_id',$value->id)->get();
-        $so = count($arProduct);
+        $arProduct = DB::table('promo_products')->join('promotions','promo_products.promotion_id','=','promotions.id')->join('products','products.id','=','promo_products.product_id')->select(['promotions.value_km','promotions.active'])->where('promo_products.product_id',$value->id)->get();
+        $active = $arProduct[0]->active;
         $price = $value->price;
         $slug = str_slug($value->name);
         $created_at = date_formats($value->created_at,"Y-m-d");
@@ -29,7 +29,7 @@ function date_formats($str)
                 <div class="single-products">
                     <div class="productinfo text-center">
                         <img src="{{ asset('storage/products/'.$value->picture) }}" style="height: 250px" />
-                        @if( $so >0 )
+                        @if( $active == 1 )
                             <?php 
                                 $discount = $arProduct[0]->value_km;
                                 $phantram = 100 - $discount;
@@ -47,7 +47,7 @@ function date_formats($str)
                     </div>
                     <div class="product-overlay">
                         <div class="overlay-content">
-                            @if( $so >0 )
+                            @if( $active == 1 )
                                 <?php 
                                     $discount = $arProduct[0]->value_km;
                                     $phantram = 100 - $discount;
@@ -67,7 +67,7 @@ function date_formats($str)
                      @if( $dates < 432000)
                     <img src="{{ asset('images/home/new.png') }}" class="new" alt="" />
                     @endif
-                    @if( $so > 0)
+                    @if( $active == 1)
                         <img src="{{ asset('images/home/sale.png') }}" class="new" alt="" />
                     @endif
                 </div>
@@ -88,6 +88,25 @@ function date_formats($str)
     <ul class="pagination">
         {{ $products->links() }}
     </ul>
+    <?php $date = date('Y-m-d'); ?>
+    <input type="hidden" id="date" value="{{ $date }}">
 </div>
-
+<script type="text/javascript">
+    setTimeout(function(){
+        date = $('#date').val();
+        $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+          $.ajax({
+            url: "{{route('promotion.disable')}}",
+            type: 'post',
+            data: {date:date},
+            success: function(data){
+                return true;
+           },
+         });
+    }, 100);
+</script>
 @stop

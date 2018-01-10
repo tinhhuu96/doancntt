@@ -12,9 +12,9 @@
 			<div class="col-xs-4" >
 				<figure class="figure">
 					@if($aruser->picture != "")
-	                    <img src="{{ asset('storage/admins/.$aruser->picture') }}" class="figure-img img-fluid rounded" alt="">
+	                    <img src="{{ asset('storage/admins/'.$aruser->picture) }}" width="300" height="250"  class="img-ci thumbnail " alt="">
 	                @else
-	                    <img src="{{ asset('images/logo/avata.png') }}" class="figure-img img-fluid rounded" alt="">
+	                    <img src="{{ asset('images/logo/avata.png') }}" class="img-ci thumbnail " alt="">
 	                @endif
 	                <figcaption class="figure-caption text-center">{{ $aruser->name }}</figcaption>
 				</figure>
@@ -29,7 +29,7 @@
 					<input type="gmail" class="form-control" value="{{ $aruser->address }}" readonly="" >
 				</div>
 				<div class="form-group">
-					<label for="">Thống kê bài viết đã đăng : {{ $count }}</label>
+					<label for="">Thống kê bài viết đã đăng :</label>
 				</div>
 			</div>
 		</div>

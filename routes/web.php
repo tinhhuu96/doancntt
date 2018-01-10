@@ -185,7 +185,7 @@ Route::group(['namespace' => 'AdminController','prefix' => 'adminpc', 'middlewar
             'uses'  => 'ProductController@update',
             'as'    => 'admin.update.product'
         ]);
-
+        
         Route::get('destroy-product-{id}',[
             'uses'  => 'ProductController@destroy',
             'as'    => 'admin.destroy.product'

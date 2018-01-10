@@ -46,6 +46,10 @@
                 </div>
             </div>
             <div class="col-xs-8">
+              <div class="form-group">
+                    <label for="">Phone</label>
+                    <input type="number" name="phone" value="" class="form-control">
+                </div>
                 <div class="form-group">
                     <label for="">Gmail</label>
                     <input type="email" name="gmail" value="" class="form-control">
@@ -58,7 +62,7 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer text-center">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Register</button>
         </div>
       </form>
     </div>

@@ -18,6 +18,10 @@ class User extends Authenticatable
     protected $primaryKey ='id';
     public $timestamps= true;
 
+    public function Permission_user(){
+      return $this->hasMany('App\Permission_user');
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

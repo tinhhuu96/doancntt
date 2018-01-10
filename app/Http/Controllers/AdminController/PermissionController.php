@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AdminController;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Validator;
@@ -14,12 +15,17 @@ class PermissionController extends Controller
 {
     public function index()
     {
-    	$arpermis = Permission::all();
-    	$arUser = DB::table('users')
-            ->join('permission_user', 'users.id', '=', 'permission_user.user_id')
-            ->select('users.*', 'permission_user.user_id', 'permission_user.id as idperuser', 'permission_user.permission_id' )
-            ->get();
-     	return view('admin.user.permission', [ 'arpermis'=>$arpermis, 'aruser'=>$arUser]);
+        if (Session::get('USERNAME') == 'admin') {
+            $arpermis = Permission::all();
+            $arUser = DB::table('users')
+                ->join('permission_user', 'users.id', '=', 'permission_user.user_id')
+                ->select('users.*', 'permission_user.user_id', 'permission_user.id as idperuser', 'permission_user.permission_id' )
+                ->get();
+            return view('admin.user.permission', [ 'arpermis'=>$arpermis, 'aruser'=>$arUser]);
+        }else{
+            return view('error.404');
+        }
+    	
     }
 
     public function store(Request $request)
