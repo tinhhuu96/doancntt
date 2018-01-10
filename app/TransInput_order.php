@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransInput_order extends Model
 {
-    protected $table = 'traninput_order';
+    protected $table = 'traninput_orders';
     protected $fillable = ['id_product', 'quantity','price','total'];
     public $timestamps = true;
 

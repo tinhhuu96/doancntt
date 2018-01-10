@@ -6,7 +6,7 @@
   use App\Paracatedetail;
   use Illuminate\Support\Facades\DB;
   $idcate = Session::get('IDCate');
-  $parameters = DB::table('paracatedetail')->join('parameters', 'paracatedetail.parameter_id','=','parameters.id')->join('categories','paracatedetail.category_id','=','categories.id')->select('parameters.*')->where('paracatedetail.category_id','=',$idcate)->get();
+  $parameters = DB::table('paracatedetails')->join('parameters', 'paracatedetails.parameter_id','=','parameters.id')->join('categories','paracatedetails.category_id','=','categories.id')->select('parameters.*')->where('paracatedetails.category_id','=',$idcate)->get();
   $category = Category::where('id',$idcate)->get();
   $arProduct = Product::where('id','=',$id)->get();
   
