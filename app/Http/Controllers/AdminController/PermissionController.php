@@ -18,8 +18,8 @@ class PermissionController extends Controller
         if (Session::get('USERNAME') == 'admin') {
             $arpermis = Permission::all();
             $arUser = DB::table('users')
-                ->join('permission_user', 'users.id', '=', 'permission_user.user_id')
-                ->select('users.*', 'permission_user.user_id', 'permission_user.id as idperuser', 'permission_user.permission_id' )
+                ->join('permission_users', 'users.id', '=', 'permission_users.user_id')
+                ->select('users.*', 'permission_users.user_id', 'permission_users.id as idperuser', 'permission_users.permission_id' )
                 ->get();
             return view('admin.user.permission', [ 'arpermis'=>$arpermis, 'aruser'=>$arUser]);
         }else{
@@ -50,7 +50,7 @@ class PermissionController extends Controller
     		return 0;
     	}
     	if ($idperuser > 0 ) {
-    		DB::table('permission_user')->where('id', $idperuser)->update(['permission_id' => $idpermis]);
+    		DB::table('permission_users')->where('id', $idperuser)->update(['permission_id' => $idpermis]);
     		return 1;
     	}
     }

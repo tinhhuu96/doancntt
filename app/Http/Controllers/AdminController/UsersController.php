@@ -259,7 +259,7 @@ class UsersController extends Controller
                 Storage::delete('public/admins/'.$tenanhcu); // xóa trong file
             }
             $arpermis = Permission_user::where('user_id','=',$id)->get();
-            DB::table('permission_user')->where('user_id', '=',$arpermis[0]->user_id)->delete();
+            DB::table('permission_users')->where('user_id', '=',$arpermis[0]->user_id)->delete();
             if ($objUser != null) {
                 $objUser->delete();
             }

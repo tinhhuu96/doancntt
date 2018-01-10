@@ -13,7 +13,7 @@ class CreateParameterDetailTable extends Migration
      */
     public function up()
     {
-        Schema::create('parameter_detail', function (Blueprint $table) {
+        Schema::create('parameter_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->unsigned()->nullable();
             $table->foreign('product_id')->references('id')->on('products');
@@ -31,6 +31,6 @@ class CreateParameterDetailTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('parameter_detail');
+        Schema::dropIfExists('parameter_details');
     }
 }

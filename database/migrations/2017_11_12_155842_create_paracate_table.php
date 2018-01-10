@@ -14,7 +14,7 @@ class CreateParacateTable extends Migration
      */
     public function up()
     {
-        Schema::create('paracatedetail', function (Blueprint $table) {
+        Schema::create('paracatedetails', function (Blueprint $table) {
             $table->integer('parameter_id')->unsigned()->nullable();
             $table->foreign('parameter_id')->references('id')->on('parameters');
             $table->integer('category_id')->unsigned()->nullable();
@@ -30,7 +30,7 @@ class CreateParacateTable extends Migration
      */
     public function down()
     {
-        Schema::table('paracatedetail', function (Blueprint $table) {
+        Schema::table('paracatedetails', function (Blueprint $table) {
             //
         });
     }
