@@ -153,7 +153,7 @@ class ParameterController extends Controller
             Parameter_detail::where('parameter_id','=',$id)->delete();
         }
 
-        $des = DB::table('paracatedetail')->where('parameter_id','=',$id)->delete();
+        $des = DB::table('paracatedetails')->where('parameter_id','=',$id)->delete();
         $obj->delete();
         return '<p class="alert alert-danger alert-dismissable">Xóa thành công !</p>';
     }

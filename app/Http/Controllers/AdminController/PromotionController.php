@@ -16,13 +16,13 @@ class PromotionController extends Controller
 {
     public function index()
     {
-    	$arpromotions = DB::table('promotions')->join('calculation','promotions.calculation_id','=','calculation.id')->select(['calculation.name as namecalcu','promotions.*'])->get();
+    	$arpromotions = DB::table('promotions')->join('calculations','promotions.calculation_id','=','calculations.id')->select(['calculations.name as namecalcu','promotions.*'])->get();
     	return view('admin.promotion.index',['arPromotion'=>$arpromotions]);
     }
 
     public function show($id)
     {
-        $arpromotions = DB::table('promotions')->join('calculation','promotions.calculation_id','=','calculation.id')->select(['calculation.name as namecalcu','calculation.id as calculation_id','promotions.*'])->where('promotions.id',$id)->get();
+        $arpromotions = DB::table('promotions')->join('calculations','promotions.calculation_id','=','calculations.id')->select(['calculations.name as namecalcu','calculations.id as calculation_id','promotions.*'])->where('promotions.id',$id)->get();
 
         $promotions = DB::table('promo_products')->join('products','promo_products.product_id','=','products.id')->select('products.*')->where('promo_products.promotion_id',$id)->get();
         return view('admin.promotion.view',['arpromotions'=>$arpromotions, 'product_promotion'=>$promotions]);
@@ -110,7 +110,7 @@ class PromotionController extends Controller
 
     public function edit($id)
     {
-    	$arpromotions = DB::table('promotions')->join('calculation','promotions.calculation_id','=','calculation.id')->select(['calculation.name as namecalcu','calculation.id as calculation_id','promotions.*'])->where('promotions.id',$id)->get();
+    	$arpromotions = DB::table('promotions')->join('calculations','promotions.calculation_id','=','calculations.id')->select(['calculations.name as namecalcu','calculations.id as calculation_id','promotions.*'])->where('promotions.id',$id)->get();
 
     	$promotions = DB::table('promo_products')->join('products','promo_products.product_id','=','products.id')->select('products.*')->where('promo_products.promotion_id',$id)->get();
     	// dd($promotions);

@@ -164,7 +164,7 @@ class ProductController extends Controller
     {
         $idproduct = $request->aid;
 
-        $arParaNewAdd = DB::table('parameter_detail')->join('parameters', 'parameter_detail.parameter_id','=','parameters.id')->select('parameter_detail.*','parameters.name')->where('parameter_detail.product_id','=',$idproduct)->get();
+        $arParaNewAdd = DB::table('parameter_details')->join('parameters', 'parameter_details.parameter_id','=','parameters.id')->select('parameter_details.*','parameters.name')->where('parameter_details.product_id','=',$idproduct)->get();
         // dd($arParaNewAdd[0]->name);
         $str ="";
         foreach ($arParaNewAdd as $key => $value) {
@@ -183,7 +183,7 @@ class ProductController extends Controller
     {
         $id = $request->aid;
         $name = $request->aname;
-        $parameters = DB::table('paracatedetail')->join('parameters', 'paracatedetail.parameter_id','=','parameters.id')->join('categories','paracatedetail.category_id','=','categories.id')->select('parameters.*')->where('paracatedetail.category_id','=',$id)->where('parameters.name','=',$name)->get();
+        $parameters = DB::table('paracatedetails')->join('parameters', 'paracatedetails.parameter_id','=','parameters.id')->join('categories','paracatedetails.category_id','=','categories.id')->select('parameters.*')->where('paracatedetails.category_id','=',$id)->where('parameters.name','=',$name)->get();
         $str ="";
         foreach ($parameters as $key => $value) {
             $str .= '<div class="row">

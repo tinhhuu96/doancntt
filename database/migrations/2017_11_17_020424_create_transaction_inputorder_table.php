@@ -13,7 +13,7 @@ class CreateTransactionInputorderTable extends Migration
      */
     public function up()
     {
-        Schema::create('traninput_order', function (Blueprint $table) {
+        Schema::create('traninput_orders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_product')->unsigned()->nullable();
             $table->integer('quantity')->unsigned()->nullable();
@@ -30,6 +30,6 @@ class CreateTransactionInputorderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('traninput_order');
+        Schema::dropIfExists('traninput_orders');
     }
 }
