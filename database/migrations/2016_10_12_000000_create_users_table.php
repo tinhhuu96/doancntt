@@ -33,7 +33,8 @@ class CreateUsersTable extends Migration
                 'password' => bcrypt("12345"),
                 'phone'    => "",
                 'address'  => "",
-                'picture'   => ""
+                'picture'   => "",
+                'permission_id' => 1
             )
         );
     }

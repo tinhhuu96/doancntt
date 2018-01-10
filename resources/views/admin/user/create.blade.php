@@ -48,7 +48,7 @@
             <div class="col-xs-8">
               <div class="form-group">
                     <label for="">Phone</label>
-                    <input type="number" name="phone" value="" class="form-control">
+                    <input type="tel" name="phone" value="" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="">Gmail</label>

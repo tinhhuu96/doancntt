@@ -17,6 +17,11 @@
 	                    <img src="{{ asset('images/logo/avata.png') }}" class="img-ci thumbnail " alt="">
 	                @endif
 	                <figcaption class="figure-caption text-center">{{ $aruser->name }}</figcaption>
+	                <div class="text-center">
+	                	<a class="btn btn-success" href="{{route('admin.user.edit',['slug'=>str_slug($aruser->name), 'id'=>$aruser->id])}}">Edit</a> 
+	                	<a class="btn btn-danger" href="{{route('admin.user.delete',['id'=>$aruser->id])}}">Delete</a> 
+	                </div>
+	                
 				</figure>
 			</div>
 			<div class="col-xs-6">

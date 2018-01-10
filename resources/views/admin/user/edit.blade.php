@@ -37,7 +37,7 @@
                             @else
                                 <img src="{{ asset('images/logo/avata.png') }}" title="hình ảnh" class="thumbnail"  style="width: 200px; height: 150px;" />
                             @endif
-                            <input type="checkbox" class="minimal-red"  name="delete_picture" value="yes" onclick="var tb=confirm('Bạn có muốn xóa {{$aruser->picture}} không ?');if(tb==true){return true;}else{return false;};" /> Delete
+                            <input type="checkbox" class="minimal-red"  name="delete_picture" value="yes" onclick="var tb=confirm('Bạn có muốn xóa {{$aruser->picture}} không ?');if(tb==true){return true;}else{return false;};" /> Delete avatar
                         </figure>
                         <hr>
                         <input type="file" name="avata" value="" class="form-control">
