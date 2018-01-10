@@ -50,7 +50,7 @@ img{
                     <tr class="">
                         <th>.#</th>
                         <th>name</th>
-                        <th colspan="2">Chức Năng</th>
+                        <th colspan="">Chức Năng</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,9 +73,9 @@ img{
                         <a id="Update-{{$value->id}}" style="display: none;" href="javascript:void(0)" class="text-yellow" onclick="Update({{$value->id}})"><i class="fa fa-refresh"> Update</i></a>
 
                     </td>
-                    <td>
+                    <!-- <td>
                         <a href="javascript:void(0)" onclick="deletePermission({{$id}})" class="text-red"><i class="fa fa-remove">Delete</i></a>
-                    </td>
+                    </td> -->
                 </tr>
                 @endforeach
                 </tbody>

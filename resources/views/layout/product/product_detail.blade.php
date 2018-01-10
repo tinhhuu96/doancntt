@@ -20,8 +20,8 @@
 
 
         $discount = 0; 
-        $arProduct = DB::table('promo_products')->join('promotions','promo_products.promotion_id','=','promotions.id')->join('products','products.id','=','promo_products.product_id')->select(['promotions.value_km'])->where('promo_products.product_id',$product->id)->get();
-        $so = count($arProduct);
+        $arProduct = DB::table('promo_products')->join('promotions','promo_products.promotion_id','=','promotions.id')->join('products','products.id','=','promo_products.product_id')->select(['promotions.value_km','promotions.active'])->where('promo_products.product_id',$value->id)->get();
+        $active = $arProduct[0]->active;
         $price = $product->price;
 
     ?>
@@ -56,7 +56,7 @@
             <h2>{{ $product->name }}</h2>
             <p>Web ID: {{ $product->code}}</p>
             <span>
-                @if( $so >0 )
+                @if( $active == 1 )
                     <?php 
                         $discount = $arProduct[0]->value_km;
                         $phantram = 100 - $discount;

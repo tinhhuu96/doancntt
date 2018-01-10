@@ -24,8 +24,8 @@ class CreatePermissionTable extends Migration
             array(
                 ['name' => "chưa xác định"],
                 ['name' => "Administrator"],
-                ['name' => "Nhân Viên"],
-                ['name' => "Khách hàng"]
+                ['name' => "Nhanvien"],
+                ['name' => "thanhvien"]
             )
         );
     }

@@ -38,21 +38,21 @@
 			<form action="{{ route('public.search.product') }}" method="post">
 				{{ csrf_field() }}
 				<div class="form-group">
-					<label for="">Giá Từ</label>
+					<label for="">Giá bắt đầu</label>
 					<?php 
 						$ar = range( 1000 ,10000, 500)
 					?>
 					<select name="price_first" class="form-control">
 						@foreach($ar as $value)
-							<option value="{{ $value }}"><?php echo number_format ( $value , 3 , '.' ,"." ).' vnđ' ?></option>
+							<option value="{{ $value }}"><?php echo number_format ( $value , 0 , '.' ,"." ).' vnđ' ?></option>
 						@endforeach
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="">Giá Từ</label>
+					<label for="">Đến</label>
 					<select name="price_last" class="form-control">
 						@foreach($ar as $value)
-							<option value="{{$value}}"><?php echo number_format ( $value , 3 , '.' ,"." ).' vnđ' ?></option>
+							<option value="{{$value}}"><?php echo number_format ( $value , 0 , '.' ,"." ).' vnđ' ?></option>
 						@endforeach
 					</select>
 				</div>

@@ -27,7 +27,7 @@ class SearchController extends Controller
                 $product = DB::table('promo_products')->join('promotions','promo_products.promotion_id','=','promotions.id')->join('products','products.id','=','promo_products.product_id')->select(['products.*','promotions.value_km'])->whereBetween('price', [$pricefirst, $pricelast])->paginate(10);
                 return view('layout.search.index',['count'=>$count,'products'=>$product,'name'=>$txt]);
             }
-            $txt = ' từ '.$pricefirst.' đến '.$pricelast;
+            $txt = ' từ '.number_format($pricefirst,0,'.','.').' đến '.number_format($pricelast,0,'.','.');
             $count = count(DB::table('promo_products')->join('promotions','promo_products.promotion_id','=','promotions.id')->join('products','products.id','=','promo_products.product_id')->select(['products.*','promotions.value_km'])->whereBetween('price', [$pricefirst, $pricelast])->get());
             $product = DB::table('promo_products')->join('promotions','promo_products.promotion_id','=','promotions.id')->join('products','products.id','=','promo_products.product_id')->select(['products.*','promotions.value_km'])->whereBetween('price', [$pricefirst, $pricelast])->paginate(10);
             return view('layout.search.index',['count'=>$count,'products'=>$product,'name'=>$txt]);

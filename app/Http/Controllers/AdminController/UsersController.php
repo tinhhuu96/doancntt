@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\AdminController;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Validator;
 use App\User;
 use App\Permission_user;
+use App\Permission;
 use App\Product;
 
 class UsersController extends Controller
@@ -23,16 +26,29 @@ class UsersController extends Controller
 
     public function index()
     {
-        $aruser = User::all();
-        return view('admin.user.index', ['arUser'=>$aruser]);
+        if (Session::get('USERNAME') == 'admin') {
+            $aruser = DB::table('users')
+            ->join('permission_user', 'users.id','=','permission_user.user_id')
+            ->select(['users.*','permission_user.*'])->get();
+            
+            return view('admin.user.index', ['arUser'=>$aruser]);
+        }else{
+            return view('error.404');
+        }
+        
     }
 
 
     public function seeProfile($id)
     {
-        $arUser = User::find($id);
-        $count  = count(Product::where('user_id','=',$id)->get());
-        return view('admin.user.User_detail',['aruser'=>$arUser,'count'=>$count]);
+        if (Session::get('USERNAME') == 'admin') {
+            $arUser = User::find($id);
+            // $count  = count(Product::where('user_id','=',$id)->get());
+            return view('admin.user.User_detail',['aruser'=>$arUser]);
+        }else{
+            return view('error.404');
+        }
+        
     }
 
     /**
@@ -42,7 +58,12 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('admin.user.create');
+        if (Session::get('USERNAME') == 'admin') {
+            return view('admin.user.create');
+        }else{
+            return view('error.404');
+        }
+        
     }
 
 
@@ -87,7 +108,7 @@ class UsersController extends Controller
             }
             if ($request->username != "") {
 
-                User::create(['name'=>$username,'email'=>trim($request->gmail), 'password'=>bcrypt($request->password),'address'=>trim($request->address), 'picture'  => $endPic ]);
+                User::create(['name'=>$username,'email'=>trim($request->gmail), 'password'=>bcrypt($request->password),'phone'=>$request->phone,'address'=>trim($request->address), 'picture'  => $endPic ]);
 
                 $arnewuser = User::where('email','=',trim($request->gmail) )->get();
                 // dd($arnewuser[0]['id']);
@@ -124,8 +145,13 @@ class UsersController extends Controller
      */
     public function edit($slug, $id)
     {
-        $aruser = User::find($id);
-        return view('admin.user.edit',['aruser'=>$aruser]);
+        if (Session::get('USERNAME') == 'admin') {
+            $aruser = User::find($id);
+            return view('admin.user.edit',['aruser'=>$aruser]);
+        }else{
+            return view('error.404');
+        }
+        
     }
 
     /**
@@ -225,22 +251,26 @@ class UsersController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $objUser = User::find($id);
+        if (Session::get('USERNAME') == 'admin') {
+            $objUser = User::find($id);
         
-        $tenanhcu = $objUser['picture']; //data
-        $pathOldPic = storage_path('public/admins/'.$tenanhcu);
-        //is_file kiểm tra khác rỗng
-        if (is_file($pathOldPic) && ($tenanhcu != "") ) {
-            //xóa ảnh cũ
-            Storage::delete('public/admins/'.$tenanhcu); // xóa trong file
+            $tenanhcu = $objUser['picture']; //data
+            $pathOldPic = storage_path('public/admins/'.$tenanhcu);
+            //is_file kiểm tra khác rỗng
+            if (is_file($pathOldPic) && ($tenanhcu != "") ) {
+                //xóa ảnh cũ
+                Storage::delete('public/admins/'.$tenanhcu); // xóa trong file
+            }
+            $arpermis = Permission_user::where('user_id','=',$id)->get();
+            DB::table('permission_user')->where('user_id', '=',$arpermis[0]->user_id)->delete();
+            if ($objUser != null) {
+                $objUser->delete();
+            }
+            
+            $request->session()->flash('msg-s', 'Delete thành công');
+            return redirect()->route('admin.users');
+        }else{
+            return view('error.404');
         }
-        $arpermis = Permission_user::where('user_id','=',$id)->get();
-        DB::table('permission_user')->where('user_id', '=',$arpermis[0]->user_id)->delete();
-        if ($objUser != null) {
-            $objUser->delete();
-        }
-        
-        $request->session()->flash('msg-s', 'Delete thành công');
-        return redirect()->route('admin.users');
     }
 }
