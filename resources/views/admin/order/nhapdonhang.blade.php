@@ -1,6 +1,6 @@
 @extends('templates.admin.template')
 @section('content')
-<div class="row">
+<!-- <div class="row">
   <div class="col-md-5">
       @if(Session::has('msg-s'))
           <div class="alert alert-success alert-dismissable">{{ Session::get('msg-s') }}</div>
@@ -9,7 +9,7 @@
           <div class="alert alert-danger alert-dismissable">{{ Session::get('msg-e') }}</div>
       @endif
     </div>
-</div>
+</div> -->
 <div class="row">
   <div class="col-xs-11">
     <div class="box box-primary">
@@ -47,7 +47,7 @@
         {{ csrf_field() }}
         <input type="hidden" value="{{ Session::get('ID') }}" name="user_id">
         <div class="box-body">
-          
+
           <div class="row">
             <div class="col-xs-6">
               <div class="form-group">
@@ -91,7 +91,7 @@
                 </select>
              </div>
             </div>
-            
+
             <div class="col-xs-2">
               <div class="form-group">
                   <label>Chọn avata sản phẩm</label> <br>
@@ -121,7 +121,7 @@
           <div class="">
             <div class="col-xs-12">
               <div class="col-xs-6">
-                
+
               </div>
             </div>
           <div>
@@ -154,7 +154,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            
+
             <input type="hidden" value="{{ $date }}" id="datetime">
             <table id="example2" class="table table-bordered table-hover">
               <thead>
@@ -167,7 +167,7 @@
               </tr>
               </thead>
               <tbody id="getValueInOrder">
-                
+
               </tbody>
             </table>
           </div>
@@ -201,10 +201,10 @@
                   $('.search').html(data);
                   $('.search').css({display:'block', transition:'0.3s all'});
                 }
-                
+
               },
               error: function (){
-               
+
               }
             });
       });
@@ -232,7 +232,7 @@
       getListInOrder();
 
     })
-    
+
   </script>
 @stop
 @stop

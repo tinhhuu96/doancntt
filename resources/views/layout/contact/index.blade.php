@@ -17,8 +17,8 @@
 </div>
 
 <div id="contact-page" class="container">
-    <div class="bg"> 	
-        <div class="row">  	
+    <div class="bg">
+        <div class="row">
             <div class="col-sm-8">
                 <div class="contact-form">
                     <h2 class="title text-center">Get In Touch</h2>
@@ -28,11 +28,15 @@
                             <input type="text" name="name" class="form-control"  placeholder="Name" id="name">
                         </div>
                         <div class="form-group col-md-6">
-                            <input type="email" name="email" class="form-control"  placeholder="Email" id="email">
+                            @if (Auth::check())
+                                <input type="email" name="email" class="form-control"  placeholder="Email" id="email" value="{!! Auth::user()->email !!}">
+                            @else
+                                <input type="email" name="email" class="form-control"  placeholder="Email" id="email">
+                            @endif
                         </div>
                         <div class="form-group col-md-12">
                             <textarea name="message" id="message" class="form-control" rows="8" placeholder="Your Message Here"></textarea>
-                        </div>                        
+                        </div>
                         <div class="form-group col-md-12">
                             <button class="btn btn-primary pull-right"  onclick="createContact()">Submit</button>
                         </div>
@@ -68,26 +72,27 @@
                         </ul>
                     </div>
                 </div>
-            </div>    			
-        </div>  
-    </div>	
+            </div>
+        </div>
+    </div>
 </div><!--/#contact-page-->
 @section('script')
     <script type="text/javascript">
-        
+
         function createContact()
         {
-            var name = $('#name').val();
-            var email = $('#email').val();
-            var content = $('#message').val();
-            if (name == "") {
-                return alert('Nhập name rỗng !');
+            var $contact = {};
+            $contact.name = $('#name').val();
+            $contact.email = $('#email').val();
+            $contact.content = $('#message').val();
+            if ($contact.name == "") {
+                return alert('name is not empty !');
             }
-            if (email == "") {
-                return alert('Nhập email rỗng !');
+            if ($contact.emai == "") {
+                return alert('email is not empty !');
             }
-            if (content == "") {
-                return alert('Nhập message rỗng !');
+            if ($contact.content == "") {
+                return alert('message is not empty !');
             }
             $.ajaxSetup({
                 headers: {
@@ -97,7 +102,7 @@
             $.ajax({
                 url: "{{route('public.create.contact')}}",
                 type: 'post',
-                data: {aname: name, aemail:email, acontent:content},
+                data: $contact,
                 success: function(data){
                     $('.modal-body').html(data);
                     $('.modal').css({display:'block', transition:'0.3 all'});

@@ -1,21 +1,12 @@
 @extends('templates.admin.template')
 @section('content')
-<?php 
+<?php
 	use App\Contact;
   $countall = count(Contact::all());
   $countallstar = count(Contact::where('star','=',1)->get());
-	$countallsend = count(Contact::where('reply','>',0)->get());
+	$countallsend = count(Contact::where('reply','!=',0)->get());
 ?>
-<div class="row">
-  <div class="col-md-5">
-      @if(Session::has('msg-s'))
-          <div class="alert alert-success alert-dismissable">{{ Session::get('msg-s') }}</div>
-      @endif
-      @if(Session::has('msg-e'))
-          <div class="alert alert-danger alert-dismissable">{{ Session::get('msg-e') }}</div>
-      @endif
-    </div>
-</div>
+
 <div class="row">
     <div class="col-md-3">
       <a href="compose.html" class="btn btn-primary btn-block margin-bottom">Compose</a>
@@ -65,7 +56,7 @@
 	          	</div>
 	            <div class="btn-group">
 	              <button onclick="var tb=confirm('Bạn có muốn xóa không ?');if(tb==true){return true;}else{return false;};" type="submit" name="delete" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-	              
+
 	            </div>
 	            <!-- /.btn-group -->
 	            <a href="{{ route('admin.contact.index') }}"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button></a>
@@ -89,7 +80,7 @@
 			                <td class="mailbox-subject"><b>{{ $value->content }}</b>
 			                </td>
 			                <td class="mailbox-attachment"></td>
-			                <td class="mailbox-date">{{ $value->created_at}}</td>
+			                <td class="mailbox-date">{{ Carbon\Carbon::parse($value->created_at)->diffForHumans() }}</td>
 			            </tr>
 			            @else
         						<tr  style="cursor: pointer;">
@@ -107,7 +98,7 @@
         			                <td class="mailbox-subject text-danger"><b>{{ $value->content }}</b>
         			                </td>
         			                <td class="mailbox-attachment text-danger"></td>
-        			                <td class="mailbox-date text-danger">{{ $value->created_at}}</td>
+        			                <td class="mailbox-date text-danger">{{ Carbon\Carbon::parse($value->created_at)->diffForHumans() }}</td>
         			            </tr>
         						@endif
 			            @endforeach
@@ -143,7 +134,7 @@
               </div>
               <div class="btn-group">
                 <button onclick="var tb=confirm('Bạn có muốn xóa không ?');if(tb==true){return true;}else{return false;};" type="submit" name="delete" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                
+
               </div>
               <!-- /.btn-group -->
               <a href="{{ route('admin.contact.index') }}"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button></a>
@@ -203,7 +194,7 @@
               </div>
               <div class="btn-group">
                 <button onclick="var tb=confirm('Bạn có muốn xóa không ?');if(tb==true){return true;}else{return false;};" type="submit" name="delete" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
-                
+
               </div>
               <!-- /.btn-group -->
               <a href="{{ route('admin.contact.index') }}"><button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button></a>
@@ -259,13 +250,14 @@
             $('#namecontact').val(data.name);
             $('#emailcontact').val(data.email);
             $('#contentcontact').val(data.content);
+            $('#contactId').val(data.id);
             $('.modal').css({display:'block', transition:'0.3 all'});
           },
           error: function (){
             alert('Có lỗi xảy ra');
           }
         });
-        
+
       }
     </script>
   @stop

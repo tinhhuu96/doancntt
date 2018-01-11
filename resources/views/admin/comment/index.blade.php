@@ -1,6 +1,6 @@
 @extends('templates.admin.template')
 @section('content')
-<div class="row">
+<!-- <div class="row">
   <div class="col-md-5">
       @if(Session::has('msg-s'))
           <div class="alert alert-success alert-dismissable">{{ Session::get('msg-s') }}</div>
@@ -9,7 +9,7 @@
           <div class="alert alert-danger alert-dismissable">{{ Session::get('msg-e') }}</div>
       @endif
     </div>
-</div>
+</div> -->
 <div class="row text-center">
   <div class="col-xs-12">
     <div class="box box-success">

@@ -1,5 +1,8 @@
 @extends('templates.admin.template')
 @section('content')
+<?php
+  use App\Category;
+?>
 <div class="row">
   <div class="col-md-5">
     <div class="box box-primary box-solid collapsed-box">
@@ -29,7 +32,7 @@
             <label for="">Chọn Parent</label> <br>
             <select name="parent" class="form-control select2" style="width: 200px !important;">
               <option value="0">--- not parent---</option>
-              <?php  
+              <?php
               function showCategories($categories, $parent =0, $char = '', $select=0)
               {
                   foreach ($categories as $key => $item)
@@ -48,7 +51,7 @@
                            }
                           // Xóa chuyên mục đã lặp
                           // unset($categories[$key]);
-                           
+
                           // Tiếp tục đệ quy để tìm chuyên mục con của chuyên mục đang lặp
                           showCategories($categories, $item['id'], $char.'|---',$item['id']);
                       }
@@ -74,14 +77,14 @@
     </div>
     <!-- /.box -->
   </div>
-  <div class="col-md-5">
+  <!-- <div class="col-md-5">
     @if(Session::has('msg-s'))
         <div class="alert alert-success alert-dismissable">{{ Session::get('msg-s') }}</div>
       @endif
       @if(Session::has('msg-e'))
         <div class="alert alert-danger alert-dismissable">{{ Session::get('msg-e') }}</div>
       @endif
-  </div>
+  </div> -->
 </div>
 <div class="row text-center">
   <div class="col-xs-offset-1 col-xs-10">
@@ -111,21 +114,21 @@
             </tr>
             </thead>
             <tbody>
-              <?php  
+              <?php
                 $i =0;
                 foreach ($categories as $key => $value) {
                   $i++;
                   $id          = $value->id;
                   $name        = $value->name;
                   $slug        = str_slug($name);
-                  $parent      = $value->parent;
+                  $parent      = Category::find($value->parent);
                   $urledit     = route('admin.cateEdit',['slug'=>$slug, 'id'=>$id]);
               ?>
             <tr id="category-{{ $id }}">
               <td>{{ $i }}</td>
               <td><a href="#" title="xem chi tiết">{{ $name }}</a>
               </td>
-              <td>{{ $parent }}</td>
+              <td>{{ $parent['name'] }}</td>
               <td>
                 <a href="{{ $urledit }}" class="text-yellow" ><i class="fa fa-edit"></i> Edit</a>
               </td>

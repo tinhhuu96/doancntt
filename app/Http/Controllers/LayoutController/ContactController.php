@@ -45,9 +45,9 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $contact = Contact::create(['name'=>trim($request->aname), 'email' => trim($request->aemail),'content'=> trim($request->acontent) ]);
+        $contact = Contact::create(['name'=>trim($request->name), 'email' => trim($request->email),'content'=> trim($request->content) ]);
         Mail::to($contact)->send(new ContactMail($contact));
-        return 'Send success, Thanks you !';
+        return 'Your request has been submitted, we will respond to you soon !';
     }
 
     /**
