@@ -1,31 +1,27 @@
     <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Chỉnh Sửa Đơn Hàng</h3>
+              <h3 class="box-title">Edit Order</h3>
             </div>
             <!-- /.box-header -->
            <div class="box-body">
              <div class="form-group">
-              {!! Form::label('address', 'Địa Chỉ Giao Hàng')!!}
+              {!! Form::label('address', 'Address')!!}
               {!! Form::text('address', null, ['class' => 'form-control']) !!}
              </div>
-<!--            <div class="form-group">
-              {!! Form::label('shipping_status', 'Tình Trạng Giao Hàng')!!}
-              {!! Form::text('shipping_status', null, ['class' => 'form-control']) !!}
-             </div> -->
              <div class="form-group">
-                {!! Form::label('shipping_status', 'Tình Trạng Giao Hàng')!!}
-                {!! Form::select('shipping_status', array('0' => 'waiting', '1' => 'done', '2' =>'cancel'), null, ['class' => 'form-control'], ['class' => 'form-control']) !!}
+                {!! Form::label('status', 'Status')!!}
+                {!! Form::select('status', array('pending' => 'Pending', 'processing' => 'Processing', 'shipping' =>'Shipping', 'shipped' => 'Shipped', 'delivered' => 'Delivered'), null, ['class' => 'form-control'], ['class' => 'form-control']) !!}
             </div>
             <div class="form-group">
-              {!! Form::label('phone', 'Số Điện Thoại')!!}
+              {!! Form::label('phone', 'Phone')!!}
               {!! Form::text('phone', null, ['class' => 'form-control']) !!}
              </div>
              <div class="form-group">
-              {!! Form::label('name', 'Tên Người Nhận')!!}
+              {!! Form::label('name', 'Recipient Name')!!}
               {!! Form::text('name', null, ['class' => 'form-control']) !!}
              </div>
-           {!! Form::submit('Lưu', ['class' => 'btn btn-primary'])!!}
+           {!! Form::submit('Save', ['class' => 'btn btn-primary'])!!}
             </div>
             <!-- /.box-body -->
           </div>

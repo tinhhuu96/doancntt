@@ -8,28 +8,27 @@
 			<div class="breadcrumbs">
 				<ol class="breadcrumb">
 				  <li><a href="#">Home</a></li>
-				  <li class="active">Manage Basket</li>
+          <li><a href="{{ url('/carts/manage') }}">Order</a></li>
+				  <li><a href="#">Order Details</a></li>
 				</ol>
 		</div>
 
 		 <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title" style="float: left;">Chi Tiết Đơn Hàng </h3>
+              <h3 class="box-title" style="float: left;">Order Details </h3>
             </div>
 
             <!-- /.box-header -->
            <div class="box-body">
-           	<table  id="example2" class="table table-bordered table-hover">
+           	<table  id="example2" class="table table-striped table-hover">
                 <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Số lượng</th>
-                  <th>Đơn Giá</th>
-                  <th>Thành Tiền</th>
-                  <th>Mã Đơn Hàng</th>
-                  <th>Tên Sản Phẩm</th>
-
+                  <th>ID Order</th>
+                  <th>Quanlity</th>
+                  <th>Price</th>
+                  <th>Subtotal</th>
+                  <th>Product Name</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,9 +37,8 @@
 		             <tr>
 		                  <td>{{ $item ->id}}</td>
 		                  <td>{{ $item ->quantity}}</td>
-		                  <td>{{ number_format($item ->price, '2', ',', '.') . ' VNĐ'}}</td>
-		                  <td>{{ number_format($item ->quantity * $item ->price, '2', ',', '.') . ' VNĐ'}}</td>
-		                  <td>{{ $item ->order_id}}</td>
+		                  <td>{{ $item ->price}}$</td>
+		                  <td>{{ $item ->quantity * $item ->price}}$</td>
 		                  <?php $product = App\Product::find($item->product_id); ?>
 		                  @if (empty($product))
 		                  <td> Sản Phẩm đã xóa hoặc ngừng kinh doanh</td>
@@ -52,7 +50,7 @@
 	                @endforeach
                 </tbody>
              </table>
-             <p style="float: right;"><b>Tổng Tiền: {{ number_format($total, '2', ',', '.') . ' VNĐ' }}</b></p>
+             <p style="float: right;"><b>Total: {{ $total}}$</b></p>
             </div>
             <!-- /.box-body -->
           </div>

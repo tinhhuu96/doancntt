@@ -9,31 +9,29 @@
 			<div class="breadcrumbs">
 				<ol class="breadcrumb">
 				  <li><a href="#">Home</a></li>
-				  <li class="active">Manage Basket</li>
+				  <li><a href="{{ url('/carts/manage') }}">Order</a></li>
 				</ol>
 		</div>
-
 		 <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title" style="float: left;">Danh Sách Đơn Hàng Gần Đây</h3>
+              <h3 class="box-title" style="float: left;">List Orders</h3>
               <a href="{{ url('carts/manage/export')}}" class="btn btn-success" style="float: right;"> Export Excel</a>
             </div>
             <!-- /.box-header -->
            <div class="box-body">
-           	<table  id="example2" class="table table-bordered table-hover">
+           	<table  id="example2" class="table table-striped table-hover">
                 <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Ngày Đặt Hàng</th>
-                  <th>Trạng Thái</th>
-                  <th>Địa Chỉ Giao Hàng</th>
-                  <th>Tình Trạng Giao Hàng</th>
-                  <th>Số Điện Thoại</th>
-                  <th>Tên Người Nhận</th>
-                  <th>Người Đặt Hàng</th>
-                  <th>Hủy Đơn Đặt Hàng</th>
-                  <th>Xem Chi Tiết</th>
+                  <th>Order Date</th>
+                  <th>Status</th>
+                  <th>Address</th>
+                  <th>Phone</th>
+                  <th>Recipient Name</th>
+                  <th>Sender Name</th>
+                  <th>Cancel Order</th>
+                  <th>View Details</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,22 +39,36 @@
 		             <tr>
 		                  <td>{{ $order ->id}}</td>
 		                  <td>{{ $order ->created_at}}</td>
-		                  <td><?php if ($order->status == 0) echo "not avalible"; else echo "avalible"; ?></td>
+                      @if ($order->status == 'pending' || $order->status == 'processing')
+                        <td><span class="label label-warning">{{ $order ->status }}</span></td>
+                      @elseif ($order->status == 'shipping')
+                        <td><span class="label label-primary">{{ $order ->status }}</span></td>
+                      @elseif ($order->status == 'shipped')
+                        <td><span class="label label-success">{{ $order ->status }}</span></td>
+                      @else
+		                    <td><span class="label label-danger">{{ $order ->status }}</span></td>
+                      @endif
 		                  <td>{{ $order ->address}}</td>
-		                  <td><?php if ($order->shipping_status ==0) echo "Waiting"; elseif ($order->shipping_status ==1) echo "Done"; else echo "Cancel" ?></td>
 		                  <td>{{ $order ->phone}}</td>
 		                  <td>{{ $order ->name}}</td>
-		                  <td>{{ App\User::find($order->user_id)->name}}</td>
-		                  @if( $order->status == 1)
+		                  <td>
+                        <?php $user = App\User::find($order->user_id); ?>
+                        @if ($user)
+                          {{ $user['name'] }}
+                        @else
+                          undefind
+                        @endif
+                      </td>
+		                  @if( $order->status == 'pending' || $order->status == 'processing')
 		                  <td style="text-align: center;">
 			                  <a href="{{ url('carts/manage/' . $order->id . '/cancel')}}">
 			                  	Hủy
 			                  </a>
 			              </td>
 		                  @else
-		                  <td style="text-align: center; vertical-align: middle;">Không khả dụng</td>
+		                  <td style="text-align: center; vertical-align: middle; color: red">Undefind</td>
 		                  @endif
-		                  <td><a href="{{ url('carts/manage/' . $order->id .'/detail') }}">Xem chi tiết</a></td>
+		                  <td><a href="{{ url('carts/manage/' . $order->id .'/detail') }}">View Details</a></td>
 	                </tr>
 	                @endforeach
                 </tbody>

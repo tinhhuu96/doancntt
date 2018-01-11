@@ -5,15 +5,11 @@ use App\Order;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use Excel;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ChangeStatusOrder;
 
 class AdminOrderController extends Controller
 {
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $orders = Order::all();
@@ -21,82 +17,22 @@ class AdminOrderController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $order = Order::find($id);
         return view('auth.order.edit')->with('order', $order);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $order = Order::find($id);
-        $shipping = $request->Input('shipping_status');
-        if ($shipping == 0)
-        {
-            $order->update(['address' => $request->Input('address'), 'shipping_status' => 0, 'phone' => $request->Input('phone'), 'name' => $request->Input('name'), 'status' => 1 ]);
-        }
-        else
-        {
-            $order->update(['address' => $request->Input('address'), 'shipping_status' => 2, 'phone' => $request->Input('phone'), 'name' => $request->Input('name'), 'status' => 0  ]);
+        $status = $order->status;
+        $order->update(['address' => $request->Input('address'), 'phone' => $request->Input('phone'), 'name' => $request->Input('name'), 'status' => $request->Input('status')]);
+        if ($status != $order->status) {
+            Mail::to($order)->send(new ChangeStatusOrder($order));
         }
 
         return redirect('adminpc/orders');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public function search(Request $request)
@@ -104,37 +40,8 @@ class AdminOrderController extends Controller
         $date_start = $request->Input('date_start');
         $date_end = $request->Input('date_end');
         $status = $request->Input('status');
-        if (empty($date_start) && empty($date_end) )
-        {
-            if($request->Input('status') == 2)
-            {
-                $orders = Order::all();
-            }
-            elseif ($request->Input('status') == 1) {
-                $orders = Order::where('status', '=', 1)->get();
-            }
-            else
-            {
-                $orders = Order::where('status', '=', 0)->get();
-            }
-            return view('auth.order.index')->with(['orders' => $orders, 'date_start' => $date_start, 'date_end' => $date_end, 'status' => $status]);
-        }
-        elseif ($request->Input('status') == 2) {
-            $orders = Order::where('created_at', '>=', $date_start)->where('created_at', '<=', $date_end)->get();
-        }
-        elseif ($request->Input('status') == 1) {
-            $orders = Order::where('created_at', '>=', $date_start)->where('created_at', '<=', $date_end)->where('status', '=', 1)->get();
-        }
-        else
-        {
-            $orders = Order::where('created_at', '>=', $date_start)->where('created_at', '<=', $date_end)->where('status', '=', 0)->get();
-        }
-
+        $orders = Order::status($status)->datefrom($date_start)->dateto($date_end)->get();
         return view('auth.order.index')->with(['orders' => $orders, 'date_start' => $date_start, 'date_end' => $date_end, 'status' => $status]);
-       /* dd($status);
-        // dd(strtotime($date_end));
-        $orders = Order::where('date', '>=', $date_start)->where('date', '<=', $date_end)->get();
-        return view('auth.order.index')->with('orders', $orders);*/
     }
 
     public function export_order(Request $request)
@@ -142,36 +49,7 @@ class AdminOrderController extends Controller
         $date_start = $request->Input('date_start');
         $date_end = $request->Input('date_end');
         $status = $request->Input('status');
-        if (empty($date_start) && empty($date_end) )
-        {
-            if($request->Input('status') == 2)
-            {
-                $orders = Order::all();
-            }
-            elseif ($request->Input('status') == 1) {
-                $orders = Order::where('status', '=', 1)->get();
-            }
-            else
-            {
-                $orders = Order::where('status', '=', 0)->get();
-            }
-            Excel::create('Orders Excel', function($excel) use($orders) {
-                $excel->sheet('Excel sheet', function($sheet) use($orders) {
-                    $sheet->fromArray($orders);
-                });
-            })->export('xls');
-            return redirect('admin/orders');
-        }
-        elseif ($request->Input('status') == 2) {
-            $orders = Order::where('created_at', '>=', $date_start)->where('created_at', '<=', $date_end)->get();
-        }
-        elseif ($request->Input('status') == 1) {
-            $orders = Order::where('created_at', '>=', $date_start)->where('created_at', '<=', $date_end)->where('status', '=', 1)->get();
-        }
-        else
-        {
-            $orders = Order::where('created_at', '>=', $date_start)->where('created_at', '<=', $date_end)->where('status', '=', 0)->get();
-        }
+        $orders = Order::status($status)->datefrom($date_start)->dateto($date_end)->get();
         Excel::create('Orders Excel', function($excel) use($orders) {
             $excel->sheet('Excel sheet', function($sheet) use($orders) {
                 $sheet->fromArray($orders);
