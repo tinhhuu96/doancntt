@@ -142,7 +142,8 @@ class PromotionController extends Controller
         $id = $request->id;
         $arpromotion = Promotion::find($id);
     	$arpromotion->name = trim($request->name);
-    	$arpromotion->value_km = $request->gt_pro;
+        $arpromotion->value_km = $request->gt_pro;
+    	$arpromotion->calculation_id = $request->radio_km;
     	$dates = $request->date;
     	$date = explode(' ',$dates);
     	$arpromotion->date_begin = date_formats($date[0]);
