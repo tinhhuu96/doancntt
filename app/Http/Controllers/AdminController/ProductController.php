@@ -265,6 +265,7 @@ class ProductController extends Controller
         $obj->code = trim($request->code);
         $obj->name= trim($request->name);
         $obj->price= trim($request->price);
+        $obj->quantity= $request->quantity;
         $obj->detail= trim($request->detail);
 
         $avata = $request->avata;

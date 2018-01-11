@@ -30,22 +30,28 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-4">
+            <div class="col-xs-3">
               <div class="form-group">
                 <label for="">Mã Sản Phẩm</label>
                 <input type="text" name="code" class="form-control" value="{{ $product[0]->code }}" id="" placeholder="code...">
               </div>
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-3">
               <div class="form-group">
                 <label for="">Tên Sản Phẩm</label>
                 <input type="text" name="name" value="{{ $product[0]->name }}" class="form-control" id="" placeholder="Enter name product">
               </div>
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-3">
               <div class="form-group">
                 <label for="">Giá bán</label>
                 <input type="number" name="price" value="{{ $product[0]->price }}" class="form-control" id="" placeholder="price">
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <div class="form-group">
+                <label for="">Số lượng</label>
+                <input type="number" name="quantity" value="{{ $product[0]->quantity }}" class="form-control" id="" placeholder="price">
               </div>
             </div>
           </div>
