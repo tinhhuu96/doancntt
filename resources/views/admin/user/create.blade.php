@@ -9,26 +9,20 @@
       <!-- /.box-header -->
       <!-- form start -->
       <form action="{{ route('admin.user.store') }}" enctype="multipart/form-data" method="post" role="form">
-        {{ csrf_field() }}
+        {!! Form::open(['url' => route('admin.user.store') ]) !!}
         <div class="box-body">
-            <div class="col-xs-4">
+            <div class="col-xs-6">
                 <div class="form-group">
-                    <label for="">UserName</label>
-                    <input type="text" name="username" value="" class="form-control">
+                    <label for="">Name</label>
+                    <input type="text" name="name" value="" class="form-control" value="{{ old('name') }}"  autofocus>
+                     @if ($errors->has('name'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('name') }}</strong>
+                        </span>
+                      @endif
                 </div>
             </div>
-            <div class="col-xs-4">
-                <div class="form-group">
-                    <label for="">Password</label>
-                    <input type="password" name="password" value="" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="">password_confirmation</label>
-                    <input type="password" name="password_confirmation" value="" class="form-control">
-                </div>
-            </div>
-            
-            <div class="col-xs-4">
+            <div class="col-xs-4" style="float: right;">
                 <div class="form-group">
                     <label for="">avatar</label> <br>
                     <div id="myfileupload">
@@ -45,26 +39,62 @@
                         <label class="filename"></label>
                 </div>
             </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label for="">Password</label>
+                    <input type="password" name="password" value="" class="form-control">
+                    @if ($errors->has('password'))
+                      <span class="help-block">
+                          <strong>{{ $errors->first('password') }}</strong>
+                      </span>
+                    @endif
+                </div>
+                <div class="form-group">
+                    <label for="">password_confirmation</label>
+                    <input type="password" name="password_confirmation" value="" class="form-control">
+                    @if ($errors->has('password_confirmation'))
+                      <span class="help-block">
+                          <strong>{{ $errors->first('password_confirmation') }}</strong>
+                      </span>
+                    @endif
+                </div>
+                <div class="form-group">
+                    <label for="">Permission</label>
+                    <?php $permission = App\Permission::pluck('name', 'id') ?>
+                    {!! Form::select('permission', $permission,['class' => 'form-control'],['class' => 'form-control']) !!}
+                </div>
+            </div>
+
             <div class="col-xs-8">
               <div class="form-group">
                     <label for="">Phone</label>
-                    <input type="tel" name="phone" value="" class="form-control">
+                    <input type="tel" name="phone" value="" class="form-control" value="{{ old('phone') }}"  autofocus>
+                    @if ($errors->has('phone'))
+                      <span class="help-block">
+                          <strong>{{ $errors->first('phone') }}</strong>
+                      </span>
+                    @endif
                 </div>
                 <div class="form-group">
-                    <label for="">Gmail</label>
-                    <input type="email" name="gmail" value="" class="form-control">
+                    <label for="">Email</label>
+                    <input type="email" name="email" value="" class="form-control" value="{{ old('email') }}"  autofocus>
+                    @if ($errors->has('email'))
+                      <span class="help-block">
+                          <strong>{{ $errors->first('email') }}</strong>
+                      </span>
+                    @endif
                 </div>
                 <div class="form-group">
                     <label for="">Địa Chỉ</label>
-                    <input type="text" name="address" value="" class="form-control">
+                    <input type="text" name="address" value="" class="form-control" value="{{ old('address') }}"  autofocus>
                 </div>
             </div>
         </div>
         <!-- /.box-body -->
         <div class="box-footer text-center">
-          <button type="submit" class="btn btn-primary">Register</button>
+          {!! Form::submit('Search ', ['Register' => 'btn btn-primary'])!!}
         </div>
-      </form>
+      {{!! Form::close() !!}}
     </div>
   </div>
 </div>

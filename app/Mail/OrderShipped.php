@@ -7,6 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Order;
+use App\OrderDetail;
 
 class OrderShipped extends Mailable
 {
@@ -31,6 +32,8 @@ class OrderShipped extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.sendemail')->with(['order' => $this->order]);
+        $order_details = $this->order->OrderDetails()->get();
+        return $this->subject('Orders E-SHOPPER')->view('emails.sendMailCheckout',
+            ['order_details' => $order_details, 'order' => $this->order]);
     }
 }

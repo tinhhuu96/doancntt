@@ -296,30 +296,31 @@ $(function () {
     });
   });
 
-// function modelView(a)
-// {
-//   $.ajaxSetup({
-//     headers: {
-//       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//     }
-//   });
-//   $.ajax({
-//     url: "{{route('admin.ajax.Viewcontact')}}",
-//     type: 'post',
-//     cache: false,
-//     data: {aid: a },
-//     success: function(data){
-//       $('#namecontact').val(data.name);
-//       $('#emailcontact').val(data.email);
-//       $('#contentcontact').val(data.content);
-//       $('.modal').css({display:'block', transition:'0.3 all'});
-//     },
-//     error: function (){
-//       alert('Có lỗi xảy ra');
-//     }
-//   });
+function modelView(a)
+{
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  $.ajax({
+    url: "{{route('admin.ajax.Viewcontact')}}",
+    type: 'post',
+    cache: false,
+    data: {aid: a },
+    success: function(data){
+      $('#namecontact').val(data.name);
+      $('#emailcontact').val(data.email);
+      $('#contentcontact').val(data.content);
+      $('#contactId').val(data.id);
+      $('.modal').css({display:'block', transition:'0.3 all'});
+    },
+    error: function (){
+      alert('Có lỗi xảy ra');
+    }
+  });
 
-// }
+}
 $(function(){
   function countallcontact(){
     setTimeout(function(){

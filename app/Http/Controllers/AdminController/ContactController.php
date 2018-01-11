@@ -9,7 +9,7 @@ use App\Contact;
 use Auth;
 use Toastr;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\ContactMail;
+use App\Mail\ContactMailAdmin;
 
 class ContactController extends Controller
 {
@@ -116,7 +116,7 @@ class ContactController extends Controller
         $contact_from = Contact::create(['name' => Auth::user()->name, 'email' => Auth::user()->email,
             'content' => trim($request->content), 'reply' => $request->contact_id, 'view' => 1]);
         $contact_to = Contact::find($request->contact_id);
-        Mail::to($contact_to)->send(new ContactMail($contact_from));
+        Mail::to($contact_to)->send(new ContactMailAdmin($contact_from));
         $request->session()->flash('msg-s','Replied');
         return redirect()->route('admin.contact.index');
     }

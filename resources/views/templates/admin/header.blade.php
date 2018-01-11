@@ -27,7 +27,7 @@
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset('admin/plugins/select2/select2.min.css') }}">
   <!-- Theme style -->
-  
+
 
   <link rel="stylesheet" href="{{ asset('admin/dist/css/AdminLTE.min.css') }}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -37,11 +37,14 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/modules/exporting.js"></script>
-  
+
   <style>
     .wrapper{
       overflow-x: unset !important;
       overflow-y: unset !important;
+    }
+    .help-block strong{
+      color: red !important;
     }
   </style>
 </head>
