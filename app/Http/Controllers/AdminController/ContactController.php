@@ -4,13 +4,18 @@ namespace App\Http\Controllers\AdminController;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Contact;
+use Auth;
+use Toastr;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMail;
 
 class ContactController extends Controller
 {
     public function index()
     {
-    	$arcontact = contact::all();
+    	$arcontact = DB::table('contacts')->orderBy('updated_at', 'desc')->get();
     	return view('admin.contact.index',['contacts'=> $arcontact]);
     }
 
@@ -22,9 +27,9 @@ class ContactController extends Controller
         $name = $contact->name;
         $email = $contact->email;
         $content = $contact->content;
-        return response()->json(['name'=>$name,'email'=>$email, 'content'=>$content]);
+        return response()->json(['name'=>$name,'email'=>$email, 'content'=>$content, 'id' => $id]);
     }
-    
+
     public function getcount(Request $req)
     {
     	$countcontact = count(Contact::where('view','=',0)->get());
@@ -63,9 +68,9 @@ class ContactController extends Controller
                         </a>
                     </li>';
             }
-            
+
         }
-        
+
         return $str;
     }
 
@@ -98,11 +103,21 @@ class ContactController extends Controller
             $request->session()->flash('msg-e','Mời chọn để xóa !');
             return redirect()->route('admin.contact.index');
         }
-        for ($i=0; $i < count($listcontacts); $i++) { 
+        for ($i=0; $i < count($listcontacts); $i++) {
             $contacts = Contact::find($listcontacts[$i]);
             $contacts->delete();
         }
-        $request->session()->flash('msg-s','Xóa thành công');
+        $request->session()->flash('msg-s','Delete complated');
+        return redirect()->route('admin.contact.index');
+    }
+
+    public function reply(Request $request)
+    {
+        $contact_from = Contact::create(['name' => Auth::user()->name, 'email' => Auth::user()->email,
+            'content' => trim($request->content), 'reply' => $request->contact_id, 'view' => 1]);
+        $contact_to = Contact::find($request->contact_id);
+        Mail::to($contact_to)->send(new ContactMail($contact_from));
+        $request->session()->flash('msg-s','Replied');
         return redirect()->route('admin.contact.index');
     }
 }

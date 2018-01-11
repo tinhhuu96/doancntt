@@ -9,8 +9,8 @@ class Category extends Model
     protected $fillable = ['name','parent'];
     public $timestamps = true;
 
-    public function Product(){
-  		return $this->hasMany('App\Product');
+    public function products(){
+  		return $this->hasMany('App\roduct');
     }
     public function Paracatedetail(){
   		return $this->hasMany('App\Paracatedetail');

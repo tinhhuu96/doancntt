@@ -12,6 +12,16 @@
     </ol>
   </section>
   <section class="content">
+    <div class="row">
+      <div class="col-md-5">
+          @if(Session::has('msg-s'))
+              <div id="messageFlash" class="alert alert-success alert-dismissable">{{ Session::get('msg-s') }}</div>
+          @endif
+          @if(Session::has('msg-e'))
+              <div class="alert alert-danger alert-dismissable">{{ Session::get('msg-e') }}</div>
+          @endif
+        </div>
+    </div>
     @yield('content')
   </section>
 </div>

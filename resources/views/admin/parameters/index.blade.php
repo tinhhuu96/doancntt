@@ -1,6 +1,6 @@
 @extends('templates.admin.template')
 @section('content')
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-5">
         <div id="alertajax"></div>
         @if(Session::has('msg-s'))
@@ -10,7 +10,7 @@
             <div class="alert alert-danger alert-dismissable">{{ Session::get('msg-e') }}</div>
         @endif
       </div>
-</div>
+</div> -->
 <div class="row">
     <div class="col-md-4">
         <div class="box box-danger collapsed-box">
@@ -63,7 +63,7 @@
                         </tr>
                     </thead>
                     <tbody id=getparameters>
-                        
+
                     </tbody>
                     <tfoot>
                         <tr></tr>
@@ -71,7 +71,7 @@
                 </table>
             </div>
         </div>
-       
+
     </div>
 </div>
 </div>

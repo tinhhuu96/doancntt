@@ -480,6 +480,11 @@ Route::group(['namespace' => 'AdminController','prefix' => 'adminpc', 'middlewar
             'as'    => 'admin.destroy.contact'
         ]);
 
+        Route::post('message-reply',[
+            'uses' => 'ContactController@reply',
+            'as' => 'admin.contact.reply'
+        ]);
+
     });
 
     Route::group(['prefix' => 'Excels'], function () {

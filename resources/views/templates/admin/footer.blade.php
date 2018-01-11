@@ -61,44 +61,52 @@
 </style>
 </div>
 <div class="row">
-  <div class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLongTitle">View Messages</h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group col-md-6">
-            <label for="">Name</label>
-            <input type="text"  class="form-control" placeholder="" id="namecontact"  readonly="">
+  <div class="modal" id="modalMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalLongTitle">View Messages</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <div class="form-group col-md-6">
-            <label for="">Gmail</label>
-            <input type="text"  class="form-control" placeholder="" id="emailcontact" readonly="">
-        </div>
-        <div class="form-group">
-          <label for="">Messages</label><br />
-          <textarea name="" id="contentcontact" class="form-control" readonly="">...</textarea>
-        </div>
-
-        <p>
-          <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-            Reply
-          </a>
-        </p>
-        <div class="collapse" id="collapseExample">
-          <div class="card card-body">
-            <textarea name="" cols="12" rows="5" class="form-control" placeholder="Nhập nội dung..."></textarea>
+        <div class="modal-body col-md-12">
+          <div class="form-group col-md-6">
+              <label for="">Name</label>
+              <input type="text"  class="form-control" placeholder="" id="namecontact"  readonly="">
           </div>
-          <button type="button" class="btn btn-primary">Send Contact</button>
+          <div class="form-group col-md-6">
+              <label for="">Gmail</label>
+              <input type="text"  class="form-control" placeholder="" id="emailcontact" readonly="">
+          </div>
+          <div class="form-group col-md-12">
+            <label for="">Messages</label><br />
+            <textarea name="" id="contentcontact" class="form-control" readonly=""></textarea>
+          </div>
+
+          <p>
+            <div class="form-group col-md-2">
+              <a class="btn btn-primary form-control" data-toggle="collapse" href="#collapseExample"
+                role="button" aria-expanded="false" aria-controls="collapseExample">
+              Reply
+              </a>
+            </div>
+          </p>
+          <div class="collapse form-group col-md-12" id="collapseExample">
+            <form action="{{ route('admin.contact.reply') }}" method="post">
+              {{ csrf_field() }}
+              <input type="hidden" name="contact_id" id="contactId" ">
+              <div class="card card-body form-group">
+                <textarea name="content" cols="12" rows="5" class="form-control" placeholder="Nhập nội dung..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary form-control"> Send </button>
+            </form>
+          </div>
+
         </div>
-        
-      </div>
-      <div class="modal-footer">
-        <a href="{{ route('admin.contact.index') }}"><button type="button" onclick="" class="btn btn-secondary" data-dismiss="modal">Close</button></a>
+        <div class="modal-footer">
+          <button type="button" id="closeModal" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
@@ -116,7 +124,6 @@
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 
-</div>
 <script type="text/javascript">
   Highcharts.chart('container', {
     chart: {
@@ -204,6 +211,14 @@
 <!-- Page script -->
 <script type="text/javascript">
 
+$(document).ready(function(){
+  $("#closeModal").click(function() {
+  $("#modalMessage").hide();
+  $("#mes-provider-s").hide();
+  $("#mes-provider-e").hide();
+ })
+});
+
 $(function () {
     //Initialize Select2 Elements
     $(".select2").select2();
@@ -270,30 +285,30 @@ $(function () {
     });
   });
 
-function modelView(a)
-{
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
-  $.ajax({
-    url: "{{route('admin.ajax.Viewcontact')}}",
-    type: 'post',
-    cache: false,
-    data: {aid: a },
-    success: function(data){
-      $('#namecontact').val(data.name);
-      $('#emailcontact').val(data.email);
-      $('#contentcontact').val(data.content);
-      $('.modal').css({display:'block', transition:'0.3 all'});
-    },
-    error: function (){
-      alert('Có lỗi xảy ra');
-    }
-  });
+// function modelView(a)
+// {
+//   $.ajaxSetup({
+//     headers: {
+//       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//     }
+//   });
+//   $.ajax({
+//     url: "{{route('admin.ajax.Viewcontact')}}",
+//     type: 'post',
+//     cache: false,
+//     data: {aid: a },
+//     success: function(data){
+//       $('#namecontact').val(data.name);
+//       $('#emailcontact').val(data.email);
+//       $('#contentcontact').val(data.content);
+//       $('.modal').css({display:'block', transition:'0.3 all'});
+//     },
+//     error: function (){
+//       alert('Có lỗi xảy ra');
+//     }
+//   });
 
-}
+// }
 $(function(){
   function countallcontact(){
     setTimeout(function(){
@@ -542,7 +557,9 @@ function destroy(id){
     }
   });
 }
-
+$(document).ready( function() {
+  $('#messageFlash').delay(2000).fadeOut();
+});
 </script>
 @yield('script')
 @yield('jquery')
