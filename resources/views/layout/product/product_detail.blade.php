@@ -20,10 +20,15 @@
 
 
         $discount = 0; 
-        $arProduct = DB::table('promo_products')->join('promotions','promo_products.promotion_id','=','promotions.id')->join('products','products.id','=','promo_products.product_id')->select(['promotions.value_km','promotions.active'])->where('promo_products.product_id',$product->id)->get();
+        $arProduct = DB::table('promo_products')
+        ->join('promotions','promo_products.promotion_id','=','promotions.id')
+        ->join('products','products.id','=','promo_products.product_id')
+        ->join('calculations','calculations.id','=','promotions.calculation_id')
+        ->where('promo_products.product_id',$product->id)->get();
         $so = count($arProduct);
         if ($so > 0) {
             $active = $arProduct[0]->active;
+            $unit   = $arProduct[0]->unit;
         }else{
             $active = 0;
         }
@@ -62,15 +67,25 @@
             <p>Web ID: {{ $product->code}}</p>
             <span>
                 @if( $active == 1 )
-                    <?php 
-                        $discount = $arProduct[0]->value_km;
-                        $phantram = 100 - $discount;
-                        $chieckhau =$phantram/100;
-                        $chieckhau = $price*$chieckhau;
-                        $chieckhau = number_format($chieckhau,0,'.','.');
-                    ?>
-                       <i><strike>$<?php echo number_format($price,0,'.','.') ?></strike></i> <br>
-                       <span>${{$chieckhau}}</span>
+                    @if( $unit == '%')
+                        <?php 
+                            $discount = $arProduct[0]->value_km;
+                            $phantram = 100 - $discount;
+                            $chieckhau =$phantram/100;
+                            $chieckhau = $price*$chieckhau;
+                            $chieckhau = number_format($chieckhau,0,'.','.');
+                        ?>
+                           <i><strike>$<?php echo number_format($price,0,'.','.') ?></strike></i> <br>
+                           <span>${{$chieckhau}}</span>
+                    @else
+                        <?php 
+                            $chieckhau = $price-$arProduct[0]->value_km;
+                            $chieckhau = number_format($chieckhau,0,'.','.');
+
+                         ?>
+                         <i><strike>$<?php echo number_format($price,0,'.','.') ?></strike></i> <br>
+                           <span>${{$chieckhau}}</span>
+                    @endif
                 @else
                     <span>$<?php echo number_format($price,0,'.','.') ?></span>
                 @endif

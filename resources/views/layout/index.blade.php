@@ -20,12 +20,11 @@
 		->join('promotions','promo_products.promotion_id','=','promotions.id')
 		->join('products','products.id','=','promo_products.product_id')
 		->join('calculations','calculations.id','=','promotions.calculation_id')
-		->select(['promotions.value_km','promotions.active','promotions.active'])
 		->where('promo_products.product_id',$value->id)->get();
-		dd($arProduct);
 		$so = count($arProduct);
 		if ($so > 0) {
 			$active = $arProduct[0]->active;
+			$unit   = $arProduct[0]->unit;
 		}else{
 			$active = 0;
 		}
@@ -43,6 +42,7 @@
 	                <div class="productinfo text-center">
 	                    <img src="{{ asset('storage/products/'.$value->picture) }}" style="height: 250px" />
 	                    @if( $active == 1 )
+	                    	@if( $unit == '%')
 							<?php
 								$discount = $arProduct[0]->value_km;
 								$phantram = 100 - $discount;
@@ -50,6 +50,12 @@
 								$chieckhau = $price*$chieckhau;
 								$chieckhau = number_format($chieckhau,0,'.','.');
 							?>
+							@else
+								<?php 
+									$chieckhau = $price-$arProduct[0]->value_km;
+									$chieckhau = number_format($chieckhau,0,'.','.');
+								 ?>
+							@endif
 							<i><strike>$<?php echo number_format($price,0,'.','.') ?></strike></i>
 							<h2 style="display: inline;">${{$chieckhau}}</h2>
 						@else
