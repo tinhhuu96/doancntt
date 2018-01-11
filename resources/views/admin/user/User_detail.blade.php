@@ -19,7 +19,9 @@
 	                <figcaption class="figure-caption text-center">{{ $aruser->name }}</figcaption>
 	                <div class="text-center">
 	                	<a class="btn btn-success" href="{{route('admin.user.edit',['slug'=>str_slug($aruser->name), 'id'=>$aruser->id])}}">Edit</a> 
-	                	<a class="btn btn-danger" href="{{route('admin.user.delete',['id'=>$aruser->id])}}">Delete</a> 
+	                	@if(Session::get('USERNAME') != 'admin')
+	                	<a class="btn btn-danger" href="{{route('admin.user.delete',['id'=>$aruser->id])}}">Delete</a>
+	                	@endif 
 	                </div>
 	                
 				</figure>

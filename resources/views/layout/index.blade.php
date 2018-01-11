@@ -16,7 +16,13 @@
 	@foreach( $products as $key => $value )
 	<?php
 		$discount = 0;
-		$arProduct = DB::table('promo_products')->join('promotions','promo_products.promotion_id','=','promotions.id')->join('products','products.id','=','promo_products.product_id')->select(['promotions.value_km','promotions.active'])->where('promo_products.product_id',$value->id)->get();
+		$arProduct = DB::table('promo_products')
+		->join('promotions','promo_products.promotion_id','=','promotions.id')
+		->join('products','products.id','=','promo_products.product_id')
+		->join('calculations','calculations.id','=','promotions.calculation_id')
+		->select(['promotions.value_km','promotions.active','promotions.active'])
+		->where('promo_products.product_id',$value->id)->get();
+		dd($arProduct);
 		$so = count($arProduct);
 		if ($so > 0) {
 			$active = $arProduct[0]->active;

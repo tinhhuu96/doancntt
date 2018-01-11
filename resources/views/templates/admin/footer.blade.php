@@ -182,6 +182,7 @@
 <script src="{{ asset('admin/plugins/jQuery/my-query.js') }}"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{{ asset('admin/bootstrap/js/bootstrap.min.js') }}"></script>
+
 <!-- Select2 -->
 <script src="{{ asset('admin/plugins/select2/select2.full.min.js') }}"></script>
 <!-- InputMask -->
@@ -208,6 +209,7 @@
 <script src="{{ asset('admin/dist/js/app.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
+<script src="{{ asset('admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <!-- Page script -->
 <script type="text/javascript">
 
@@ -220,6 +222,15 @@ $(document).ready(function(){
 });
 
 $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false
+    });
     //Initialize Select2 Elements
     $(".select2").select2();
 

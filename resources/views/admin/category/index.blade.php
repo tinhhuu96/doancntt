@@ -149,6 +149,7 @@
     <!-- /.box -->
   </div>
 </div>
+
 <script type="text/javascript">
   function delCategory(id)
   {

@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Validator;
 use App\User;
-use App\Permission_user;
 use App\Permission;
 use App\Product;
 
@@ -106,10 +105,6 @@ class UsersController extends Controller
             if ($request->username != "") {
 
                 User::create(['name'=>$username,'email'=>trim($request->gmail), 'password'=>bcrypt($request->password),'phone'=>$request->phone,'address'=>trim($request->address), 'picture'  => $endPic ]);
-
-                $arnewuser = User::where('email','=',trim($request->gmail) )->get();
-                // dd($arnewuser[0]['id']);
-                Permission_user::create(['user_id'=>$arnewuser[0]['id'], 'permission_id' => 1 ]);
                 $request->session()->flash('msg-s','Thêm thành công');
                 return redirect()->route('admin.users');
 
@@ -258,8 +253,6 @@ class UsersController extends Controller
                 //xóa ảnh cũ
                 Storage::delete('public/admins/'.$tenanhcu); // xóa trong file
             }
-            $arpermis = Permission_user::where('user_id','=',$id)->get();
-            DB::table('permission_users')->where('user_id', '=',$arpermis[0]->user_id)->delete();
             if ($objUser != null) {
                 $objUser->delete();
             }
