@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\CreateUserRequest;
 use Validator;
 use App\User;
 use App\Permission;
@@ -69,53 +70,25 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
-        $username = trim($request->username);
+        $name = trim($request->name);
         $inputs = $request->all();
-        $rules = array(
-            'username' => 'required|min:3|max:20',
-            'gmail' => 'required|email',
-            'password' => 'required|min:5|max:20',
-            'password_confirmation' => 'required|same:password',
-            'address'  => 'required',
-            );
-        $message = array(
-            'required' => 'Xin mời nhập !',
-            'username.min'=> 'Nhỏ nhất là 3 kí tự',
-            'min'      => 'Nhỏ nhất là 5 kí tự',
-            'max'      => 'Lớn nhất là 20 kí tự',
-            'gmail.emai'=>'Không đúng định dạng',
-            'same'      => 'Mật khẩu không trùng khớp',
-            'fullname.max'    => 'Lớn nhất 50 kí tự',
-            );
-        $validator = Validator::make($inputs, $rules, $message);
-        if ($validator->fails()) {
-            return redirect('/adminpc/User/user-add')
-                        ->withErrors($validator)
-                        ->withInput();
+        $endPic= "";
+        if ($request->avata != "") {
+            $path = $request->file('avata')->store('public/admins');
+            $tmp  = explode('/',$path);
+            $endPic = end($tmp);
         }
-        if($username != 'admindemo' && $username!='mod'){
-            $endPic= "";
-            if ($request->avata != "") {
-                $path = $request->file('avata')->store('public/admins');
-                $tmp  = explode('/',$path);
-                $endPic = end($tmp);
-            }
-            if ($request->username != "") {
-
-                User::create(['name'=>$username,'email'=>trim($request->gmail), 'password'=>bcrypt($request->password),'phone'=>$request->phone,'address'=>trim($request->address), 'picture'  => $endPic ]);
-                $request->session()->flash('msg-s','Thêm thành công');
-                return redirect()->route('admin.users');
-
-            }else{
-                $request->session()->flash('msg-e','Không thể thêm admin');
-                return redirect()->route('admin.users');
-            }
+        $user = User::create(['name'=>$name,'email'=>trim($request->email),
+            'password'=>bcrypt($request->password),'phone'=>$request->phone,
+            'address'=>trim($request->address), 'picture'  => $endPic, 'permission_id' => $request->permission]);
+        if ($user) {
+            $request->session()->flash('msg-s','Thêm thành công');
         }else{
-            $request->session()->flash('msg-e','Thêm thất bại !');
-           return redirect()->route('admin.users');
+            $request->session()->flash('msg-e','Không thể thêm admin');
         }
+            return redirect()->route('admin.users');
     }
 
     /**

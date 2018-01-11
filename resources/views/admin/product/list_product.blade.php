@@ -28,7 +28,7 @@
             </thead>
             <tbody>
               @foreach( $arProduct as $key => $value)
-                <?php  
+                <?php
                 ?>
                 <tr>
                   <td>{{ $value->code }}</td>
@@ -42,7 +42,7 @@
                     @endif
                   </td>
                   <td>
-                    <input type="number" name="" value="{{ $value->quantity }}" placeholder="" class="form-control" disabled="true">
+                    {{ $value->quantity }}
                   </td>
                   <td>{{ $value->price }} vnđ</td>
                   <td><a href="{{ route('admin.Order.inputUpdate',['slug'=>str_slug($value->name), 'id'=> $value->id ]) }}">Nhập đơn hàng</a></td>
@@ -81,7 +81,7 @@
 </div>
 @section('script')
 <script type="text/javascript">
-  
+
 
   function changerActive(id,so){
       $.ajaxSetup({

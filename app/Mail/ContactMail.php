@@ -31,6 +31,6 @@ class ContactMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.sendemail')->with(['contact' => $this->contact]);
+        return $this->subject('Send Request Completed')->view('emails.contactMail',['contact' => $this->contact]);
     }
 }
