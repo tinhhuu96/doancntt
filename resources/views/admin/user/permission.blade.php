@@ -104,7 +104,7 @@ img{
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $selected=""; ?>
+                <?php $selected="selected"; ?>
                 @foreach( $aruser as $key => $values)
 
                 <input type="hidden" id="idperuser-{{ $key }}" value="{{ $values->idperuser }}">
@@ -116,11 +116,10 @@ img{
                         <select class="form-control select2" id="permis-{{$key}}">
                             @foreach($arpermis as $k => $val)
                                 @if($val->id == $values->permission_id)
-                                    <?php 
-                                        $selected = "selected";
-                                    ?>
-                                @endif
                                     <option selected="{{ $selected }}" value="{{ $val->id }}">{{ $val->name }}</option>
+                                @else
+                                    <option selected="" value="{{ $val->id }}">{{ $val->name }}</option>
+                                @endif
                                 
                             @endforeach
                         </select>

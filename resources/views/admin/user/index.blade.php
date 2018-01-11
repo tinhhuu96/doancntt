@@ -137,7 +137,9 @@ img{
                   <a href="{{ $edit }}" class="text-yellow"><i class="fa fa-edit"> Edit</i></a>
                 </td>
                 <td>
+                  @if(Session::get('USERNAME') != 'admin')
                   <a href="{{ $delete }}" onclick="var tb=confirm('Bạn có muốn xóa không ?');if(tb==true){return true;}else{return false;};" class="text-red"><i class="fa fa-trash-o"> Delete</i></a>
+                  @endif
                 </td>
                 <td>
                   <a href="{{ route('admin.user.seeProfile',['id'=>$value->id]) }}"><i>xem chi tiết...</i></a>

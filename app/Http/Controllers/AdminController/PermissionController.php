@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use App\Permission;
-use App\Permission_user;
 use App\User;
 
 class PermissionController extends Controller
@@ -17,10 +16,7 @@ class PermissionController extends Controller
     {
         if (Session::get('USERNAME') == 'admin') {
             $arpermis = Permission::all();
-            $arUser = DB::table('users')
-                ->join('permission_users', 'users.id', '=', 'permission_users.user_id')
-                ->select('users.*', 'permission_users.user_id', 'permission_users.id as idperuser', 'permission_users.permission_id' )
-                ->get();
+            $arUser = User::all();
             return view('admin.user.permission', [ 'arpermis'=>$arpermis, 'aruser'=>$arUser]);
         }else{
             return view('error.404');
