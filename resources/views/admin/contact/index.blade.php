@@ -2,7 +2,7 @@
 @section('content')
 <?php
 	use App\Contact;
-  $countall = count(Contact::all());
+  $countall = count(Contact::where('reply',0)->get());
   $countallstar = count(Contact::where('star','=',1)->get());
 	$countallsend = count(Contact::where('reply','!=',0)->get());
 ?>
@@ -63,7 +63,8 @@
 	            <table class="table table-hover table-striped">
 		            <tbody>
 		            	@foreach( $contacts as $value)
-		            	@if( $value->view == 1 && $value->reply == 0 )
+
+		            	@if( $value->view == 1 && $value->reply == 0)
 			            <tr style="cursor: pointer;">
 			                <td><input type="checkbox" id="" class="check" name="checkall[]" value="{{$value->id}}"/></td>
 			                <td class="mailbox-star" id="setStar-{{ $value->id }}">
@@ -80,6 +81,7 @@
 			                <td class="mailbox-date">{{ Carbon\Carbon::parse($value->created_at)->diffForHumans() }}</td>
 			            </tr>
 			            @else
+                    @if( $value->reply == 0)
         						<tr  style="cursor: pointer;">
         			                <td>
         			                	<input type="checkbox" id="" class="check" name="checkall[]" value="{{$value->id}}"/>
@@ -97,6 +99,7 @@
         			                <td class="mailbox-attachment text-danger"></td>
         			                <td class="mailbox-date text-danger">{{ Carbon\Carbon::parse($value->created_at)->diffForHumans() }}</td>
         			            </tr>
+                        @endif
         						@endif
 			            @endforeach
 		            </tbody>
@@ -151,7 +154,7 @@
                   <a href="javascript:void(0)" onclick="setStar({{$value->id}},0)"><i class="fa fa-star text-black"></i></a>
                           @endif
                         </td>
-                        <td class="mailbox-name"><a href="javascript:void(0)">{{ $value->name }}</a></td>
+                        <td class="mailbox-name"><a onclick="modalView({{ $value->id }})" href="javascript:void(0)">{{ $value->name }}</a></td>
                         <td class="mailbox-subject"><b>{{ $value->content }}</b>
                         </td>
                         <td class="mailbox-attachment"></td>
@@ -248,6 +251,9 @@
             $('#emailcontact').val(data.email);
             $('#contentcontact').val(data.content);
             $('#contactId').val(data.id);
+            if (data.reply == 0) {
+              $('#reply').css({display:'block', transition:'0.3 all'});
+            }
             $('.modal').css({display:'block', transition:'0.3 all'});
           },
           error: function (){

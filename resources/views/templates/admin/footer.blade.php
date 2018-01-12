@@ -83,29 +83,27 @@
             <label for="">Messages</label><br />
             <textarea name="" id="contentcontact" class="form-control" readonly=""></textarea>
           </div>
-
-          <p>
-            <div class="form-group col-md-2">
-              <a class="btn btn-primary form-control" data-toggle="collapse" href="#collapseExample"
-                role="button" aria-expanded="false" aria-controls="collapseExample">
-              Reply
-              </a>
-            </div>
-          </p>
-          <div class="collapse form-group col-md-12" id="collapseExample">
-            <form action="{{ route('admin.contact.reply') }}" method="post">
-              {{ csrf_field() }}
-              <input type="hidden" name="contact_id" id="contactId" ">
-              <div class="card card-body form-group">
-                <textarea name="content" cols="12" rows="5" class="form-control" placeholder="Nhập nội dung..."></textarea>
+          <div id="reply" style="display: none;">
+              <div class="form-group col-md-2">
+                <a class="btn btn-primary form-control" data-toggle="collapse" href="#collapseExample"
+                  role="button" aria-expanded="false" aria-controls="collapseExample">
+                Reply
+                </a>
               </div>
-              <button type="submit" class="btn btn-primary form-control"> Send </button>
-            </form>
+            <div class="collapse form-group col-md-12" id="collapseExample">
+              <form action="{{ route('admin.contact.reply') }}" method="post">
+                {{ csrf_field() }}
+                <input type="hidden" name="contact_id" id="contactId" ">
+                <div class="card card-body form-group">
+                  <textarea name="content" cols="12" rows="5" class="form-control" placeholder="Nhập nội dung..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary form-control"> Send </button>
+              </form>
+            </div>
           </div>
-
         </div>
         <div class="modal-footer">
-          <button type="button" id="closeModal" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" id="closeModal" onclick="$('#reply').css({display:'none', transition:'0.3 all'});" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -312,6 +310,9 @@ function modelView(a)
       $('#emailcontact').val(data.email);
       $('#contentcontact').val(data.content);
       $('#contactId').val(data.id);
+      if (data.reply == 0) {
+        $('#reply').css({display:'block', transition:'0.3 all'});
+      }
       $('.modal').css({display:'block', transition:'0.3 all'});
     },
     error: function (){

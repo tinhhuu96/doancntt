@@ -27,7 +27,8 @@ class ContactController extends Controller
         $name = $contact->name;
         $email = $contact->email;
         $content = $contact->content;
-        return response()->json(['name'=>$name,'email'=>$email, 'content'=>$content, 'id' => $id]);
+        $reply   = $contact->reply;
+        return response()->json(['name'=>$name,'email'=>$email, 'content'=>$content, 'id' => $id,'reply'=> $reply]);
     }
 
     public function getcount(Request $req)
