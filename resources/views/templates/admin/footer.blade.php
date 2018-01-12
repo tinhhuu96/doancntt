@@ -222,8 +222,8 @@ $(document).ready(function(){
 });
 
 $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
+    $("#datatableproduct").DataTable();
+    $('#datatableproduct').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": false,
