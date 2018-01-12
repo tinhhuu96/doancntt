@@ -63,11 +63,12 @@ class ParameterController extends Controller
     {
         $name = trim($request->name);
         $cate = $request->para;
+
         if ($name == null) {
             $txt = '<p class="alert alert-danger alert-dismissable">nhập rỗng !</p>';
             return response()->json(['txt'=>$txt,'so'=>1]);
         }else{
-            $so = count(Parameter::where('name',$name)->get() );
+            $so = count(DB::table('parameters')->join('paracatedetails','parameters.id','=','paracatedetails.parameter_id')->where('parameters.name',$name)->where('paracatedetails.category_id',$cate)->get() );
             if ($so == 0) {
                 $arpara = parameter::create(['name'=>$name]);
                 if ($arpara) {

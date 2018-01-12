@@ -146,17 +146,16 @@ class OrdermanageController extends Controller
     public function ajaxGetInOrder(Request $request)
     {
         $date = $request->adate;
-
-        $array = TransInput_order::where('created_at','like',''.$date.'%')->get();
+        $array = DB::table('products')->join('traninput_orders','products.id','=','traninput_orders.id_product')->where('traninput_orders.created_at','like',''.$date.'%')->get();
         $str = "";
         foreach ($array as $key => $value) {
             $str .= $value->id_product;
              $str .= '<tr>
                 <td>'.$value->id.'</td>
-                <td>'.$value->id_product.'</td>
+                <td>'.$value->name.'</td>
                 <td>'.$value->quantity.'</td>
-                <td>'.$value->price.' vnđ</td>
-                <td class="text-right">'.$value->total.' vnđ</td>
+                <td>'.number_format($value->price,0,'.','.').' vnđ</td>
+                <td class="text-right">'.number_format($value->total,0,'.','.').' vnđ</td>
               </tr>';
         }
         return $str;
