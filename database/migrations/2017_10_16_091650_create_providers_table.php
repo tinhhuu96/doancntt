@@ -23,10 +23,10 @@ class CreateProvidersTable extends Migration
         });
         DB::table('providers')->insert(
             array(
-                'name' => 'Oppo',
+                'name' => 'FPT Shop',
                 'phone'=> '123456789',
                 'address' => "danang city",
-                'email'  => "oppo@gmail.com",
+                'email'  => "fptshop@gmail.com",
             )
         );
     }
