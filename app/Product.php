@@ -26,4 +26,8 @@ class Product extends Model
     public function Promotion_product() {
       return $this->belongsTo('App\promo_products');
     }
+
+    public function TransInput_order() {
+      return $this->belongsTo('App\TransInput_order');
+    }
 }

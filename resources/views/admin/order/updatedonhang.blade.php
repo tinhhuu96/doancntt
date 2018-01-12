@@ -24,7 +24,7 @@
             <div class="col-xs-2">
               <div class="form-group">
                 <label for=" ">Giá Bán</label>
-                <input type="number" name="price" value="" class="form-control" id="" placeholder="{{ $arProduct->price }}">
+                <input type="number" name="price" value="" class="form-control" id="" placeholder="<?php echo number_format($arProduct->price,0,'.','.') ?>">
               </div>
             </div>
             <div class="col-xs-2">
@@ -73,7 +73,7 @@
                 <form action="{{ route('admin.excel.addorder') }}" method="post">
                   {{ csrf_field() }}
                   <input type="hidden" value="{{ $date }}" name="date">
-                  <button type="submit" onclick="" class="btn btn-primary">Xuất file Excels</button>
+                  <button type="submit" class="btn btn-primary">Xuất file Excels</button>
                 </form>
               </h3>
             </div>
@@ -82,19 +82,17 @@
           <div class="box-body">
 
             <input type="hidden" value="{{ $date }}" id="datetime">
-            <table id="example2" class="table table-bordered table-hover">
+            <table id="example2" class="table table-bordered table-hover text-center ">
               <thead>
-              <tr>
+              <tr">
                 <th>Stt</th>
-                <th>id_Code</th>
+                <th>Sản phẩm</th>
                 <th>Số Lượng</th>
-                <th>Giá nhập vào</th>
-                <th>Giá bán ra </th>
+                <th>Giá bán </th>
                 <th>Tổng tiền</th>
               </tr>
               </thead>
               <tbody id="getValueInOrder">
-
               </tbody>
             </table>
           </div>

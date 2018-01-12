@@ -147,7 +147,7 @@
                 <form action="{{ route('admin.excel.addorder') }}" method="post">
                   {{ csrf_field() }}
                   <input type="hidden" value="{{ $date }}" name="date">
-                  <button type="submit" onclick="" class="btn btn-primary">Xuất file Excels</button>
+                  <button type="submit" class="btn btn-primary">Xuất file Excels</button>
                 </form>
               </h3>
             </div>
@@ -156,13 +156,13 @@
           <div class="box-body">
 
             <input type="hidden" value="{{ $date }}" id="datetime">
-            <table id="example2" class="table table-bordered table-hover">
+            <table id="example2" class="table table-bordered table-hover text-center">
               <thead>
-              <tr>
+              <tr">
                 <th>Stt</th>
-                <th>id_Code</th>
+                <th>Sản phẩm</th>
                 <th>Số Lượng</th>
-                <th>Giá bán ra </th>
+                <th>Giá bán </th>
                 <th>Tổng tiền</th>
               </tr>
               </thead>
@@ -209,27 +209,7 @@
             });
       });
 
-      function getListInOrder(){
-        setTimeout(function(){
-          var date = $('#datetime').val();
-              // alert(date);
-              $.ajaxSetup({
-                headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-              });
-              $.ajax({
-                url: "{{route('admin.ajax.getInOrder')}}",
-                type: 'post',
-                data: {adate:date},
-                success: function(data){
-                 $('#getValueInOrder').html(data);
-               },
-               complete: getListInOrder
-             });
-            },200);
-      };
-      getListInOrder();
+      
 
     })
 

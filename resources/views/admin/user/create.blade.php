@@ -92,9 +92,9 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer text-center">
-          {!! Form::submit('Search ', ['Register' => 'btn btn-primary'])!!}
+          {!! Form::submit('Register ', ['class' => 'btn btn-primary'])!!}
         </div>
-      {{!! Form::close() !!}}
+      {!! Form::close() !!}
     </div>
   </div>
 </div>

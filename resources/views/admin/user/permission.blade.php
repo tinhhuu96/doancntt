@@ -118,7 +118,7 @@ img{
                                 @if($val->id == $values->permission_id)
                                     <option selected="{{ $selected }}" value="{{ $val->id }}">{{ $val->name }}</option>
                                 @else
-                                    <option selected="" value="{{ $val->id }}">{{ $val->name }}</option>
+                                    <option value="{{ $val->id }}">{{ $val->name }}</option>
                                 @endif
                                 
                             @endforeach

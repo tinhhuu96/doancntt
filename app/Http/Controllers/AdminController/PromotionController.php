@@ -37,6 +37,11 @@ class PromotionController extends Controller
     {
         $str = ""; 
         $ids = $request->aid;
+        if ($ids == "") {
+            return '<tr>
+                        <td colspan="5">Không có sản phẩm</td>
+                    </tr>';
+        }
         foreach ($ids as $key => $id) {
             $arProducts = Product::where('category_id',$id)->get();
         
@@ -50,8 +55,6 @@ class PromotionController extends Controller
                         </tr>';
             }
         }
-        
-        
     	if ($str == "") {
     		return '<tr>
 				<td colspan="5">Không có sản phẩm</td>

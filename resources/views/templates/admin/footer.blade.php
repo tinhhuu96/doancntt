@@ -222,7 +222,6 @@ $(document).ready(function(){
 });
 
 $(function () {
-    $("#datatableproduct").DataTable();
     $('#datatableproduct').DataTable({
       "paging": true,
       "lengthChange": false,
@@ -321,6 +320,45 @@ function modelView(a)
   });
 
 }
+function readURL(input,thumbimage) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      $("#thumbimage").attr('src', e.target.result);
+    }
+    reader.readAsDataURL(input.files[0]);
+    $("#thumbimage").show();
+  }
+  else {
+    $("#thumbimage").attr('src', input.value);
+    $("#thumbimage").show();
+  }
+  $('.filename').text($("#uploadfile").val());
+  $('.Choicefile').css('background', '#C4C4C4');
+  $('.Choicefile').css('cursor', 'default');
+  $(".Choicefile").unbind('click');
+  $(".removeimg").show();
+}
+$(document).ready(function () {
+  $(".Choicefile").bind('click', function () {
+
+    $("#uploadfile").click();
+
+  });
+  $(".removeimg").click(function () {
+    $("#thumbimage").attr('src', '{{ asset('images/logo/avata.png') }}').show();
+    $("#myfileupload").html('<input type="file" name="avata" id="uploadfile" onchange="readURL(this);" />');
+    $(".removeimg").hide();
+    $(".Choicefile").bind('click', function () {
+      $("#uploadfile").click();
+    });
+    $('.Choicefile').css('background','#0877D8');
+    $('.Choicefile').css('cursor', 'pointer');
+    $(".filename").text("");
+  });
+})
+
+
 $(function(){
   function countallcontact(){
     setTimeout(function(){
@@ -364,48 +402,6 @@ $(function(){
     },500);
   };
   getarcontact();
-});
-
-function readURL(input,thumbimage) {
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      $("#thumbimage").attr('src', e.target.result);
-    }
-    reader.readAsDataURL(input.files[0]);
-    $("#thumbimage").show();
-  }
-  else {
-    $("#thumbimage").attr('src', input.value);
-    $("#thumbimage").show();
-  }
-  $('.filename').text($("#uploadfile").val());
-  $('.Choicefile').css('background', '#C4C4C4');
-  $('.Choicefile').css('cursor', 'default');
-  $(".Choicefile").unbind('click');
-  $(".removeimg").show();
-}
-$(document).ready(function () {
-  $(".Choicefile").bind('click', function () {
-
-    $("#uploadfile").click();
-
-  });
-  $(".removeimg").click(function () {
-    $("#thumbimage").attr('src', '{{ asset('images/logo/avata.png') }}').show();
-    $("#myfileupload").html('<input type="file" name="avata" id="uploadfile" onchange="readURL(this);" />');
-    $(".removeimg").hide();
-    $(".Choicefile").bind('click', function () {
-      $("#uploadfile").click();
-    });
-    $('.Choicefile').css('background','#0877D8');
-    $('.Choicefile').css('cursor', 'pointer');
-    $(".filename").text("");
-  });
-})
-
-
-$(function(){
 
   $('#check_all').on('change', function() {
     var checkall = document.getElementById("check_all");
@@ -420,22 +416,27 @@ $(function(){
       }
     }
   });
-
-  //------------------------------------------------------------
-  // $('#check_all').on('change', function() {
-  //   var checkall = document.getElementById("check_all");
-  //   var check    = document.getElementsByClassName("check");
-  //   if (checkall.checked) {
-  //     for (var i = 0; i < check.length; i++) {
-  //       check[i].checked = true;
-  //     }
-  //   }else{
-  //     for (var i = 0; i < check.length; i++) {
-  //       check[i].checked = false;
-  //     }
-  //   }
-  // });
-  //-------------------------------------------------------------
+  function getListInOrder(){
+        setTimeout(function(){
+          var date = $('#datetime').val();
+              // alert(date);
+              $.ajaxSetup({
+                headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+              });
+              $.ajax({
+                url: "{{route('admin.ajax.getInOrder')}}",
+                type: 'post',
+                data: {adate:date},
+                success: function(data){
+                 $('#getValueInOrder').html(data);
+               },
+               complete: getListInOrder
+             });
+            },500);
+      };
+      getListInOrder();
 
   function getContact(){
     setTimeout(function(){

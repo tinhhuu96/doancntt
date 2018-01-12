@@ -9,12 +9,9 @@
 
 <div class="row">
     <div class="col-md-3">
-      <a href="compose.html" class="btn btn-primary btn-block margin-bottom">Compose</a>
-
       <div class="box box-solid">
         <div class="box-header with-border">
           <h3 class="box-title">Messager</h3>
-
           <div class="box-tools">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
             </button>
@@ -66,7 +63,7 @@
 	            <table class="table table-hover table-striped">
 		            <tbody>
 		            	@foreach( $contacts as $value)
-		            	@if( $value->view == 1 )
+		            	@if( $value->view == 1 && $value->reply == 0 )
 			            <tr style="cursor: pointer;">
 			                <td><input type="checkbox" id="" class="check" name="checkall[]" value="{{$value->id}}"/></td>
 			                <td class="mailbox-star" id="setStar-{{ $value->id }}">
@@ -154,7 +151,7 @@
                   <a href="javascript:void(0)" onclick="setStar({{$value->id}},0)"><i class="fa fa-star text-black"></i></a>
                           @endif
                         </td>
-                        <td class="mailbox-name" onclick="modalView({{ $value->id }})"><a href="javascript:void(0)">{{ $value->name }}</a></td>
+                        <td class="mailbox-name"><a href="javascript:void(0)">{{ $value->name }}</a></td>
                         <td class="mailbox-subject"><b>{{ $value->content }}</b>
                         </td>
                         <td class="mailbox-attachment"></td>

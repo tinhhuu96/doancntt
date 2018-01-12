@@ -18,13 +18,17 @@
                         <input type="text" name="username" value="{{$aruser->name}}" class="form-control" disabled="">
                     </div>
                     <div class="form-group">
-                        <label for="">Xác nhận bằng Mật Khẩu</label>
-                        <input type="password" name="password_old" value="" class="form-control">
-                        @if(Session::has('msg-e'))
-                            <div class="alert alert-danger alert-dismissable">{{ Session::get('msg-e') }}</div>
+                        <label for="">Gmail</label>
+                        <input type="email" name="gmail" value="{{ $aruser->email }}" class="form-control">
+                        @if ($errors->has('gmail'))
+                            <p class="has-error alert-danger">{{$errors->first('gmail')}}</p>
                         @endif
-                        @if ($errors->has('password_old'))
-                            <p class="has-error alert-danger">{{$errors->first('password_old')}}</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Địa Chỉ</label>
+                        <input type="text" name="address" value="{{ $aruser->address }}" class="form-control">
+                        @if ($errors->has('address'))
+                            <p class="has-error alert-danger">{{$errors->first('address')}}</p>
                         @endif
                     </div>
                 </div>
@@ -44,29 +48,6 @@
                     </div>
                 </div>
             </div>
-                
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <label for="">Gmail</label>
-                    <input type="email" name="gmail" value="{{ $aruser->email }}" class="form-control">
-                    @if ($errors->has('gmail'))
-                        <p class="has-error alert-danger">{{$errors->first('gmail')}}</p>
-                    @endif
-                </div>
-            </div>
-            <div class="col-xs-12">
-                <div class="form-group">
-                    <label for="">Địa Chỉ</label>
-                    <input type="text" name="address" value="{{ $aruser->address }}" class="form-control">
-                    @if ($errors->has('address'))
-                        <p class="has-error alert-danger">{{$errors->first('address')}}</p>
-                    @endif
-                </div>    
-            </div>
-            <div class="xol-xs-12">
-                
-            </div>
-            
         </div>
         <!-- /.box-body -->
         <div class="box-footer text-center">
