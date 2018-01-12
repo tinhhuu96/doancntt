@@ -55,8 +55,9 @@ class CartController extends Controller
 
     public function store_order(Request $request)
     {
-        $order = Order::create(['email' => $request->Input('email'), 'shipping_status' => 0, 'address' => $request->Input('address_order'), 'phone' => $request->Input('phone'), 'name' => $request->Input('name_receiver'), 'user_id' => Auth::user()->id ]);
-
+        $order = Order::create(['email' => $request->Input('email'),
+            'address' => $request->Input('address_order'), 'phone' => $request->Input('phone'),
+            'name' => $request->Input('name_receiver'), 'user_id' => Auth::user()->id]);
         if ($order) {
             $content = Cart::content();
             foreach ($content as $item) {
@@ -89,18 +90,19 @@ class CartController extends Controller
     public function cancel($id)
     {
         $order = Order::find($id);
-        if ($order->status == 0) {
+        if ($order->status != 'pending' && $order->status != 'processing') {
             Toastr::warning("Can not cancel order !");
-            return redirect('carts/manage');
         }
-        $items = $order->OrderDetails()->get();
-        $order->update(['shipping_status' => 2, 'status' => 0]);
-        foreach ($items as $item) {
-            $product = Product::findOrFail($item->product_id);
-            $quantity = $product->quantity + $item->quantity;
-            $product->update(['quantity' => $quantity]);
+        else{
+            $order->update(['status' => 'delivered']);
+            $items = $order->OrderDetails()->get();
+            foreach ($items as $item) {
+                $product = Product::find($item->product_id);
+                $quantity = $product->quantity + $item->quantity;
+                $product->update(['quantity' => $quantity]);
+            }
+            Toastr::success("Delivered Order " . $order->id);
         }
-        Toastr::success("Canceled Order " . $order->id);
         return redirect('carts/manage');
     }
 

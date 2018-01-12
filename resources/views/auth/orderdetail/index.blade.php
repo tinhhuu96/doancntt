@@ -6,14 +6,15 @@
             </div>
             <!-- /.box-header -->
            <div class="box-body">
-              <table  id="example2" class="table table-bordered table-hover">
+              <table  class="table table-bordered table-hover">
                 <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Số lượng</th>
-                  <th>Giá</th>
-                  <th>Mã Đơn Hàng</th>
-                  <th>Mã Sản Phẩm</th>
+                  <th>Product Name</th>
+                  <th>Quanlity</th>
+                  <th>Price</th>
+                  <th>Subtotal</th>
+                  <th>Order ID</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -21,21 +22,22 @@
                 @foreach ($orderdetails as $orderdetail)
                  <tr>
                   <td>{{ $orderdetail ->id}}</td>
-                  <td>{{ $orderdetail ->quantity}}</td>
-                  <td>{{ $orderdetail->price . ' VNĐ'}}</td>
-                  <td>{{ $orderdetail ->order_id}}</td>
                   <?php $product = App\Product::find($orderdetail->product_id); ?>
                   @if (empty($product))
                   <td> Sản Phẩm đã xóa hoặc ngừng kinh doanh</td>
                   @else
                   <td>{{ $product->name}}</td>
                   @endif
+                  <td>{{ $orderdetail ->quantity}}</td>
+                  <td>{{ $orderdetail->price }}$</td>
+                  <td>{{ $orderdetail->price * $orderdetail->quantity }}$</td>
+                  <td>{{ $orderdetail ->order_id}}</td>
                 </tr>
                 <?php $total+=$orderdetail->quantity * $orderdetail->price ?>
                 @endforeach
                 </tbody>
               </table>
-               <p style="float: right;"><b>Tổng Tiền: {{ number_format($total, '2', ',', '.') . ' VNĐ' }}</b></p>
+               <p style="float: right;"><b>Total: {{ $total }}$</b></p>
             </div>
             <!-- /.box-body -->
           </div>

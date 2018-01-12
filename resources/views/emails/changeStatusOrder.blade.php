@@ -8,12 +8,13 @@
 <div style="padding:25px 20px 5px 20px;background-color:#2d82c4;color:white">
 <p style="margin:0"><b>Xin chào bạn {{ $order->name }} !</b></p>
 
-<p>Cảm ơn bạn đã đặt hàng của công ty chúng tối. Bạn vui lòng kiểm tra lại thông tin đơn hàng, nếu có bất cứ sai sót gì xin hãy liên hệ với chung tôi</p>
+<p>Đơn Hàng số {{ $order->id }} của bạn đã được thay đổi trạng thái</p>
 </div>
 
 <div style="margin-top:23px">
-<p></p><div style="font-size:18px;text-align:center;font-weight:600;color:#2d82c4;margin-bottom:18px">Thông tin đơn hàng ngày {{$order->created_at}}</div>
+<p></p><div style="font-size:18px;text-align:center;font-weight:600;color:#2d82c4;margin-bottom:18px">Thông tin đơn hàng số {{$order->id}}</div>
 <div style="margin:0px 20px 10px 20px;border-top:1px solid #eeeeee;display:block">
+  <h3 style="color: green;">Trạng Thái: {{ $order->status}}</h3>
   <table border="0" style="border-collapse:separate;border-spacing:0;line-height:25px;width:100%">
     <thead>
       <th style="padding:5px 10px;border:1px solid #ccc;background-color:#d9d9d9;font-weight:bold;width:120px">
@@ -37,11 +38,7 @@
             <?php $product = App\Product::find($value->product_id); ?>
             {{$product['name']}}</td>
           <td style="padding:5px 10px;border:1px solid #ccc;border-top:none;width:120px">
-<<<<<<< e1dbeb4302f3ad1a3c032aff268c2c99d086978c
-            {{$value->price}}
-=======
             {{$value->price}}$
->>>>>>> dahboard
           </td>
           <td style="padding:5px 10px;border:1px solid #ccc;border-top:none;width:120px">
             {{$value->quantity}}

@@ -1,5 +1,6 @@
   @extends('templates.admin.template')
   @section('content')
+  <?php use Carbon\Carbon; ?>
   <div class="col-xs-12">
     <div class="box">
       <div class="box-header">
@@ -9,7 +10,9 @@
       <div class="box-body">
         <div class="form-inline" style="margin-bottom: 10px; float: left;">
         {!! Form::open(['url' => 'adminpc/orders/search', 'enctype' => 'multipart/form-data', 'method' => 'GET']) !!}
-          {!! Form::select('status', array('2' => 'All', '0' => 'not avalible', '1' => 'avalible'),['class' => 'form-control'],['class' => 'form-control']) !!}
+          {!! Form::select('status', array('all' => 'All', 'pending' => 'Pending',
+          'processing' => 'Processing','shipping' =>'Shipping', 'shipped' => 'Shipped',
+          'delivered' => 'Delivered'),['class' => 'form-control'],['class' => 'form-control']) !!}
           {!! Form::date('date_start', null, ['class' => 'form-control']) !!}
           {!! Form::date('date_end', null, ['class' => 'form-control']) !!}
           {!! Form::submit('Search ', ['class' => 'btn btn-primary'])!!}
@@ -22,34 +25,53 @@
          <a href="{{url('/adminpc/orders/export?status=2')}}" class="btn btn-success" style="float: right;"> Export Order</a>
          @endif
 
-          <table  id="example2" class="table table-bordered table-hover">
+          <table class="table table-striped">
             <thead>
             <tr>
-              <th>ID</th>
-              <th>Ngày Đặt Hàng</th>
-              <th>Trạng Thái</th>
-              <th>Địa Chỉ Giao Hàng</th>
-              <th>Tình Trạng Giao Hàng</th>
-              <th>Số Điện Thoại</th>
-              <th>Tên Người Nhận</th>
-              <th>Người Đặt Hàng</th>
-              <th>Sửa</th>
-              <th>Xem Chi Tiết</th>
+              <th>ID Order</th>
+              <th>Order Date</th>
+              <th>Status</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Recipient Name</th>
+              <th>Sender Name</th>
+              <th>Action</th>
+              <th>View Details</th>
             </tr>
             </thead>
             <tbody>
               @foreach ($orders as $order)
                <tr>
                 <td>{{ $order ->id}}</td>
-                <td>{{ $order ->created_at}}</td>
-                <td><?php if ($order->status == 0) echo "not avalible"; else echo "avalible"; ?></td>
+                <td><?php  $date = Carbon::parse($order['created_at']); ?>
+                  {{ $date->format('d-m-Y')}}
+                </td>
+                <td>@if ($order->status == 'pending' || $order->status == 'processing')
+                  <span class="label label-warning">{{ $order ->status }}</span>
+                @elseif ($order->status == 'shipping')
+                  <span class="label label-primary">{{ $order ->status }}</span>
+                @elseif ($order->status == 'shipped')
+                  <span class="label label-success">{{ $order ->status }}</span>
+                @else
+                  <span class="label label-danger">{{ $order ->status }}</span>
+                @endif</td>
                 <td>{{ $order ->address}}</td>
-                <td><?php if ($order->shipping_status ==0) echo "Waiting"; elseif ($order->shipping_status ==1) echo "Done"; else echo "Cancel" ?></td>
                 <td>{{ $order ->phone}}</td>
                 <td>{{ $order ->name}}</td>
-                <td>{{ App\User::find($order->user_id)->name}}</td>
-                <td><a href="{{ url('adminpc/orders/'. $order->id . '/edit')}}"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                <td><a href="{{ url('adminpc/' . $order->id .'/orderdetails') }}">Xem chi tiết</a></td>
+                <td><?php $user = App\User::find($order->user_id); ?>
+                  @if ($user)
+                    {{ $user['name'] }}
+                  @else
+                    undefind
+                  @endif
+                </td>
+                <td class="text-center">
+                  <div class="btn-group">
+                    <a href="{{ url('adminpc/orders/'. $order->id . '/edit')}}"
+                      class="btn btn-warning btn-xs">
+                      <i class="fa fa-pencil"></i></a></td>
+                  </div>
+                <td><a href="{{ url('adminpc/' . $order->id .'/orderdetails') }}">View Details</a></td>
 
               </tr>
               @endforeach
@@ -60,3 +82,4 @@
     </div>
   </div>
   @stop
+
