@@ -51,7 +51,7 @@
 								$chieckhau = number_format($chieckhau,0,'.','.');
 							?>
 							@else
-								<?php 
+								<?php
 									$chieckhau = $price-$arProduct[0]->value_km;
 									$chieckhau = number_format($chieckhau,0,'.','.');
 								 ?>

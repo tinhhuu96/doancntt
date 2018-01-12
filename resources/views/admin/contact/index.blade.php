@@ -1,4 +1,3 @@
-@extends('templates.admin.template')
 @section('content')
 <?php
 	use App\Contact;
@@ -61,6 +60,16 @@
 	          </div>
 	          <div class="table-responsive mailbox-messages">
 	            <table class="table table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Content</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
 		            <tbody>
 		            	@foreach( $contacts as $value)
 
@@ -75,9 +84,10 @@
 			                	@endif
 			                </td>
 			                <td class="mailbox-name" onclick="modalView({{ $value->id }})"><a href="javascript:void(0)">{{ $value->name }}</a></td>
+                      <td>{{ $value->email }}</td>
 			                <td class="mailbox-subject"><b>{{ $value->content }}</b>
 			                </td>
-			                <td class="mailbox-attachment"></td>
+			                <!-- <td class="mailbox-attachment"></td> -->
 			                <td class="mailbox-date">{{ Carbon\Carbon::parse($value->created_at)->diffForHumans() }}</td>
 			            </tr>
 			            @else
@@ -94,9 +104,10 @@
         			                	@endif
         			                </td>
         			                <td onclick="modalView({{ $value->id }})" class="mailbox-name text-danger"><a href="javascript:void(0)" class="text-danger">{{ $value->name }}</a></td>
+                              <td>{{ $value->email }}</td>
         			                <td class="mailbox-subject text-danger"><b>{{ $value->content }}</b>
         			                </td>
-        			                <td class="mailbox-attachment text-danger"></td>
+        			                <!-- <td class="mailbox-attachment text-danger"></td> -->
         			                <td class="mailbox-date text-danger">{{ Carbon\Carbon::parse($value->created_at)->diffForHumans() }}</td>
         			            </tr>
                         @endif
@@ -142,6 +153,16 @@
             </div>
             <div class="table-responsive mailbox-messages">
               <table class="table table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Content</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
                 <tbody>
                   @foreach( $contacts as $value)
                   @if( $value->reply != 0 )
@@ -155,10 +176,11 @@
                           @endif
                         </td>
                         <td class="mailbox-name"><a onclick="modalView({{ $value->id }})" href="javascript:void(0)">{{ $value->name }}</a></td>
+                        <td>{{ $value->email }}</td>
                         <td class="mailbox-subject"><b>{{ $value->content }}</b>
                         </td>
-                        <td class="mailbox-attachment"></td>
-                        <td class="mailbox-date">{{ $value->created_at}}</td>
+                        <!-- <td class="mailbox-attachment"></td> -->
+                        <td class="mailbox-date">{{ Carbon\Carbon::parse($value->created_at)->diffForHumans() }}</td>
                     </tr>
                     @endif
                   @endforeach
@@ -202,6 +224,16 @@
             </div>
             <div class="table-responsive mailbox-messages">
               <table class="table table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Content</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
                 <tbody>
                   @foreach( $contacts as $value)
                   @if( $value->star == 1 )
@@ -211,10 +243,11 @@
                         <a href="javascript:void(0)" onclick="setStar({{$value->id}},1)" ><i class="fa fa-star text-yellow"></i></a>
                       </td>
                       <td class="mailbox-name" onclick="modalView({{ $value->id }})"><a href="read-mail.html">{{ $value->name }}</a></td>
+                      <td>{{ $value->email }}</td>
                       <td class="mailbox-subject"><b>{{ $value->content }}</b>
                       </td>
-                      <td class="mailbox-attachment"></td>
-                      <td class="mailbox-date">{{ $value->created_at}}</td>
+                      <!-- <td class="mailbox-attachment"></td> -->
+                      <td class="mailbox-date">{{ Carbon\Carbon::parse($value->created_at)->diffForHumans() }}</td>
                   </tr>
                   @endif
                   @endforeach

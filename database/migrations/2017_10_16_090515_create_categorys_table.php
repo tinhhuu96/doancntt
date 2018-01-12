@@ -20,6 +20,12 @@ class CreateCategorysTable extends Migration
             $table->integer('parent')->unsigned()->nullable();
             $table->timestamps();
         });
+        DB::table('categories')->insert(
+            array(
+                ['name' => 'Phone', 'parent' => 0],
+                ['name' => 'Laptop', 'parent' => 0]
+            )
+        );
     }
 
     /**

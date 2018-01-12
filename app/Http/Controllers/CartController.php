@@ -19,11 +19,11 @@ use Toastr;
 class CartController extends Controller
 {
 	public function index(){
-		if (Auth::check())
-		{
-			return view('layouts.cart.index');
-		}
-		return view('auth.login');
+		// if (Auth::check())
+		// {
+		return view('layouts.cart.index');
+		// }
+		// return view('auth.login');
 	}
 
     public function add($id){
@@ -55,9 +55,16 @@ class CartController extends Controller
 
     public function store_order(Request $request)
     {
-        $order = Order::create(['email' => $request->Input('email'),
-            'address' => $request->Input('address_order'), 'phone' => $request->Input('phone'),
-            'name' => $request->Input('name_receiver'), 'user_id' => Auth::user()->id]);
+        if (Auth::check()) {
+            $order = Order::create(['email' => $request->Input('email'),
+                'address' => $request->Input('address_order'), 'phone' => $request->Input('phone'),
+                'name' => $request->Input('name_receiver'), 'user_id' => Auth::user()->id]);
+        }
+        else{
+             $order = Order::create(['email' => $request->Input('email'),
+                'address' => $request->Input('address_order'), 'phone' => $request->Input('phone'),
+                'name' => $request->Input('name_receiver')]);
+        }
         if ($order) {
             $content = Cart::content();
             foreach ($content as $item) {
@@ -75,7 +82,7 @@ class CartController extends Controller
             return redirect('/');
         }
         else
-        Toastr::warning("error");
+            Toastr::warning("error");
         return redirect('/carts/checkout');
     }
 

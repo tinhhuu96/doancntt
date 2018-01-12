@@ -16,13 +16,12 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('phone')->unsigned()->nullable();
+            $table->string('phone');
             $table->string('email');
             $table->string('address');
-            // $table->integer('shipping_status')->default(0);
-            $table->enum('status',['pending', 'processing', 'shipping', 'shipped', 'delivered'])->default('pending');
-            $table->integer('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->enum('status',['pending', 'processing', 'shipping', 'shipped',
+                'delivered'])->default('pending');
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }
