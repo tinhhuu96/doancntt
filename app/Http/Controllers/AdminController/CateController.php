@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\AdminController;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\cateRequest;
+use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -45,7 +45,7 @@ class CateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(cateRequest $request)
+    public function store(CreateCategoryRequest $request)
     {
 
         $arCate = Category::create(['name'=>trim($request->name), 'parent'=>$request->parent]);

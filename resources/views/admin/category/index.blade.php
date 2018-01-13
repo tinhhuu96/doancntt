@@ -3,9 +3,16 @@
 <?php
   use App\Category;
 ?>
-<div class="row">
-  <div class="col-md-5">
-    <div class="box box-primary box-solid collapsed-box">
+
+  @if(Session::has('msg-s'))
+    <div class="alert alert-success alert-dismissable">{{ Session::get('msg-s') }}</div>
+  @endif
+  @if(Session::has('msg-e'))
+    <div class="alert alert-danger alert-dismissable">{{ Session::get('msg-e') }}</div>
+  @endif
+<div class="">
+  <div class="col-md-4">
+    <div class="box box-primary box-solid">
       <div class="box-header with-border">
         <h3 class="box-title text-white">Thêm danh mục</h3>
         <div class="box-tools pull-right">
@@ -20,10 +27,10 @@
           {{ csrf_field() }}
           <div class="form-group">
             <label for="">Name Categories</label>
-            <input type="text" name="name" value="" placeholder="nhập..." class="form-control" required="mời nhập">
-            @if ($errors->has('name'))
+            <input type="text" name="name" value="" placeholder="nhập..." class="form-control" >
+              @if ($errors->has('name'))
                 <span class="help-block">
-                    <strong class="text-danger">{{ $errors->first('name') }}</strong>
+                    <strong>{{ $errors->first('name') }}</strong>
                 </span>
             @endif
           </div>
@@ -59,13 +66,19 @@
               }
               ?>
                <?php showCategories($arcate); ?>
+
             </select>
+            @if ($errors->has('parent'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('parent') }}</strong>
+                </span>
+            @endif
           </div>
           <div class="form-group">
-            <div class="col-xs-3">
+            <div class="col-xs-2">
               <input type="submit" name="" value="Add New" class="btn btn-success">
             </div>
-            <div class="col-xs-3">
+            <div class="col-xs-2">
               <button type="button" class="btn btn-default text-right" data-widget="collapse"><i class="fa fa-arrow-circle-up ">Close</i>
             </div>
           </button>
@@ -74,20 +87,11 @@
         </div>
       </div>
       <!-- /.box-body -->
-    </div>
-    <!-- /.box -->
-  </div>
-  <!-- <div class="col-md-5">
-    @if(Session::has('msg-s'))
-        <div class="alert alert-success alert-dismissable">{{ Session::get('msg-s') }}</div>
-      @endif
-      @if(Session::has('msg-e'))
-        <div class="alert alert-danger alert-dismissable">{{ Session::get('msg-e') }}</div>
-      @endif
-  </div> -->
+    </div> <!-- /.box -->
+
 </div>
-<div class="row text-center">
-  <div class="col-xs-offset-1 col-xs-10">
+<div class="col-xs-8 text-center">
+  <div class="">
     <div class="box box-success">
       <div class="box-header with-border">
         <h3 class="box-title">Danh sách danh mục</h3>
