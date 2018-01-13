@@ -12,6 +12,8 @@ use App\Parameter;
 use App\Comment;
 use App\Promotion_product;
 use App\Promotion;
+use Carbon\Carbon;
+use App\User;
 
 class ProductController extends Controller
 {
@@ -74,14 +76,21 @@ class ProductController extends Controller
         // dd($array);
         $str ="";
         foreach ($array as $key => $value) {
+            $time = Carbon::parse($value->created_at)->diffForHumans();
+            $arimg = User::where('id',$value->user_id)->get();
+            if ($arimg[0]->picture == "") {
+                $img = 'avata.png';
+            }else{
+                $img   = $arimg[0]->picture;
+            }
             $str .= '<div class="form-group " >
                         <hr style="color: #bbb;">
                         <div class="row">
                             <div class="col-xs-1">
-                                <img src="'.asset('images/logo/avata.png').'" alt="" style="width: 50px ; height: 50px;" />
+                                <img src="'.asset('storage/admins/'.$img).'" class="thumbnail" alt="" style="width: 50px ; height: 50px;" />
                             </div>
                             <div class="col-xs-11">
-                                <span>Time: '.ham_dao_nguoc_chuoi($value->created_at).'</span> <br/>
+                                <span>Time: '.$time.'</span> <br/>
                                 <span>'.$value->contents.'</span>
                             </div>
                         </div>

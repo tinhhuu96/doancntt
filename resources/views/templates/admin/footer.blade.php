@@ -347,7 +347,7 @@ $(function(){
        },
        complete: getarcontact
      });
-    },500);
+    },200);
   };
   getarcontact();
 

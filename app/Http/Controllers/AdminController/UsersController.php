@@ -25,8 +25,9 @@ class UsersController extends Controller
      */
 
     public function index()
-    {
-        if (Session::get('USERNAME') == 'admin') {
+    {   
+        $user = Session::get('USERNAME');
+        if ($user == 'admin') {
             $aruser = DB::table('users')->get();
             return view('admin.user.index', ['arUser'=>$aruser]);
         }else{
