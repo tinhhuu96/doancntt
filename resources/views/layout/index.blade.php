@@ -46,7 +46,7 @@
 							<?php
 								$discount = $arProduct[0]->value_km;
 								$phantram = 100 - $discount;
-								$chieckhau =$phantram/100;
+								$chieckhau = $phantram/100;
 								$chieckhau = $price*$chieckhau;
 								$chieckhau = number_format($chieckhau,0,'.','.');
 							?>
@@ -57,12 +57,13 @@
 								 ?>
 							@endif
 							<i><strike>$<?php echo number_format($price,0,'.','.') ?></strike></i>
-							<h2 style="display: inline;">${{$chieckhau}}</h2>
+							<h2 style="display: inline;">$<span id="span_price">{{$chieckhau}}</span></h2>
 						@else
+							<?php $chieckhau = $price  ?>
 							<h2 style="display: inline;">$<?php echo number_format($price,0,'.','.') ?></h2>
 	                    @endif
 	                    <p>{{ $value->name }}</p>
-	                    <a href="javascript:void(0)"  class="btn btn-default add-to-cart add_product" onclick="addCart({{$value->id}})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+	                    <a href="javascript:void(0)"  class="btn btn-default add-to-cart add_product" onclick="addCart({{$value->id}},{{$chieckhau}})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 	                </div>
 	                <div class="product-overlay">
 	                    <div class="overlay-content">
@@ -75,12 +76,12 @@
 									$chieckhau = number_format($chieckhau,0,'.','.');
 								?>
 								<i><strike>$<?php echo number_format($price,0,'.','.') ?></strike></i>
-								<h2 style="display: inline;">${{$chieckhau}}</h2>
+								<h2 style="display: inline;">$<span id="span_price">${{$chieckhau}}</span></h2>
 							@else
 								<h2 style="display: inline;">$<?php echo number_format($price,0,'.','.') ?></h2>
 		                    @endif
 	                        <p>{{ $value->name }}</p>
-	                        <a href="javascript:void(0)"  class="btn btn-default add-to-cart add_product" onclick="addCart({{$value->id}})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+	                        <a href="javascript:void(0)"  class="btn btn-default add-to-cart add_product" onclick="addCart({{$value->id}},{{$chieckhau}})"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 	                    </div>
 	                </div>
 	                @if( $dates < 432000)

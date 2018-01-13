@@ -26,9 +26,9 @@ class CartController extends Controller
 		// return view('auth.login');
 	}
 
-    public function add($id){
+    public function add($id, $price){
         $product = Product::find($id);
-        Cart::add($product->id, $product->name, 1, $product->price, ['images' => $product->picture]);
+        Cart::add($product->id, $product->name, 1, $price, ['images' => $product->picture]);
         $count = Cart::count();
         return response(['count' => $count], 200);
     }
@@ -127,7 +127,8 @@ class CartController extends Controller
         return response(['count' => $count], 200);*/
         $item = Cart::get($rowId);
         Cart::update($rowId, $item->qty - 1);
-        return response(['qty' => $item->qty, 'subtotal' => $item->subtotal], 200);
+        return response(['qty' => $item->qty, 'subtotal' => $item->subtotal,
+            'total' => Cart::total()], 200);
         // Cart::update($rowId, )
     }
 
@@ -135,7 +136,8 @@ class CartController extends Controller
     {
         $item = Cart::get($rowId);
         Cart::update($rowId, $item->qty + 1);
-        return response(['qty' => $item->qty, 'subtotal' => $item->subtotal], 200);
+        return response(['qty' => $item->qty, 'subtotal' => $item->subtotal,
+            'total' => Cart::total()], 200);
     }
 
     public function export_order()

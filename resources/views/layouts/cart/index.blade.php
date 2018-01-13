@@ -12,7 +12,7 @@
 				  <li class="active">Shopping Cart</li>
 				</ol>
 			</div>
-			 <a href="{{ url('/')}}" class="btn btn-primary btn-lg active" role="button" style="float: right; background-color: green">Tiếp tục mua hàng</a>
+			 <a href="{{ url('/')}}" class="btn btn-primary btn-lg" style="float: right; background-color: green">Tiếp tục mua hàng</a>
 			 <br>
 			 <br>
 			 <br>
@@ -40,7 +40,7 @@
 								<h4><a href="">{{$item->name}}</a></h4>
 							</td>
 							<td class="cart_price">
-								<p style="margin-top: 20px">{{ number_format($item->price, 0, '.','.') . ' VNĐ'}}</p>
+								<p style="margin-top: 20px">{{ $item->price }}$</p>
 							</td>
 							<td class="cart_quantity">
 								<div class="cart_quantity_button">
@@ -52,7 +52,7 @@
 								</form>
 							</td>
 							<td class="cart_total">
-								<p class="cart_total_price" style="margin-top: 20px"><span id="sub{{$item->rowId}}">{{ number_format($item->subtotal, 0, '.','.') . ' VNĐ' }}</span></p>
+								<p class="cart_total_price" style="margin-top: 20px"><span id="sub{{$item->rowId}}">{{ $item->subtotal }}$</span></p>
 							</td>
 							<td class="cart_delete">
 								<a class="cart_quantity_delete delete" href="{{ url('carts/delete/' . $item->rowId) }}"><i class="fa fa-times"></i></a>
@@ -64,7 +64,7 @@
 								<p class="cart_total_price" style="color: #666; font-weight: bold;"> Tổng Cộng: </p>
 							</td>
 							<td>
-								<p id="total" class="cart_total_price">{{ Cart::total() . ' VNĐ' }}</p>
+								<p id="total" class="cart_total_price"><span id="total_price">{{ Cart::total() . '$' }}</span></p>
 							</td>
 						</tr>
 
