@@ -24,6 +24,7 @@ class IndexController extends Controller
         $products = DB::table('products')->count();
         $shipped = DB::table('orders')->where('status', 'shipped')->count();
         $delivered = DB::table('orders')->where('status','delivered')->count();
+
         return view('admin.index',['members' => $members, 'orders' => $orders,
             'products' => $products, 'shipped' => $shipped, 'delivered' => $delivered]);
     }

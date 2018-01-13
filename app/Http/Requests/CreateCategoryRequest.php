@@ -25,14 +25,12 @@ class CreateCategoryRequest extends FormRequest
     {
         return [
             'name'   => 'required|min:5',
-            'parent'   => 'required|min:5',
         ];
     }
 
     public function messages(){
         return [
             'name.required' => 'Vui lòng nhập tên danh mục',
-            'parent.required' => 'Vui lòng nhập tên danh mục',
             'name.min' => 'Tên danh mục tối thiểu 5 ký tự',
         ];
     }

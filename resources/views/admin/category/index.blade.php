@@ -3,13 +3,6 @@
 <?php
   use App\Category;
 ?>
-
-  @if(Session::has('msg-s'))
-    <div class="alert alert-success alert-dismissable">{{ Session::get('msg-s') }}</div>
-  @endif
-  @if(Session::has('msg-e'))
-    <div class="alert alert-danger alert-dismissable">{{ Session::get('msg-e') }}</div>
-  @endif
 <div class="">
   <div class="col-md-4">
     <div class="box box-primary box-solid">

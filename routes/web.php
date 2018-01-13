@@ -24,6 +24,7 @@ route::pattern('slug','.*');
         Route::get('adminpc/orders/summary','AdminOrderController@report');
         Route::get('adminpc/orders/summary/search','AdminOrderController@report_search');
         Route::get('adminpc/orders/export', 'AdminOrderController@export_order');
+        Route::get('adminpc/orders/export_order_summary', 'AdminOrderController@export_order_summary');
         Route::get('adminpc/orders/search', 'AdminOrderController@search');
         Route::resource('adminpc/orders', 'AdminOrderController');
         Route::resource('adminpc/{id}/orderdetails', 'AdminOrderDetailController');

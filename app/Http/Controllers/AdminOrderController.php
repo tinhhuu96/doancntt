@@ -57,34 +57,32 @@ class AdminOrderController extends Controller
         })->export('xls');
         return redirect('admin/orders');
     }
-        public function report()
+
+    public function export_order_summary(Request $request)
     {
-        $orders = Order::all();
+        $date_start = $request->Input('date_start');
+        $date_end = $request->Input('date_end');
+        $orders = Order::datefrom($date_start)->dateto($date_end)->where('status', 'shipped')->get();
+        Excel::create('Orders Excel', function($excel) use($orders) {
+            $excel->sheet('Excel sheet', function($sheet) use($orders) {
+                $sheet->fromArray($orders);
+            });
+        })->export('xls');
+        return redirect('admin/orders');
+    }
+
+    public function report()
+    {
+        $orders = Order::where('status', 'shipped')->get();
         return view('auth.order.report')->with('orders', $orders);
 
     }
     public function report_search (Request $request)
     {
-
         $date_start = $request->Input('date_start');
         $date_end = $request->Input('date_end');
-        if (empty($date_start) && empty($date_end) )
-        {
-            $orders = $orders = Order::where('date', '>=', '0/0/0')->where('date', '<=', '0/0/0')->get();
-            $total = total_summary(12);
-            return view('auth.order.report')->with(['orders' => $orders, 'total' => $total]);
-        }
-        elseif(!empty($date_start) && empty($date_end))
-        {
-            $orders = Order::where('date', '>=', $date_start)->get();
-            return view('auth.order.report')->with(['orders' => $orders]);
-        }
-        elseif (empty($date_start) && !empty($date_end)) {
-            $orders = Order::where('date', '<=', $date_end )->get();
-            return view('auth.order.report')->with(['orders' => $orders]);
-        }
-        $orders = Order::where('date', '>=', $date_start)->where('date', '<=', $date_end)->get();
-        return view('auth.order.report')->with(['orders' => $orders]);
+        $orders = Order::datefrom($date_start)->dateto($date_end)->where('status', 'shipped')->get();
+        return view('auth.order.report')->with(['orders' => $orders, 'date_start' => $date_start, 'date_end' => $date_end]);
     }
 
     public function total_summary($id)

@@ -15,6 +15,7 @@ class ContactController extends Controller
 {
     public function index()
     {
+        // dd('ok');
     	$arcontact = DB::table('contacts')->orderBy('updated_at', 'desc')->get();
     	return view('admin.contact.index',['contacts'=> $arcontact]);
     }
