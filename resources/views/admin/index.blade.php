@@ -126,7 +126,7 @@
     },
     plotOptions: {
         column: {
-            depth: 25
+            depth: {{ $products }}
         }
     },
     xAxis: {
@@ -145,7 +145,7 @@
     },
     series: [{
         name: 'Sales',
-        data: [2, 3, null, 4, 0, 5, 1, 4, 6, 3]
+        data: [30, 3, null, 4, 0, 5, 1, 4, 6, 3]
     }]
 });
 </script>

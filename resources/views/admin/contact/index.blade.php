@@ -1,3 +1,4 @@
+@extends('templates.admin.template')
 @section('content')
 <?php
 	use App\Contact;

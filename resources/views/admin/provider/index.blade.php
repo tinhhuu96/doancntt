@@ -65,14 +65,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="col-md-5">
-      @if(Session::has('msg-s'))
-          <div class="alert alert-success alert-dismissable">{{ Session::get('msg-s') }}</div>
-        @endif
-        @if(Session::has('msg-e'))
-          <div class="alert alert-danger alert-dismissable">{{ Session::get('msg-e') }}</div>
-        @endif
-    </div> -->
 </div>
 <div class="row text-center">
   <div class="col-xs-offset-1 col-xs-10">

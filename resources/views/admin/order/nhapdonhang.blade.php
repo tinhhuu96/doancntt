@@ -1,15 +1,5 @@
 @extends('templates.admin.template')
 @section('content')
-<!-- <div class="row">
-  <div class="col-md-5">
-      @if(Session::has('msg-s'))
-          <div class="alert alert-success alert-dismissable">{{ Session::get('msg-s') }}</div>
-      @endif
-      @if(Session::has('msg-e'))
-          <div class="alert alert-danger alert-dismissable">{{ Session::get('msg-e') }}</div>
-      @endif
-    </div>
-</div> -->
 <div class="row">
   <div class="col-xs-11">
     <div class="box box-primary">
@@ -209,7 +199,7 @@
             });
       });
 
-      
+
 
     })
 

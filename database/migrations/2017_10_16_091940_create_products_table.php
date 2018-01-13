@@ -17,15 +17,15 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('code');
             $table->string('name');
-            $table->string('detail');
+            $table->text('detail');
             $table->string('picture');
-            $table->integer('price')->unsigned()->nullable();
+            $table->string('price')->nullable();
             $table->integer('quantity')->unsigned()->nullable();
             $table->integer('active')->unsigned()->nullable();
             $table->integer('category_id')->unsigned()->nullable();
             $table->foreign('category_id')->references('id')->on('categories');
             $table->integer('provider_id')->unsigned()->nullable();
-            $table->integer('view')->unsigned()->nullable();
+            $table->integer('view')->nullable();
             $table->timestamps();
         });
     }

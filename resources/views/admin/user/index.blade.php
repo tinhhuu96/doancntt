@@ -10,13 +10,6 @@ img{
     height:80px;
 }
 </style>
-  @if(Session::has('msg-s'))
-      <div class="alert alert-success alert-dismissable">{{ Session::get('msg-s') }}</div>
-  @endif
-  @if(Session::has('msg-e'))
-    <div class="alert alert-danger alert-dismissable">{{ Session::get('msg-e') }}</div>
-  @endif
-
 <div class="row">
   <div class="col-xs-offset-1 col-xs-10">
     <div class="box box-success">
