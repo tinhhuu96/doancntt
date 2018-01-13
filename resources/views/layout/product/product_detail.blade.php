@@ -122,7 +122,6 @@
         <div class="tab-pane fade" id="Comments" >
            <div class="">
                 <div class="form-group">
-                    <label for="">Comment product</label>
                     <div class="col-xs-12" id="commentList">
 
                     </div>
@@ -154,7 +153,7 @@
             </div>
             @else
             <div class="col-xs-offset-1">
-                <label for=""> Mời bạn đăng nhâp để được bình luận !</label>
+                <label for=""> Mời bạn đăng nhập để được bình luận !</label>
             </div>
             @endif
         </div>

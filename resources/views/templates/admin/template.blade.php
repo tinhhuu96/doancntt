@@ -13,7 +13,7 @@
   </section>
   <section class="content">
     <div class="row">
-      <div class="col-md-5" id="messageFlash">
+      <div class="col-md-offset-1 col-md-5" id="messageFlash">
           @if(Session::has('msg-s'))
               <div class="alert alert-success alert-dismissable">{{ Session::get('msg-s') }}</div>
           @endif

@@ -82,7 +82,12 @@
             <div class="col-xs-12">
               <div class="form-group">
                 <label for="">Chi Tiết Sản Phẩm</label>
-                <textarea class="ckeditor form-control" rows="3" name="detail" ></textarea>
+                  @if ($errors->has('detail'))
+                      <span class="help-block">
+                          <strong>{{ $errors->first('detail') }}</strong>
+                      </span>
+                  @endif
+                  <textarea class="ckeditor form-control" rows="3" name="detail" ></textarea>
               </div>
             </div>
           </div>

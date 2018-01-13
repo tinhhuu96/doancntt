@@ -16,21 +16,20 @@ class SearchController extends Controller
         if ($req->txt != "") {
             $count = count(DB::table('products')->select(['products.*'])->where('products.name','like','%'.$req->txt.'%')->get());
             $product = DB::table('products')->select(['products.*'])->where('products.name','like','%'.$req->txt.'%')->paginate(10);
-            return view('layout.search.index',['count'=>$count,'products'=>$product,'name'=>$req->txt]);
+            $txt = $req->txt;
         }else{
             $pricefirst = $req->price_first;
             $pricelast = $req->price_last;
-            if ($pricefirst == "") {
-                $txt = ' rỗng';
+            if ($pricelast == 0) {
+                $txt = 'tất cả sản phẩm trên '.number_format($pricefirst,0,'.','.').'$';
+                $count = count(DB::table('products')->select(['products.*'])->where('price','>=',$pricefirst)->paginate(10) );
+                $product = DB::table('products')->select(['products.*'])->where('price','>=', $pricefirst)->paginate(10);
+            }else{
+                $txt = ' từ '.number_format($pricefirst,0,'.','.').'$ đến '.number_format($pricelast,0,'.','.').'$';
                 $count = count(DB::table('products')->select(['products.*'])->whereBetween('price', [$pricefirst, $pricelast])->get());
                 $product = DB::table('products')->select(['products.*'])->whereBetween('price', [$pricefirst, $pricelast])->paginate(10);
-                return view('layout.search.index',['count'=>$count,'products'=>$product,'name'=>$txt]);
             }
-            $txt = ' từ '.number_format($pricefirst,0,'.','.').' đến '.number_format($pricelast,0,'.','.');
-            $count = count(DB::table('products')->select(['products.*'])->whereBetween('price', [$pricefirst, $pricelast])->get());
-            $product = DB::table('products')->select(['products.*'])->whereBetween('price', [$pricefirst, $pricelast])->paginate(10);
-            return view('layout.search.index',['count'=>$count,'products'=>$product,'name'=>$txt]);
         }
-    	
+    	return view('layout.search.index',['count'=>$count,'products'=>$product,'name'=>$txt]);
     }
 }
