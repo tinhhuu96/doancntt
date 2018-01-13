@@ -154,8 +154,8 @@ class OrdermanageController extends Controller
                 <td>'.$value->id.'</td>
                 <td>'.$value->name.'</td>
                 <td>'.$value->quantity.'</td>
-                <td>'.number_format($value->price,0,'.','.').' vnđ</td>
-                <td class="text-right">'.number_format($value->total,0,'.','.').' vnđ</td>
+                <td>'.number_format($value->price,0,'.','.').' $</td>
+                <td class="text-right">'.number_format($value->total,0,'.','.').' $</td>
               </tr>';
         }
         return $str;

@@ -19,7 +19,7 @@
         }
 
 
-        $discount = 0; 
+        $discount = 0;
         $arProduct = DB::table('promo_products')
         ->join('promotions','promo_products.promotion_id','=','promotions.id')
         ->join('products','products.id','=','promo_products.product_id')
@@ -56,7 +56,7 @@
     </div>
     <div class="col-sm-7">
         <div class="product-information"><!--/product-information-->
-            <?php 
+            <?php
                 $created_at = date_formats($product->created_at,"Y-m-d");;
                 $dates = ( strtotime($date)-strtotime($created_at) );
             ?>
@@ -68,7 +68,7 @@
             <span>
                 @if( $active == 1 )
                     @if( $unit == '%')
-                        <?php 
+                        <?php
                             $discount = $arProduct[0]->value_km;
                             $phantram = 100 - $discount;
                             $chieckhau =$phantram/100;
@@ -78,7 +78,7 @@
                            <i><strike>$<?php echo number_format($price,0,'.','.') ?></strike></i> <br>
                            <span>${{$chieckhau}}</span>
                     @else
-                        <?php 
+                        <?php
                             $chieckhau = $price-$arProduct[0]->value_km;
                             $chieckhau = number_format($chieckhau,0,'.','.');
 
@@ -87,11 +87,12 @@
                            <span>${{$chieckhau}}</span>
                     @endif
                 @else
+                    <?php $chieckhau = $price  ?>
                     <span>$<?php echo number_format($price,0,'.','.') ?></span>
                 @endif
                 <label>Quantity:</label>
                 <input type="text" value="1" />
-                <button type="button" onclick="addCart({{$product->id}})" class="btn btn-fefault cart">
+                <button type="button" onclick="addCart({{$product->id}},{{$chieckhau}})" class="btn btn-fefault cart">
                     <i class="fa fa-shopping-cart"></i>
                     Add to cart
                 </button>
@@ -117,7 +118,7 @@
             <div class="">
                 {!! $product->detail !!}
             </div>
-            
+
         </div>
         <div class="tab-pane fade" id="Comments" >
            <div class="">
@@ -159,11 +160,6 @@
         </div>
         <div class="tab-pane fade active in" id="reviews" >
             <div class="col-sm-12">
-                <ul>
-                    <li><a href=""><i class="fa fa-user"></i>admin</a></li>
-                    <li><a href=""><i class="fa fa-calendar-o"></i><?php echo ham_dao_nguoc_date($product->created_at)  ?></a></li>
-                </ul>
-                <p><b>Write Your Comments</b></p>
                 <h4>Thông số</h4>
                 <table class="table table-bordered">
                     <tr>
@@ -208,7 +204,6 @@
                             <div class="productinfo text-center">
                                 <img src="{{ asset('storage/products/'.$value->picture) }}" alt="{{ $value->name}}" />
                                 <h2>$ {{ $price }}</h2>
-                                <p>{!! $value->detail !!}</p>
                                 <a href="javascript:void(0)" onclick="addCart({{$value->id}})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                             </div>
                         </div>
@@ -231,7 +226,6 @@
                             <div class="productinfo text-center">
                                 <img src="{{ asset('storage/products/'.$value->picture) }}" alt="{{ $value->name}}" />
                                 <h2>$ {{ $price }}</h2>
-                                <p>{!! $value->detail !!}</p>
                                 <a href="javascript:void(0)" onclick="addCart({{$value->id}})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                             </div>
                         </div>

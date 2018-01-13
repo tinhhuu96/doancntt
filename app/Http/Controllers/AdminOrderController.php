@@ -74,7 +74,10 @@ class AdminOrderController extends Controller
     public function report()
     {
         $orders = Order::where('status', 'shipped')->get();
-        return view('auth.order.report')->with('orders', $orders);
+        $date_start = "";
+        $date_end = "";
+        return view('auth.order.report')->with(['orders' => $orders,
+            'date_start' => $date_start, 'date_end' => $date_end]);
 
     }
     public function report_search (Request $request)

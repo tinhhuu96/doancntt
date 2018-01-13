@@ -44,7 +44,7 @@
                   <td>
                     {{ $value->quantity }}
                   </td>
-                  <td>{{ $value->price }} vnđ</td>
+                  <td>{{ $value->price }} $</td>
                   <td><a href="{{ route('admin.Order.inputUpdate',['slug'=>str_slug($value->name), 'id'=> $value->id ]) }}">Nhập đơn hàng</a></td>
                   <td>
                     @if($value->active == 1)

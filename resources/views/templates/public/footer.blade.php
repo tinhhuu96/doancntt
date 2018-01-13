@@ -79,11 +79,11 @@
     <script src="{{ asset('js/jquery.prettyPhoto.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 	  <script type="text/javascript">
-			function addCart(id)
+			function addCart(id, price)
 		    {
 		        var root = '{{url('/carts')}}';
-		        $.get(root + '/' + id + '/' + 'add', function(data, status){
-
+		        var price =
+		        $.get(root + '/' + id + '/' + price + '/add', function(data, status){
 		            console.log(data);
 		        //   $('#count').replaceWith('<span id="count">' + data.count +'</span> ');
 		          $('#count').replaceWith('<span id="count">(' + data.count +')</span> ');
@@ -102,9 +102,11 @@
 		 	var root = '{{ url('/carts') }}';
 		 	$.get( root + '/' + rowId + '/down-count', function(data, status){
 		 		var sub = data.subtotal.toLocaleString();
+		 		var total = data.total.toLocaleString();
 		 		console.log(data);
 		 		$('#'+ rowId).replaceWith('<input type="text" id="'+rowId+'" name="quantity" value="' + data.qty +'" size="2" style="text-align: center;">');
-		 		$('#sub' + rowId).replaceWith('<span id="sub'+rowId+'">'+sub+' VNĐ </span>');
+		 		$('#sub' + rowId).replaceWith('<span id="sub'+rowId+'">'+sub+' $ </span>');
+		 		$('#total_price').replaceWith('<span id="total_price">' + total+ '$ </span>')
 		 	});
 
 		 }
@@ -114,9 +116,11 @@
 			var root = '{{ url('/carts') }}';
 		 	$.get( root + '/' + rowId + '/up-count', function(data, status){
 		 		var sub = data.subtotal.toLocaleString();
+		 		var total = data.total.toLocaleString();
 		 		console.log(data);
 		 		$('#'+ rowId).replaceWith('<input type="text" id="'+rowId+'" name="quantity" value="' + data.qty +'" size="2" style="text-align: center;">');
-		 		$('#sub' + rowId).replaceWith('<span id="sub'+rowId+'">'+sub+' VNĐ </span>');
+		 		$('#sub' + rowId).replaceWith('<span id="sub'+rowId+'">'+sub+' $ </span>');
+		 		$('#total_price').replaceWith('<span id="total_price">' + total+ '$ </span>')
 		 	});
 		}
 

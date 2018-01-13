@@ -7,7 +7,7 @@ route::pattern('slug','.*');
     Route::get('change-password', 'UpdatePasswordController@view_update');
     Route::post('change-password', 'UpdatePasswordController@update');
 //add cart
-        Route::get('carts/{id}/add', 'CartController@add');
+        Route::get('carts/{id}/{price}/add', 'CartController@add');
 ///carts
         Route::get('/carts', 'CartController@index');
         Route::get('carts/delete/{rowId}', 'CartController@delete');
