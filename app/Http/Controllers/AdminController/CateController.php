@@ -47,13 +47,12 @@ class CateController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
-
         $arCate = Category::create(['name'=>trim($request->name), 'parent'=>$request->parent]);
-            if ($arCate) {
-                $request->session()->flash('msg-s','Thêm thành công');
-            }else{
-                $request->session()->flash('msg-e','Thêm thất bại');
-            }
+        if ($arCate) {
+            $request->session()->flash('msg-s','Thêm thành công');
+        }else{
+            $request->session()->flash('msg-e','Thêm thất bại');
+        }
         return redirect()->route('admin.category');
     }
 
@@ -98,11 +97,10 @@ class CateController extends Controller
             $arcate->parent   = $request->parent;
             $arcate->update();
             $request->session()->flash('msg-s', 'Update thành công');
-            return redirect()->route('admin.category');
         }else{
             $request->session()->flash('msg-e','Update thất bại');
-            return redirect()->route('admin.category');
         }
+        return redirect()->route('admin.category');
     }
 
     /**

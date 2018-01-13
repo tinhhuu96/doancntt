@@ -82,23 +82,17 @@ class ProductController extends Controller
         // dd($request->provider);
         $id = $request->idcate;
         $code= trim($request->code);
+        $code= 'SP_'.$code;
         $name= trim($request->name);
         $detail= trim($request->detail);
         $avata = $request->avata;
-        $inputs = $request->all();
-        $rules = array(
-            'name' => 'required|min:5',
-            'code' => 'required|min:5',
-            'detail' => 'required|min:5',
-            );
-        $message = array(
-            'required' => 'Xin mời nhập !',
-            'min'      => 'Nhỏ nhất là 5 kí tự',
-            );
-        $validator = Validator::make($inputs, $rules, $message);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+        $request->validate([
+            'code' => 'required|min:5|max:20',
+            'name' => 'required',
+            'detail' => 'required',
+            'provider' => 'required',
+        ]);
+
         $arhash = Product::where('code','=',$code)->get();
 
         if (count($arhash) > 0 ) {

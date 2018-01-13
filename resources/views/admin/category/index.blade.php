@@ -25,7 +25,7 @@
                 <span class="help-block">
                     <strong>{{ $errors->first('name') }}</strong>
                 </span>
-            @endif
+              @endif
           </div>
           <div class="container row">
             <div class="form-group">
