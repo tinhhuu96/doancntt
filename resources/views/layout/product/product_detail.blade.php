@@ -127,12 +127,12 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" value="{{ $product->id }}" id="id_product">
+            <input type="hidden" value="0" id="id_user">
             @if(Auth::user() != "")
             <div class="table tabel-bordered">
                 <hr style="color: #bbb;">
                 <form action="javascript:void(0)" method="">
-                <input type="hidden" value="{{ $product->id }}" id="id_product">
-                <input type="hidden" value="0" id="id_user">
                 <div class="row">
                     <div class="form-group">
                         <div class="col-xs-2" style="width: 10.666667% !important;">
@@ -277,7 +277,6 @@
             });
         }
         $(function(){
-
              function getComments(){
                 setTimeout(function(){
                     var a = $('#id_product').val();
@@ -298,7 +297,6 @@
                 },50);
             };
             getComments();
-
         })
     </script>
 @stop

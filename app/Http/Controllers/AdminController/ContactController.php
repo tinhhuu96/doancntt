@@ -10,6 +10,8 @@ use Auth;
 use Toastr;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactMailAdmin;
+use App\User;
+use Carbon\Carbon;
 
 class ContactController extends Controller
 {
@@ -56,6 +58,7 @@ class ContactController extends Controller
             return  $arStr[1].' '.$arNgay[2].'-'.$arNgay[1].'-'.$arNgay[0];
         }
         foreach ($contact as $key => $value) {
+            $time = Carbon::parse($value->created_at)->diffForHumans();
             if ($value->view == 0 ) {
                 $str .= '<li onclick="modelView('.$value->id.')">
                         <a href="javascript:void(0)">
@@ -64,7 +67,7 @@ class ContactController extends Controller
                           </div>
                           <h4>
                             '.$value->name.'
-                            <small><i class="fa fa-clock-o"></i> '.ham_dao_nguoc_chuoi($value->created_at).'</small>
+                            <small><i class="fa fa-clock-o"></i> '.$time.'</small>
                           </h4>
                           <p>'.$value->content.'</p>
                         </a>
