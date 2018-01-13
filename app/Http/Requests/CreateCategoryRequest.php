@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class cateRequest extends FormRequest
+class CreateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,16 @@ class cateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'   => 'required|min:3',
+            'name'   => 'required|min:5',
+            'parent'   => 'required|min:5',
         ];
     }
 
     public function messages(){
         return [
             'name.required' => 'Vui lòng nhập tên danh mục',
-            'name.min' => 'Tên danh mục tối thiểu 3 ký tự',
+            'parent.required' => 'Vui lòng nhập tên danh mục',
+            'name.min' => 'Tên danh mục tối thiểu 5 ký tự',
         ];
     }
 }
