@@ -76,7 +76,7 @@
 									$chieckhau = number_format($chieckhau,0,'.','.');
 								?>
 								<i><strike>$<?php echo number_format($price,0,'.','.') ?></strike></i>
-								<h2 style="display: inline;">$<span id="span_price">${{$chieckhau}}</span></h2>
+								<h2 style="display: inline;"><span id="span_price">${{$chieckhau}}</span></h2>
 							@else
 								<h2 style="display: inline;">$<?php echo number_format($price,0,'.','.') ?></h2>
 		                    @endif

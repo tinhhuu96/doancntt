@@ -40,20 +40,20 @@
 				<div class="form-group">
 					<label for="">Giá bắt đầu</label>
 					<?php 
-						$ar = range( 1000 ,50000, 1000);
+						$ar = range( 100 ,10000, 100);
 					?>
-					<select name="price_first" class="form-control">
+					<select name="price_first" class="form-control" id="pricefirst" onchange="validate1()">
 						@foreach($ar as $value)
-							<option value="{{ $value }}"><?php echo number_format ( $value , 0 , '.' ,"." ).' $' ?> </option>
+							<option value="{{ $value }}">{{$value}} $</option>
 						@endforeach
 					</select>
 				</div>
 				<div class="form-group">
 					<label for="">Đến</label>
-					<select name="price_last" class="form-control">
+					<select name="price_last" class="form-control" id="dateend" onchange="validate2()">
 						<option value="0">-- Tất cả ------</option>
 						@foreach($ar as $value)
-							<option value="{{$value}}"><?php echo number_format ( $value , 0 , '.' ,"." ).' $' ?></option>
+							<option value="{{$value}}">{{$value}} $</option>
 						@endforeach
 					</select>
 				</div>
@@ -67,3 +67,6 @@
 	<div class="shipping text-center"><!--shipping-->
 		<img src="{{ asset('images/home/shipping.jpg') }}" alt="" />
 	</div><!--/shipping-->
+	<script type="text/javascript">
+		
+	</script>
