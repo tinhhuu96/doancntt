@@ -128,8 +128,13 @@
                     </div>
                 </div>
             </div>
+            @if(Auth::user() != "")
+            <?php $id_user =  Auth::user()->id ; ?>
+            @else
+                <?php $id_user = 1; ?>
+            @endif
             <input type="hidden" value="{{ $product->id }}" id="id_product">
-            <input type="hidden" value="{{Auth::user()->id}}" id="id_user">
+            <input type="hidden" value="{{$id_user}}" id="id_user">
             @if(Auth::user() != "")
             <div class="table tabel-bordered">
                 <hr style="color: #bbb;">
