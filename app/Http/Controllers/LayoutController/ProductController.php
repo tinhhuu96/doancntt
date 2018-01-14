@@ -42,7 +42,6 @@ class ProductController extends Controller
         $arproduct = Product::find($id);
         $arparameters = $arproduct->parameter_details;
         $arcategory = $arproduct->Category;
-        // dd($arcategory->id);
         $arproducts = Product::where('category_id','=',$arcategory->id)->where('id','<>',$id)->get();
         // dd($arproducts);
         return view('layout.product.product_detail',['products'=>$arproducts,'product'=>$arproduct, 'parameters'=>$arparameters]);
@@ -54,8 +53,7 @@ class ProductController extends Controller
         $id_user = $request->aid_user;
         $content = trim($request->acontent);
         if ($content != "") {
-            Comment::create(['product_id'=>$id_product, 'user_id'=>1, 'contents'=> $content]);
-
+            Comment::create(['product_id'=>$id_product, 'user_id'=>$id_user, 'contents'=> $content]);
             return "Bình luận thành công !";
         }
 

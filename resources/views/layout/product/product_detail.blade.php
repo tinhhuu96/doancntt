@@ -129,7 +129,7 @@
                 </div>
             </div>
             <input type="hidden" value="{{ $product->id }}" id="id_product">
-            <input type="hidden" value="0" id="id_user">
+            <input type="hidden" value="{{Auth::user()->id}}" id="id_user">
             @if(Auth::user() != "")
             <div class="table tabel-bordered">
                 <hr style="color: #bbb;">
